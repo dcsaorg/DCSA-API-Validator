@@ -10,7 +10,7 @@ import static io.restassured.RestAssured.get;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 /*
- * A simple test illustrating the use of REST Assured
+ * Tests related to the GET /events endpoint
  */
 
 public class getEventsTest {

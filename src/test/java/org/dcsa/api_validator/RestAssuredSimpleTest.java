@@ -15,4 +15,9 @@ public class RestAssuredSimpleTest {
     public void simple_get_test() {
         get(Configuration.ROOT_URI + "/events").then().assertThat().body("size()", greaterThanOrEqualTo(0));
     }
+
+    @Test
+    public void connectionSucceded() {
+        get(ROOT_URI + "/events").then().assertThat().statusCode(200);
+    }
 }

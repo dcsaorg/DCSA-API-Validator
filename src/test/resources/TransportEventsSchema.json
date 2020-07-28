@@ -1,0 +1,134 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "id": "http://example.com/example.json",
+  "type": "object",
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "default": {},
+  "required": [
+    "events"
+  ],
+  "properties": {
+    "events": {
+      "id": "#/properties/events",
+      "type": "array",
+      "title": "The events schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": [],
+      "additionalItems": false,
+      "items": {
+        "id": "#/properties/events/items",
+        "anyOf": [
+          {
+            "id": "#/properties/events/items/anyOf/0",
+            "type": "object",
+            "title": "The Transport Event schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "required": [
+              "eventID",
+              "eventType",
+              "eventDateTime",
+              "eventClassifierCode",
+              "eventTypeCode",
+              "transportReference",
+              "transportLegReference",
+              "facilityTypeCode",
+              "UNLocationCode",
+              "facilityCode"
+            ],
+            "properties": {
+              "eventID": {
+                "id": "#/properties/events/items/anyOf/0/properties/eventID",
+                "type": "string",
+                "title": "The eventID schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": 0
+              },
+              "eventType": {
+                "id": "#/properties/events/items/anyOf/0/properties/eventType",
+                "type": "string",
+                "title": "The eventType schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": ""
+              },
+              "eventDateTime": {
+                "id": "#/properties/events/items/anyOf/0/properties/eventDateTime",
+                "type": "string",
+                "format": "date-time",
+                "title": "The eventDateTime schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": ""
+              },
+              "eventClassifierCode": {
+                "id": "#/properties/events/items/anyOf/0/properties/eventClassifierCode",
+                "type": "string",
+                "title": "The eventClassifierCode schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": ""
+              },
+              "eventTypeCode": {
+                "id": "#/properties/events/items/anyOf/0/properties/eventTypeCode",
+                "type": "string",
+                "title": "The eventTypeCode schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": ""
+              },
+              "transportReference": {
+                "id": "#/properties/events/items/anyOf/0/properties/transportReference",
+                "type": "string",
+                "title": "The transportReference schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": 0
+              },
+              "transportLegReference": {
+                "id": "#/properties/events/items/anyOf/0/properties/transportLegReference",
+                "type": "string",
+                "title": "The transportLegReference schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": ""
+              },
+              "facilityTypeCode": {
+                "id": "#/properties/events/items/anyOf/0/properties/facilityTypeCode",
+                "type": "string",
+                "title": "The facilityTypeCode schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": ""
+              },
+              "UNLocationCode": {
+                "id": "#/properties/events/items/anyOf/0/properties/UNLocationCode",
+                "type": "string",
+                "title": "The UNLocationCode schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": ""
+              },
+              "facilityCode": {
+                "id": "#/properties/events/items/anyOf/0/properties/facilityCode",
+                "type": "string",
+                "title": "The facilityCode schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": ""
+              },
+              "otherFacility": {
+                "id": "#/properties/events/items/anyOf/0/properties/otherFacility",
+                "type": "string",
+                "title": "The otherFacility schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": ""
+              },
+              "modeOfTransportCode": {
+                "id": "#/properties/events/items/anyOf/0/properties/modeOfTransportCode",
+                "type": "string",
+                "title": "The modeOfTransportCode schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": 0
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      }
+    }
+  },
+  "additionalProperties": true
+}

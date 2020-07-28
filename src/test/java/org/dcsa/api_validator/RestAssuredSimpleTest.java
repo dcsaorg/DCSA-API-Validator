@@ -1,5 +1,3 @@
-package org.dcsa.api_validator;
-
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 

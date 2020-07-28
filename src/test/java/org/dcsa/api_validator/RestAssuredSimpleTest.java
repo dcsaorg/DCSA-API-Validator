@@ -18,6 +18,6 @@ public class RestAssuredSimpleTest {
 
     @Test
     public void connectionSucceded() {
-        get(ROOT_URI + "/events").then().assertThat().statusCode(200);
+        get(Configuration.ROOT_URI + "/events").then().assertThat().statusCode(200);
     }
 }

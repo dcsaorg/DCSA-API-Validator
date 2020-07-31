@@ -14,7 +14,6 @@ import spark.Spark;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.LocalDateTime;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -22,21 +21,22 @@ import static io.restassured.RestAssured.given;
 
 public class eventSubscriptionsTest {
     private static final CountDownLatch lock = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
-private static Request req;
+    private static Request req;
 
     @BeforeAll
-    public static void initServer(){
+    public static void initServer() {
         Spark.port(4567);
-        Spark.post("/webhook/receive",(req,res)->{
-            eventSubscriptionsTest.req =req;
+        Spark.post("/webhook/receive", (req, res) -> {
+            eventSubscriptionsTest.req = req;
             lock.countDown(); //Release lock
             return "Callback received!";
         });
         Spark.awaitInitialization();
 
     }
+
     @Test
-    public void testCallbacks() throws InterruptedException, IOException,  JSONException {
+    public void testCallbacks() throws InterruptedException, IOException, JSONException {
 
         initServer();
         given().
@@ -49,15 +49,14 @@ private static Request req;
                         "            \"shipmentInformationTypeCode\": \"Asger text\"" +
                         "        }").
                 post(Configuration.ROOT_URI + "/events");
-        LocalDateTime then = LocalDateTime.now();
 
-       lock.await(20000, TimeUnit.MILLISECONDS); //Released immediately if lock countdown is 0
-        Assert.assertNotNull(req.body());
+        lock.await(20000, TimeUnit.MILLISECONDS); //Released immediately if lock countdown is 0
+        Assert.assertNotNull( req.body());
 
         //Validate that the callback body is a Shipment Event
         JSONObject jsonSubject = new JSONObject(req.body());
 
-        try (InputStream inputStream = getClass().getResourceAsStream("/ShipmentEventSchema.json")) {
+        try (InputStream inputStream = getClass().getResourceAsStream("/ShipmentEventsSchema.json")) {
             JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
             Schema schema = SchemaLoader.load(rawSchema);
             schema.validate(jsonSubject); // throws a ValidationException if this object is invalid

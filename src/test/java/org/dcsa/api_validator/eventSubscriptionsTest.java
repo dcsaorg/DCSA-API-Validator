@@ -61,7 +61,7 @@ public class eventSubscriptionsTest {
                         "            \"eventClassifierCode\": \"PLN\",\n" +
                         "            \"eventType\": \"SHIPMENT\"," +
                         "            \"eventTypeCode\": \"DEPA\"," +
-                        "            \"shipmentInformationTypeCode\": \"Asger text\"" +
+                        "            \"shipmentInformationTypeCode\": \"Callback text\"" +
                         "        }").
                 post(Configuration.ROOT_URI + "/events");
 
@@ -91,7 +91,7 @@ public class eventSubscriptionsTest {
                         "            \"eventClassifierCode\": \"PLN\",\n" +
                         "            \"eventType\": \"SHIPMENT\"," +
                         "            \"eventTypeCode\": \"DEPA\"," +
-                        "            \"shipmentInformationTypeCode\": \"Asger text\"" +
+                        "            \"shipmentInformationTypeCode\": \"callback2 text\"" +
                         "        }").
                 post(Configuration.ROOT_URI + "/events");
 

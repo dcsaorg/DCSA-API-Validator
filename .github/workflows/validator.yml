@@ -21,6 +21,8 @@ jobs:
       run: mvn package -DskipTests #Need to skip the tests as they depend on a running DB
     - name: Build and run the backend microservices
       run: docker-compose -f docker-compose/docker-compose.yml up -d -V
+    - name: get ip
+      run: docker container run -e "DOCKER_HOST=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')" ...
     - name: Run the validator
       uses: actions/checkout@v2
       with:

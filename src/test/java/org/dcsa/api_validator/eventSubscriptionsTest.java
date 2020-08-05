@@ -6,6 +6,7 @@ import org.everit.json.schema.loader.SchemaLoader;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.junit.jupiter.api.BeforeAll;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import spark.Request;
@@ -22,13 +23,14 @@ public class eventSubscriptionsTest {
     //Don't reuse request objects to reduce risk of other unrelated events affecting the tests
     private static Request req;
     private static Request reqTransportEvent;
-    private static CountDownLatch lock;
+    private static CountDownLatch lock = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
 
     @BeforeTest
     static void setup() {
-        lock = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
+
 
         Spark.port(4567);
+        Spark.ipAddress("127.0.0.1");
         Spark.post("/webhook/receive", (req, res) -> {
             eventSubscriptionsTest.req = req;
             lock.countDown(); //Release lock
@@ -47,6 +49,8 @@ public class eventSubscriptionsTest {
     static void cleanUp() {
         req=null;
         reqTransportEvent=null;
+        lock = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
+        Spark.stop();
         Spark.awaitStop();
     }
 

@@ -25,9 +25,10 @@ public class eventSubscriptionsTest {
     private Request reqTransportEvent;
     private static CountDownLatch lock = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
     private static CountDownLatch lock2 = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
+    private static CountDownLatch lock3 = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
     private static boolean initialized;
 
-    void setup() {
+    void setup() throws InterruptedException {
         if (!initialized) {
             Spark.port(4567);
             Spark.post("/webhook/receive", (req, res) -> {
@@ -45,7 +46,7 @@ public class eventSubscriptionsTest {
         }
         Spark.awaitInitialization();
 
-
+    lock3.await(10000,TimeUnit.MILLISECONDS);
     }
 
     @BeforeMethod

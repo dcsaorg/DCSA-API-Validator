@@ -25,10 +25,8 @@ public class eventSubscriptionsTest {
     private static Request reqTransportEvent;
     private static CountDownLatch lock = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
 
-    @BeforeTest
+    @BeforeMethod
     static void setup() {
-
-
         Spark.port(4567);
         Spark.ipAddress("127.0.0.1");
         Spark.post("/webhook/receive", (req, res) -> {
@@ -45,7 +43,7 @@ public class eventSubscriptionsTest {
 
     }
 
-    @AfterTest
+    @AfterMethod
     static void cleanUp() {
         req=null;
         reqTransportEvent=null;

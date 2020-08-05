@@ -21,36 +21,36 @@ import static io.restassured.RestAssured.given;
 
 public class eventSubscriptionsTest {
     //Don't reuse request objects to reduce risk of other unrelated events affecting the tests
-    private static Request req;
-    private static Request reqTransportEvent;
+    private Request req;
+    private Request reqTransportEvent;
     private static CountDownLatch lock = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
     private static CountDownLatch lock2 = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
     private static boolean initialized;
 
-    static void setup() {
-        if (!initialized){
+    void setup() {
+        if (!initialized) {
             Spark.port(4567);
-        Spark.post("/webhook/receive", (req, res) -> {
-            eventSubscriptionsTest.req = req;
-            lock.countDown(); //Release lock
-            return "Callback received!";
-        });
-        Spark.post("/webhook/receive-transport-events", (req, res) -> {
-            eventSubscriptionsTest.reqTransportEvent = req;
-            lock2.countDown(); //Release lock
-            return "Callback received!";
-        });
-        Spark.awaitInitialization();
-        initialized = true;
-    }
+            Spark.post("/webhook/receive", (req, res) -> {
+                this.req = req;
+                lock.countDown(); //Release lock
+                return "Callback received!";
+            });
+            Spark.post("/webhook/receive-transport-events", (req, res) -> {
+                this.reqTransportEvent = req;
+                lock2.countDown(); //Release lock
+                return "Callback received!";
+            });
+            Spark.awaitInitialization();
+            initialized = true;
+        }
 
 
     }
 
     @BeforeMethod
-    static void cleanUp() {
-        req=null;
-        reqTransportEvent=null;
+     void cleanUp() {
+        this.req = null;
+        this.reqTransportEvent = null;
         lock = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
         lock2 = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
 //        Spark.stop();
@@ -73,7 +73,7 @@ public class eventSubscriptionsTest {
 
         lock.await(20000, TimeUnit.MILLISECONDS); //Released immediately if lock countdown is 0
         Assert.assertNotNull(req, "The callback request should not be null");
-        Assert.assertNotNull(req.body() , "The callback request body should not be null");
+        Assert.assertNotNull(req.body(), "The callback request body should not be null");
         String jsonBody = req.body();
 
         System.out.println("The testCallbacks() test received the body: " + jsonBody);

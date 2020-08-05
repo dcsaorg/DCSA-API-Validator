@@ -96,7 +96,7 @@ public class eventSubscriptionsTest {
                 post(Configuration.ROOT_URI + "/events");
 
         lock.await(10000, TimeUnit.MILLISECONDS); //Released immediately if lock countdown is 0
-        Assert.assertNull(reqTransportEvent, , "The callback request should be null"); //The body should be null, since only transport events must be sent to this endpoint
+        Assert.assertNull(reqTransportEvent, "The callback request should be null"); //The body should be null, since only transport events must be sent to this endpoint
 
     }
 

@@ -28,7 +28,7 @@ public class eventSubscriptionsTest {
     @BeforeMethod
     static void setup() {
         Spark.port(4567);
-        Spark.ipAddress("0.0.0.0");
+        Spark.ipAddress("172.17.0.1");
         Spark.post("/webhook/receive", (req, res) -> {
             eventSubscriptionsTest.req = req;
             lock.countDown(); //Release lock

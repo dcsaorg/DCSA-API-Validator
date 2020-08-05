@@ -22,7 +22,7 @@ jobs:
     - name: Build and run the backend microservices
       run: docker-compose -f docker-compose/docker-compose.yml up -d -V
     - name: get ip
-      run: docker container run -e "DOCKER_HOST=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')" ...
+      run: ifconfig -a
     - name: Run the validator
       uses: actions/checkout@v2
       with:

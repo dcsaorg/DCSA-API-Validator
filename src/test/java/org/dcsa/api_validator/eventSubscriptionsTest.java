@@ -43,6 +43,7 @@ public class eventSubscriptionsTest {
             Spark.awaitInitialization();
             initialized = true;
         }
+        Spark.awaitInitialization();
 
 
     }

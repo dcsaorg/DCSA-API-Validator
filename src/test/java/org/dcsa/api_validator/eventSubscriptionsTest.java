@@ -66,8 +66,8 @@ public class eventSubscriptionsTest {
                 post(Configuration.ROOT_URI + "/events");
 
         lock.await(20000, TimeUnit.MILLISECONDS); //Released immediately if lock countdown is 0
-        Assert.assertNotNull(req);
-        Assert.assertNotNull(req.body());
+        Assert.assertNotNull(req, "The callback request should not be null");
+        Assert.assertNotNull(req.body() , "The callback request body should not be null");
         String jsonBody = req.body();
 
         System.out.println("The testCallbacks() test received the body: " + jsonBody);
@@ -96,7 +96,7 @@ public class eventSubscriptionsTest {
                 post(Configuration.ROOT_URI + "/events");
 
         lock.await(10000, TimeUnit.MILLISECONDS); //Released immediately if lock countdown is 0
-        Assert.assertNull(reqTransportEvent); //The body should be null, since only transport events must be sent to this endpoint
+        Assert.assertNull(reqTransportEvent, , "The callback request should be null"); //The body should be null, since only transport events must be sent to this endpoint
 
     }
 

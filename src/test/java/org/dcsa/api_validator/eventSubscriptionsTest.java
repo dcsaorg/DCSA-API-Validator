@@ -24,10 +24,12 @@ public class eventSubscriptionsTest {
     private static Request req;
     private static Request reqTransportEvent;
     private static CountDownLatch lock = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
+    private static CountDownLatch lock2 = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
+    private static boolean initialized;
 
-    @BeforeMethod
     static void setup() {
-        Spark.port(4567);
+        if (!initialized){
+            Spark.port(4567);
         Spark.post("/webhook/receive", (req, res) -> {
             eventSubscriptionsTest.req = req;
             lock.countDown(); //Release lock
@@ -35,24 +37,29 @@ public class eventSubscriptionsTest {
         });
         Spark.post("/webhook/receive-transport-events", (req, res) -> {
             eventSubscriptionsTest.reqTransportEvent = req;
-            lock.countDown(); //Release lock
+            lock2.countDown(); //Release lock
             return "Callback received!";
         });
         Spark.awaitInitialization();
+        initialized = true;
+    }
+
 
     }
 
-    @AfterMethod
+    @BeforeMethod
     static void cleanUp() {
         req=null;
         reqTransportEvent=null;
         lock = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
-        Spark.stop();
-        Spark.awaitStop();
+        lock2 = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
+//        Spark.stop();
+//        Spark.awaitStop();
     }
 
     @Test
     public void testCallbacks() throws InterruptedException, IOException, JSONException {
+        setup();
         given().
                 contentType("application/json").
                 body("{\n" +
@@ -83,6 +90,7 @@ public class eventSubscriptionsTest {
 
     @Test
     public void testCallbackFilter() throws InterruptedException, JSONException {
+        setup();
         given().
                 contentType("application/json").
                 body("{\n" +
@@ -94,7 +102,7 @@ public class eventSubscriptionsTest {
                         "        }").
                 post(Configuration.ROOT_URI + "/events");
 
-        lock.await(10000, TimeUnit.MILLISECONDS); //Released immediately if lock countdown is 0
+        lock2.await(10000, TimeUnit.MILLISECONDS); //Released immediately if lock countdown is 0
         Assert.assertNull(reqTransportEvent, "The callback request should be null"); //The body should be null, since only transport events must be sent to this endpoint
 
     }

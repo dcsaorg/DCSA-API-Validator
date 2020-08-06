@@ -15,7 +15,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: dcsaorg/DCSA-Backend
-        ref: datatest
+        ref: master
         token: ${{ secrets.read_repo_pat }}
 
     - run: ifconfig -a

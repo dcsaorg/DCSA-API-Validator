@@ -26,8 +26,9 @@ public class eventSubscriptionsTest {
     private static CountDownLatch lock = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
     private static CountDownLatch lock2 = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
 
-    @BeforeClass
+    @BeforeMethod
     void setup() {
+        cleanUp();
         Spark.port(4567);
         Spark.post("/webhook/receive", (req, res) -> {
             this.req = req;
@@ -44,12 +45,17 @@ public class eventSubscriptionsTest {
 
     }
 
-    @BeforeMethod
-    void cleanUp() {
+    private void cleanUp() {
         this.req = null;
         this.reqTransportEvent = null;
         lock = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
         lock2 = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
+    }
+
+    @AfterMethod
+    void shutdown() {
+        Spark.stop();
+        Spark.awaitStop();
     }
 
     @Test

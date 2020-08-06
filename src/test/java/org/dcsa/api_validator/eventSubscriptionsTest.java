@@ -28,24 +28,25 @@ public class eventSubscriptionsTest {
 
     @BeforeClass
     void setup() {
-            Spark.port(4567);
-            Spark.post("/webhook/receive", (req, res) -> {
-                this.req = req;
-                lock.countDown(); //Release lock
-                return "Callback received!";
-            });
-            Spark.post("/webhook/receive-transport-events", (req, res) -> {
-                this.reqTransportEvent = req;
-                lock2.countDown(); //Release lock
-                return "Callback received!";
-            });
-            Spark.awaitInitialization();
+        Spark.ipAddress("127.0.0.1");
+        Spark.port(4567);
+        Spark.post("/webhook/receive", (req, res) -> {
+            this.req = req;
+            lock.countDown(); //Release lock
+            return "Callback received!";
+        });
+        Spark.post("/webhook/receive-transport-events", (req, res) -> {
+            this.reqTransportEvent = req;
+            lock2.countDown(); //Release lock
+            return "Callback received!";
+        });
+        Spark.awaitInitialization();
 
 
     }
 
     @BeforeMethod
-     void cleanUp() {
+    void cleanUp() {
         this.req = null;
         this.reqTransportEvent = null;
         lock = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released

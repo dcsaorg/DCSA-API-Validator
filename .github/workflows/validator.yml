@@ -25,9 +25,5 @@ jobs:
       run: docker-compose -f docker-compose/docker-compose.yml up -d -V
     - name: Run the validator
       uses: actions/checkout@v2
-      with:
-        repository: dcsaorg/DCSA-API-Validator
-        ref: master
-        token: ${{ secrets.read_repo_pat }}
     - name: Run the API validator
       run: mvn test

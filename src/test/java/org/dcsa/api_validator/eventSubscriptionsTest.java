@@ -28,7 +28,6 @@ public class eventSubscriptionsTest {
 
     @BeforeClass
     void setup() {
-        Spark.ipAddress("127.0.0.1");
         Spark.port(4567);
         Spark.post("/webhook/receive", (req, res) -> {
             this.req = req;

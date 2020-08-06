@@ -23,8 +23,8 @@ public class eventSubscriptionsTest {
     //Don't reuse request objects to reduce risk of other unrelated events affecting the tests
     private Request req;
     private Request reqTransportEvent;
-    private static CountDownLatch lock = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
-    private static CountDownLatch lock2 = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
+    private CountDownLatch lock = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
+    private CountDownLatch lock2 = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
 
     @BeforeMethod
     void setup() {

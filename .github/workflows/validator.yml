@@ -17,13 +17,11 @@ jobs:
         repository: dcsaorg/DCSA-Backend
         ref: master
         token: ${{ secrets.read_repo_pat }}
-
-    - run: ifconfig -a
     - name: Build backend
       run: mvn package -DskipTests #Need to skip the tests as they depend on a running DB
     - name: Build and run the backend microservices
       run: docker-compose -f docker-compose/docker-compose.yml up -d -V
-    - name: Checkout the validator
+    - name: Checkout API validator
       uses: actions/checkout@v2
     - name: Run the API validator
       run: mvn test

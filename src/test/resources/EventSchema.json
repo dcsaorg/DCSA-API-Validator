@@ -118,6 +118,7 @@
         "default": {},
         "required": [
           "eventID",
+          "shipmentID",
           "eventType",
           "eventDateTime",
           "eventClassifierCode",
@@ -129,6 +130,13 @@
             "id": "#/properties/events/items/anyOf/1/properties/eventID",
             "type": "string",
             "title": "The eventID schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0
+          },
+          "shipmentID": {
+            "id": "#/properties/shipmentID",
+            "type": "string",
+            "title": "The shipmentID schema",
             "description": "An explanation about the purpose of this instance.",
             "default": 0
           },

@@ -21,6 +21,13 @@
       "description": "An explanation about the purpose of this instance.",
       "default": 0
     },
+    "shipmentID": {
+      "id": "#/properties/shipmentID",
+      "type": "string",
+      "title": "The shipmentID schema",
+      "description": "The id of the shipment the event refers to",
+      "default": 0
+    },
     "eventType": {
       "id": "#/properties/eventType",
       "type": "string",

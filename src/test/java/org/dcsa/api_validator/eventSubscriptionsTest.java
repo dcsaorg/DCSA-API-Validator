@@ -67,6 +67,7 @@ public class eventSubscriptionsTest {
                         "            \"eventClassifierCode\": \"PLN\",\n" +
                         "            \"eventType\": \"SHIPMENT\"," +
                         "            \"eventTypeCode\": \"DEPA\"," +
+                        "            \"shipmentID\": \"5e51e72c-d872-11ea-811c-0f8f10a32ea1\"," +
                         "            \"shipmentInformationTypeCode\": \"Callback text\"" +
                         "        }").
                 post(Configuration.ROOT_URI + "/events");
@@ -97,6 +98,7 @@ public class eventSubscriptionsTest {
                         "            \"eventClassifierCode\": \"PLN\",\n" +
                         "            \"eventType\": \"SHIPMENT\"," +
                         "            \"eventTypeCode\": \"DEPA\"," +
+                        "            \"shipmentID\": \"5e51e72c-d872-11ea-811c-0f8f10a32ea1\"," +
                         "            \"shipmentInformationTypeCode\": \"callback2 text\"" +
                         "        }").
                 post(Configuration.ROOT_URI + "/events");

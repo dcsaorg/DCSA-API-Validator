@@ -14,7 +14,7 @@ jobs:
     - name: Fetch backend
       uses: actions/checkout@v2
       with:
-        repository: dcsaorg/DCSA-Backend
+        repository: dcsaorg/DCSA-TNT
         ref: master
         token: ${{ secrets.read_repo_pat }}
     - name: Build backend

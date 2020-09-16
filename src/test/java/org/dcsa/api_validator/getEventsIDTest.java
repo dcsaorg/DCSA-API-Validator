@@ -5,6 +5,7 @@ import com.github.fge.jsonschema.main.JsonSchemaFactory;
 import io.restassured.path.json.JsonPath;
 import org.apache.http.HttpStatus;
 import org.dcsa.api_validator.conf.Configuration;
+import org.testng.Reporter;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class getEventsIDTest {
     //Receives all eventIDs from GET /events, then queries them, validates the ID and that the event has one of the 4 event structures.
     @Test
     public void testEventIds() {
+        Reporter.log("Running testEventIds ------------------------------------------------------------------------------------------------------------------------");
         String json = given().
                 auth().
                 oauth2(Configuration.accessToken).

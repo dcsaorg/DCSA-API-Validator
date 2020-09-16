@@ -16,7 +16,7 @@
 
     <properties>
         <groovy.version>3.0.2</groovy.version>
-        <org.slf4j.simpleLogger.defaultLogLevel>info</org.slf4j.simpleLogger.defaultLogLevel>
+        <restassured.version>4.3.1</restassured.version>
     </properties>
 
     <build>
@@ -53,24 +53,24 @@
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>json-schema-validator</artifactId>
-            <version>4.3.1</version>
+            <version>${restassured.version}</version>
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
-            <version>4.3.1</version>
+            <version>${restassured.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured-all</artifactId>
-            <version>4.3.1</version>
+            <version>${restassured.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.rest-assured/json-path -->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>json-path</artifactId>
-            <version>4.3.1</version>
+            <version>${restassured.version}</version>
         </dependency>
 
         <dependency>

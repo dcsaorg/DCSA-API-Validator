@@ -2,20 +2,18 @@ package org.dcsa.api_validator;
 
 import com.github.fge.jsonschema.cfg.ValidationConfiguration;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
-import com.jayway.jsonpath.Criteria;
-import com.jayway.jsonpath.Filter;
 import io.restassured.path.json.JsonPath;
 import org.dcsa.api_validator.conf.Configuration;
 import org.testng.annotations.Test;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.github.fge.jsonschema.SchemaVersion.DRAFTV4;
-import static io.restassured.RestAssured.*;
+import static io.restassured.RestAssured.get;
+import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.everyItem;
 
 /*
  * Tests related to the GET /events endpoint
@@ -29,7 +27,10 @@ public class getEventsTest {
 
     @Test
     public void testEvents() {
-        get(Configuration.ROOT_URI + "/events").
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
                 body(matchesJsonSchemaInClasspath("EventsSchema.json").
@@ -39,6 +40,8 @@ public class getEventsTest {
     @Test
     public void testEquipmentEventsQueryParam() {
         given().
+                auth().
+                oauth2(Configuration.accessToken).
                 queryParam("eventType", "EQUIPMENT").
                 get(Configuration.ROOT_URI + "/events").
                 then().
@@ -51,6 +54,9 @@ public class getEventsTest {
     @Test
     public void testEquipmentReferenceQueryParam() {
         String json = given().
+
+                auth().
+                oauth2(Configuration.accessToken).
                 queryParam("eventType", "EQUIPMENT,TRANSPORTEQUIPMENT").
                 get(Configuration.ROOT_URI + "/events").
                 body().asString();
@@ -58,6 +64,8 @@ public class getEventsTest {
         List<String> equipmentReferences = JsonPath.from(json).getList("events.equipmentReference");
         for (String equipmentReference : equipmentReferences) {
             given().
+                    auth().
+                    oauth2(Configuration.accessToken).
                     queryParam("equipmentReference", equipmentReference).
                     get(Configuration.ROOT_URI + "/events").
                     then().
@@ -68,6 +76,8 @@ public class getEventsTest {
     @Test
     public void testTransportEventsQueryParam() {
         given().
+                auth().
+                oauth2(Configuration.accessToken).
                 queryParam("eventType", "TRANSPORT").
                 get(Configuration.ROOT_URI + "/events").
                 then().
@@ -79,6 +89,8 @@ public class getEventsTest {
     @Test
     public void testShipmentEventsQueryParam() {
         given().
+                auth().
+                oauth2(Configuration.accessToken).
                 queryParam("eventType", "SHIPMENT").
                 get(Configuration.ROOT_URI + "/events").
                 then().
@@ -90,6 +102,8 @@ public class getEventsTest {
     @Test
     public void testTransportEquipmentEventsQueryParam() {
         given().
+                auth().
+                oauth2(Configuration.accessToken).
                 queryParam("eventType", "TRANSPORTEQUIPMENT").
                 get(Configuration.ROOT_URI + "/events").
                 then().

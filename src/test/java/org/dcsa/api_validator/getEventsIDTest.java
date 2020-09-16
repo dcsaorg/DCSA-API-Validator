@@ -27,12 +27,16 @@ public class getEventsIDTest {
     @Test
     public void testEventIds() {
         String json = given().
+                auth().
+                oauth2(Configuration.accessToken).
                 get(Configuration.ROOT_URI + "/events").
                 body().asString();
 
         List<String> ids = JsonPath.from(json).getList("events.eventID");
         for (String id : ids) {
             given().
+                    auth().
+                    oauth2(Configuration.accessToken).
                     get(Configuration.ROOT_URI + "/events/" + id).
                     then().
                     body("eventID", is(id)).
@@ -44,6 +48,9 @@ public class getEventsIDTest {
     //Ensures a bad request is thrown when the path parameter is not an UUID. If API implementers don't use UUIDs, then this test should be removed
     @Test
     public void testIncorrectUUID() {
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
         get(Configuration.ROOT_URI+"/events/NOT-AN-UUID")
                 .then()
                 .assertThat().
@@ -52,6 +59,9 @@ public class getEventsIDTest {
 
     @Test
     public void testNotFoundUUID() {
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
         get(Configuration.ROOT_URI+"/events/80d63706-7b93-4936-84fe-3ef9ef1946f0")
                 .then()
                 .assertThat().

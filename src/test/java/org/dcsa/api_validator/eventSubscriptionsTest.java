@@ -61,6 +61,8 @@ public class eventSubscriptionsTest {
     @Test
     public void testCallbacks() throws InterruptedException, IOException, JSONException {
         given().
+                auth().
+                oauth2(Configuration.accessToken).
                 contentType("application/json").
                 body("{\n" +
                         "            \"eventDateTime\": \"2020-07-14T22:00:00.000+00:00\"," +
@@ -92,6 +94,8 @@ public class eventSubscriptionsTest {
     @Test
     public void testCallbackFilter() throws InterruptedException, JSONException {
         given().
+                auth().
+                oauth2(Configuration.accessToken).
                 contentType("application/json").
                 body("{\n" +
                         "            \"eventDateTime\": \"2020-07-14T22:00:00.000+00:00\"," +

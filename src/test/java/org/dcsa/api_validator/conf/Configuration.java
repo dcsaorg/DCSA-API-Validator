@@ -12,7 +12,7 @@ import org.testng.annotations.BeforeSuite;
 import static io.restassured.RestAssured.given;
 
 public class Configuration {
-    public final static String ROOT_URI = "http://localhost:9090";
+    public final static String ROOT_URI = System.getenv("API_ROOT_URI");
     public static String accessToken;
 
     @BeforeSuite(alwaysRun = true)
@@ -24,13 +24,9 @@ public class Configuration {
                 .formParam("client_id", System.getenv("client_id"))
                 .formParam("grant_type", "client_credentials")
                 .formParam("audience", System.getenv("audience"))
-//                        .body("grant_type=client_credentials&client_id="+System.getenv("client_id")+"&client_secret="+System.getenv("client_secret")+"&audience=localhost")
                 .urlEncodingEnabled(true)
                 .when()
                 .post(System.getenv("OAuthTokenUri")).jsonPath().getString("access_token");
-
-        Reporter.log("OAuth Token: " + accessToken);
-        System.out.println("Oauth Token" + accessToken);
 
     }
 }

@@ -1,8 +1,10 @@
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.*;
+package org.dcsa.api_validator.tnt.v2;
 
 import org.dcsa.api_validator.conf.Configuration;
 import org.testng.annotations.Test;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 /*
  * A simple test illustrating the use of REST Assured

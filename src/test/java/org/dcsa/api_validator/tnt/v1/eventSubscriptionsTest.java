@@ -1,4 +1,4 @@
-package org.dcsa.api_validator;
+package org.dcsa.api_validator.tnt.v1;
 
 import org.dcsa.api_validator.conf.Configuration;
 import org.everit.json.schema.Schema;

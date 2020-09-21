@@ -17,6 +17,7 @@
     <properties>
         <groovy.version>3.0.2</groovy.version>
         <restassured.version>4.3.1</restassured.version>
+        <test.suite>all.xml</test.suite>
     </properties>
 
     <build>
@@ -29,7 +30,7 @@
                 <configuration>
                     <!-- Suite testng xml file to consider for test execution -->
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                        <suiteXmlFile>${test.suite}</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>

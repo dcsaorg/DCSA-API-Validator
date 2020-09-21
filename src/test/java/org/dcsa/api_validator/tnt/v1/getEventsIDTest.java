@@ -1,4 +1,4 @@
-package org.dcsa.api_validator;
+package org.dcsa.api_validator.tnt.v1;
 
 import com.github.fge.jsonschema.cfg.ValidationConfiguration;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;

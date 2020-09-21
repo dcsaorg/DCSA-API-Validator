@@ -28,7 +28,7 @@ jobs:
       run: docker-compose -f docker-compose.yml up -d -V
     - name: Checkout API validator
       uses: actions/checkout@v2
-    - name: Run the API validator on TNTV2
+    - name: Run the API validator on TNTV1
       run: mvn -Dtest.suite=TnTV1.xml test
       env: 
         client_secret: ${{ secrets.AUTH0_DCSA_CLIENT_SECRET }}

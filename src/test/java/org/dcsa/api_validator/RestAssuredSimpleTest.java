@@ -13,11 +13,17 @@ public class RestAssuredSimpleTest {
 
     @Test
     public void simple_get_test() {
-        get(Configuration.ROOT_URI + "/events").then().assertThat().body("size()", greaterThanOrEqualTo(0));
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                get(Configuration.ROOT_URI + "/events").then().assertThat().body("size()", greaterThanOrEqualTo(0));
     }
 
     @Test
     public void connectionSucceded() {
-        get(Configuration.ROOT_URI + "/events").then().assertThat().statusCode(200);
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                get(Configuration.ROOT_URI + "/events").then().assertThat().statusCode(200);
     }
 }

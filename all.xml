@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="allSuites">
+    <suite-files>
+        <suite-file path="TnTV1.xml" />
+        <suite-file path="TnTV2.xml" />
+    </suite-files>
+</suite>

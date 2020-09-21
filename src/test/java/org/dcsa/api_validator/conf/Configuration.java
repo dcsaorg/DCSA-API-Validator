@@ -1,11 +1,6 @@
 package org.dcsa.api_validator.conf;
 
-import groovy.util.logging.Slf4j;
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import io.restassured.response.ResponseBody;
-import org.json.JSONObject;
 import org.testng.Reporter;
 import org.testng.annotations.BeforeSuite;
 

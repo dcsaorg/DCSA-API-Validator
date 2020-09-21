@@ -48,8 +48,11 @@ hs_err_pid*
 .idea/**/dictionaries
 .idea/**/shelf
 
+
 # Generated files
 .idea/**/contentModel.xml
+.idea/sonarlint
+.idea/jarRepositories.xml
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
@@ -59,6 +62,7 @@ hs_err_pid*
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
+.env
 
 # Gradle
 .idea/**/gradle.xml

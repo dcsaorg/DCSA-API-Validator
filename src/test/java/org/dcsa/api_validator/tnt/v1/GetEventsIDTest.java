@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.is;
  * Tests related to the GET /events/{eventID} endpoint
  */
 
-public class getEventsIDTest {
+public class GetEventsIDTest {
 
     JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.newBuilder().setValidationConfiguration(ValidationConfiguration.newBuilder().setDefaultVersion(DRAFTV4).freeze()).freeze();
 
@@ -42,7 +42,7 @@ public class getEventsIDTest {
                     get(Configuration.ROOT_URI + "/events/" + id).
                     then().
                     body("eventID", is(id)).
-                    assertThat().body(matchesJsonSchemaInClasspath("EventSchema.json").using(jsonSchemaFactory));
+                    assertThat().body(matchesJsonSchemaInClasspath("tnt/v1/EventSchema.json").using(jsonSchemaFactory));
         }
 
     }

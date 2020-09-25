@@ -6,7 +6,6 @@ import org.everit.json.schema.loader.SchemaLoader;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import org.junit.jupiter.api.BeforeAll;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import spark.Request;
@@ -19,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 import static io.restassured.RestAssured.given;
 
-public class eventSubscriptionsTest {
+public class EventSubscriptionsTest {
     //Don't reuse request objects to reduce risk of other unrelated events affecting the tests
     private Request req;
     private Request reqTransportEvent;
@@ -83,7 +82,7 @@ public class eventSubscriptionsTest {
         //Validate that the callback body is a Shipment Event
         JSONObject jsonSubject = new JSONObject(jsonBody);
 
-        try (InputStream inputStream = getClass().getResourceAsStream("/ShipmentEventsSchema.json")) {
+        try (InputStream inputStream = getClass().getResourceAsStream("/tnt/v1/ShipmentEventsSchema.json")) {
             JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
             Schema schema = SchemaLoader.load(rawSchema);
             schema.validate(jsonSubject); // throws a ValidationException if this object is invalid

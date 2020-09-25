@@ -1,0 +1,127 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "id": "http://example.com/example.json",
+  "type": "array",
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "default": [],
+  "examples": [
+    [
+      {
+        "scheduleID": "123e4567-e89b-12d3-a456-426614174000",
+        "vesselOperatorCarrierCode": "MAEU",
+        "vesselOperatorCarrierCodeListProvider": "NMFTA",
+        "vesselPartnerCarrierCode": "MSCU,HLCU",
+        "vesselPartnerCarrierCodeListProvider": "NMFTA",
+        "startDate": "2020-04-06",
+        "dateRange": "P4W"
+      }
+    ]
+  ],
+  "additionalItems": true,
+  "items": {
+    "id": "#/items",
+    "anyOf": [
+      {
+        "id": "#/items/anyOf/0",
+        "type": "object",
+        "title": "The first anyOf schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": {},
+        "examples": [
+          {
+            "scheduleID": "123e4567-e89b-12d3-a456-426614174000",
+            "vesselOperatorCarrierCode": "MAEU",
+            "vesselOperatorCarrierCodeListProvider": "NMFTA",
+            "vesselPartnerCarrierCode": "MSCU,HLCU",
+            "vesselPartnerCarrierCodeListProvider": "NMFTA",
+            "startDate": "2020-04-06",
+            "dateRange": "P4W"
+          }
+        ],
+        "required": [
+          "scheduleID",
+          "vesselOperatorCarrierCode",
+          "vesselOperatorCarrierCodeListProvider",
+          "vesselPartnerCarrierCode",
+          "vesselPartnerCarrierCodeListProvider",
+          "startDate",
+          "dateRange"
+        ],
+        "properties": {
+          "scheduleID": {
+            "id": "#/items/anyOf/0/properties/scheduleID",
+            "type": "string",
+            "title": "The scheduleID schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "123e4567-e89b-12d3-a456-426614174000"
+            ]
+          },
+          "vesselOperatorCarrierCode": {
+            "id": "#/items/anyOf/0/properties/vesselOperatorCarrierCode",
+            "type": "string",
+            "title": "The vesselOperatorCarrierCode schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "MAEU"
+            ]
+          },
+          "vesselOperatorCarrierCodeListProvider": {
+            "id": "#/items/anyOf/0/properties/vesselOperatorCarrierCodeListProvider",
+            "type": "string",
+            "title": "The vesselOperatorCarrierCodeListProvider schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "NMFTA"
+            ]
+          },
+          "vesselPartnerCarrierCode": {
+            "id": "#/items/anyOf/0/properties/vesselPartnerCarrierCode",
+            "type": "string",
+            "title": "The vesselPartnerCarrierCode schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "MSCU,HLCU"
+            ]
+          },
+          "vesselPartnerCarrierCodeListProvider": {
+            "id": "#/items/anyOf/0/properties/vesselPartnerCarrierCodeListProvider",
+            "type": "string",
+            "title": "The vesselPartnerCarrierCodeListProvider schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "NMFTA"
+            ]
+          },
+          "startDate": {
+            "id": "#/items/anyOf/0/properties/startDate",
+            "type": "string",
+            "title": "The startDate schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "2020-04-06"
+            ]
+          },
+          "dateRange": {
+            "id": "#/items/anyOf/0/properties/dateRange",
+            "type": "string",
+            "title": "The dateRange schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "P4W"
+            ]
+          }
+        },
+        "additionalProperties": true
+      }
+    ]
+  }
+}

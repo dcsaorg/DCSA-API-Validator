@@ -148,7 +148,7 @@
     },
     "otherFacility": {
       "id": "#/properties/otherFacility",
-      "type": "string",
+      "type": ["string", "null"],
       "title": "The otherFacility schema",
       "description": "An explanation about the purpose of this instance.",
       "default": "",

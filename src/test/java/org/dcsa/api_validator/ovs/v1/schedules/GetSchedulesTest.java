@@ -1,4 +1,4 @@
-package org.dcsa.api_validator.ovs.v1;
+package org.dcsa.api_validator.ovs.v1.schedules;
 
 import com.github.fge.jsonschema.cfg.ValidationConfiguration;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;

@@ -4,6 +4,8 @@
     <test thread-count="5" name="OVSV1">
         <packages>
             <package name="org.dcsa.api_validator.ovs.v1"/>
+            <package name="org.dcsa.api_validator.ovs.v1.transportcalls"/>
+            <package name="org.dcsa.api_validator.ovs.v1.schedules"/>
             <package name="org.dcsa.api_validator.conf"/>
         </packages>
     </test> <!-- Test -->

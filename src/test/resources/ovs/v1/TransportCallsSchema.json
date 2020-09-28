@@ -5,24 +5,6 @@
   "title": "The root schema",
   "description": "The root schema comprises the entire JSON document.",
   "default": [],
-  "examples": [
-    [
-      {
-        "transportCallID": "123e4567-e89b-12d3-a456-426614174000",
-        "scheduleID": "123e4567-e89b-12d3-a456-426614174000",
-        "carrierServiceCode": "FE1",
-        "vesselIMONumber": 1801323,
-        "vesselName": "Vessel A",
-        "carrierVoyageNumber": "2015W",
-        "UNLocationCode": "USNYC",
-        "UNLocationName": "New York",
-        "transportCallNumber": 2,
-        "facilityTypeCode": "POTE",
-        "facilityCode": "AEAUHADT",
-        "otherFacility": "Depot location or address"
-      }
-    ]
-  ],
   "additionalItems": true,
   "items": {
     "id": "#/items",
@@ -33,22 +15,6 @@
         "title": "The first anyOf schema",
         "description": "An explanation about the purpose of this instance.",
         "default": {},
-        "examples": [
-          {
-            "transportCallID": "123e4567-e89b-12d3-a456-426614174000",
-            "scheduleID": "123e4567-e89b-12d3-a456-426614174000",
-            "carrierServiceCode": "FE1",
-            "vesselIMONumber": 1801323,
-            "vesselName": "Vessel A",
-            "carrierVoyageNumber": "2015W",
-            "UNLocationCode": "USNYC",
-            "UNLocationName": "New York",
-            "transportCallNumber": 2,
-            "facilityTypeCode": "POTE",
-            "facilityCode": "AEAUHADT",
-            "otherFacility": "Depot location or address"
-          }
-        ],
         "required": [
           "transportCallID",
           "scheduleID",
@@ -69,120 +35,84 @@
             "type": "string",
             "title": "The transportCallID schema",
             "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "123e4567-e89b-12d3-a456-426614174000"
-            ]
+            "default": ""
           },
           "scheduleID": {
             "id": "#/items/anyOf/0/properties/scheduleID",
             "type": "string",
             "title": "The scheduleID schema",
             "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "123e4567-e89b-12d3-a456-426614174000"
-            ]
+            "default": ""
           },
           "carrierServiceCode": {
             "id": "#/items/anyOf/0/properties/carrierServiceCode",
             "type": "string",
             "title": "The carrierServiceCode schema",
             "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "FE1"
-            ]
+            "default": ""
           },
           "vesselIMONumber": {
             "id": "#/items/anyOf/0/properties/vesselIMONumber",
             "type": "integer",
             "title": "The vesselIMONumber schema",
             "description": "An explanation about the purpose of this instance.",
-            "default": 0,
-            "examples": [
-              1801323
-            ]
+            "default": 0
           },
           "vesselName": {
             "id": "#/items/anyOf/0/properties/vesselName",
             "type": "string",
             "title": "The vesselName schema",
             "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "Vessel A"
-            ]
+            "default": ""
           },
           "carrierVoyageNumber": {
             "id": "#/items/anyOf/0/properties/carrierVoyageNumber",
             "type": "string",
             "title": "The carrierVoyageNumber schema",
             "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "2015W"
-            ]
+            "default": ""
           },
           "UNLocationCode": {
             "id": "#/items/anyOf/0/properties/UNLocationCode",
             "type": "string",
             "title": "The UNLocationCode schema",
             "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "USNYC"
-            ]
+            "default": ""
           },
           "UNLocationName": {
             "id": "#/items/anyOf/0/properties/UNLocationName",
             "type": "string",
             "title": "The UNLocationName schema",
             "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "New York"
-            ]
+            "default": ""
           },
           "transportCallNumber": {
             "id": "#/items/anyOf/0/properties/transportCallNumber",
             "type": "integer",
             "title": "The transportCallNumber schema",
             "description": "An explanation about the purpose of this instance.",
-            "default": 0,
-            "examples": [
-              2
-            ]
+            "default": 0
           },
           "facilityTypeCode": {
             "id": "#/items/anyOf/0/properties/facilityTypeCode",
             "type": "string",
             "title": "The facilityTypeCode schema",
             "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "POTE"
-            ]
+            "default": ""
           },
           "facilityCode": {
             "id": "#/items/anyOf/0/properties/facilityCode",
             "type": "string",
             "title": "The facilityCode schema",
             "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "AEAUHADT"
-            ]
+            "default": ""
           },
           "otherFacility": {
             "id": "#/items/anyOf/0/properties/otherFacility",
-            "type": "string",
+            "type": ["string", "null"],
             "title": "The otherFacility schema",
             "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "Depot location or address"
-            ]
+            "default": ""
           }
         },
         "additionalProperties": true

@@ -1,4 +1,4 @@
-package org.dcsa.api_validator.ovs.v1;
+package org.dcsa.api_validator.ovs.v1.schedules;
 
 import org.dcsa.api_validator.conf.Configuration;
 import org.testng.annotations.Test;

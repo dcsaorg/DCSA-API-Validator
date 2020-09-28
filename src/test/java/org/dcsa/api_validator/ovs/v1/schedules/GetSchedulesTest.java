@@ -56,7 +56,9 @@ public class GetSchedulesTest {
                     then().
                     body("startDate", everyItem(equalTo(startDate)));
         }
-    }   //Finds all dateRanges from schedules, and then uses them each of them as a query parameter, and verifies the response
+    }
+
+    //Finds all dateRanges from schedules, and then uses them each of them as a query parameter, and verifies the response
     @Test
     public void testDateRangeQueryParam() {
         String json = given().

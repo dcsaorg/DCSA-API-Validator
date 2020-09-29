@@ -1,4 +1,4 @@
-package org.dcsa.api_validator.tnt.v1;
+package org.dcsa.api_validator.ovs.v1.schedules;
 
 import com.github.fge.jsonschema.cfg.ValidationConfiguration;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
@@ -11,38 +11,37 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static com.github.fge.jsonschema.SchemaVersion.DRAFTV4;
-import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.is;
 
 /*
- * Tests related to the GET /events/{eventID} endpoint
+ * Tests related to the GET /schedules/{scheduleID} endpoint
  */
 
-public class getEventsIDTest {
+public class GetSchedulesIDTest {
 
     JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.newBuilder().setValidationConfiguration(ValidationConfiguration.newBuilder().setDefaultVersion(DRAFTV4).freeze()).freeze();
 
-    //Receives all eventIDs from GET /events, then queries them, validates the ID and that the event has one of the 4 event structures.
+    //Receives all scheduleIDs from GET /schedules, then queries them, validates the ID and that the schedule has the correct structure
     @Test
-    public void testEventIds() {
-        Reporter.log("Running testEventIds ------------------------------------------------------------------------------------------------------------------------");
+    public void testScheduleIds() {
+        Reporter.log("Running testScheduleIds ------------------------------------------------------------------------------------------------------------------------");
         String json = given().
                 auth().
                 oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/events").
+                get(Configuration.ROOT_URI + "/schedules").
                 body().asString();
 
-        List<String> ids = JsonPath.from(json).getList("events.eventID");
+        List<String> ids = JsonPath.from(json).getList("scheduleID");
         for (String id : ids) {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    get(Configuration.ROOT_URI + "/events/" + id).
+                    get(Configuration.ROOT_URI + "/schedules/" + id).
                     then().
-                    body("eventID", is(id)).
-                    assertThat().body(matchesJsonSchemaInClasspath("EventSchema.json").using(jsonSchemaFactory));
+                    body("scheduleID", is(id)).
+                    assertThat().body(matchesJsonSchemaInClasspath("ovs/v1/ScheduleSchema.json").using(jsonSchemaFactory));
         }
 
     }
@@ -53,7 +52,7 @@ public class getEventsIDTest {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-        get(Configuration.ROOT_URI+"/events/NOT-AN-UUID")
+        get(Configuration.ROOT_URI+"/schedules/NOT-AN-UUID")
                 .then()
                 .assertThat().
                 statusCode(HttpStatus.SC_BAD_REQUEST);
@@ -64,7 +63,7 @@ public class getEventsIDTest {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-        get(Configuration.ROOT_URI+"/events/80d63706-7b93-4936-84fe-3ef9ef1946f0")
+        get(Configuration.ROOT_URI+"/schedules/80d63706-7b93-4936-84fe-3ef9ef1946f0")
                 .then()
                 .assertThat().
                 statusCode(HttpStatus.SC_NOT_FOUND);

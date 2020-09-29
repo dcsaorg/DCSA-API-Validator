@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.everyItem;
  * Tests related to the GET /events endpoint
  */
 
-public class getEventsTest {
+public class GetEventsTest {
 
     JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.newBuilder().setValidationConfiguration(ValidationConfiguration.newBuilder().setDefaultVersion(DRAFTV4).freeze()).freeze();
     ;
@@ -33,7 +33,7 @@ public class getEventsTest {
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
-                body(matchesJsonSchemaInClasspath("EventsSchema.json").
+                body(matchesJsonSchemaInClasspath("tnt/v1/EventsSchema.json").
                         using(jsonSchemaFactory));
     }
 
@@ -46,7 +46,7 @@ public class getEventsTest {
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
-                body(matchesJsonSchemaInClasspath("EquipmentEventsSchema.json").
+                body(matchesJsonSchemaInClasspath("tnt/v1/EquipmentEventsSchema.json").
                         using(jsonSchemaFactory));
     }
 
@@ -82,7 +82,7 @@ public class getEventsTest {
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
-                body(matchesJsonSchemaInClasspath("TransportEventsSchema.json").
+                body(matchesJsonSchemaInClasspath("tnt/v1/TransportEventsSchema.json").
                         using(jsonSchemaFactory));
     }
 
@@ -95,7 +95,7 @@ public class getEventsTest {
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
-                body(matchesJsonSchemaInClasspath("ShipmentEventsSchema.json").
+                body(matchesJsonSchemaInClasspath("tnt/v1/ShipmentEventsSchema.json").
                         using(jsonSchemaFactory));
     }
 
@@ -108,7 +108,7 @@ public class getEventsTest {
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
-                body(matchesJsonSchemaInClasspath("TransportEquipmentEventsSchema.json").
+                body(matchesJsonSchemaInClasspath("tnt/v1/TransportEquipmentEventsSchema.json").
                         using(jsonSchemaFactory));
     }
 }

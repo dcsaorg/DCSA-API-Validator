@@ -1,4 +1,4 @@
-name: Run v1 testsuite on v1 branch
+name: Run testsuite on OVS master
 
 on: [push]
 
@@ -19,8 +19,8 @@ jobs:
     - name: Fetch backend
       uses: actions/checkout@v2
       with:
-        repository: dcsaorg/DCSA-TNT
-        ref: v1
+        repository: dcsaorg/DCSA-OVS
+        ref: master
         token: ${{ secrets.read_repo_pat }}
     - name: Build backend
       run: mvn package -DskipTests #Need to skip the tests as they depend on a running DB
@@ -28,11 +28,11 @@ jobs:
       run: docker-compose -f docker-compose.yml up -d -V
     - name: Checkout API validator
       uses: actions/checkout@v2
-    - name: Run the API validator on TNTV1
-      run: mvn -Dtest.suite=TnTV1.xml test
+    - name: Run the API validator on OVSV1
+      run: mvn -Dtest.suite=OVSV1.xml test
       env: 
         client_secret: ${{ secrets.AUTH0_DCSA_CLIENT_SECRET }}
         client_id: 1qEYXCbxWvjeYS8VVm1BfnfZrP3TY9n8
         audience: localhost
         OAuthTokenUri: https://dcsa.eu.auth0.com/oauth/token
-        API_ROOT_URI: http://localhost:9090
+        API_ROOT_URI: http://localhost:9090/v1

@@ -1,0 +1,161 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "id": "http://example.com/example.json",
+  "type": "object",
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "default": {},
+  "examples": [
+    {
+      "transportCallID": "123e4567-e89b-12d3-a456-426614174000",
+      "scheduleID": "123e4567-e89b-12d3-a456-426614174000",
+      "carrierServiceCode": "FE1",
+      "vesselIMONumber": 1801323,
+      "vesselName": "Vessel A",
+      "carrierVoyageNumber": "2015W",
+      "UNLocationCode": "USNYC",
+      "UNLocationName": "New York",
+      "transportCallNumber": 2,
+      "facilityTypeCode": "POTE",
+      "facilityCode": "AEAUHADT",
+      "otherFacility": "Depot location or address"
+    }
+  ],
+  "required": [
+    "transportCallID",
+    "scheduleID",
+    "carrierServiceCode",
+    "vesselIMONumber",
+    "vesselName",
+    "carrierVoyageNumber",
+    "UNLocationCode",
+    "UNLocationName",
+    "transportCallNumber",
+    "facilityTypeCode",
+    "facilityCode",
+    "otherFacility"
+  ],
+  "properties": {
+    "transportCallID": {
+      "id": "#/properties/transportCallID",
+      "type": "string",
+      "title": "The transportCallID schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "123e4567-e89b-12d3-a456-426614174000"
+      ]
+    },
+    "scheduleID": {
+      "id": "#/properties/scheduleID",
+      "type": "string",
+      "title": "The scheduleID schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "123e4567-e89b-12d3-a456-426614174000"
+      ]
+    },
+    "carrierServiceCode": {
+      "id": "#/properties/carrierServiceCode",
+      "type": "string",
+      "title": "The carrierServiceCode schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "FE1"
+      ]
+    },
+    "vesselIMONumber": {
+      "id": "#/properties/vesselIMONumber",
+      "type": "integer",
+      "title": "The vesselIMONumber schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": 0,
+      "examples": [
+        1801323
+      ]
+    },
+    "vesselName": {
+      "id": "#/properties/vesselName",
+      "type": "string",
+      "title": "The vesselName schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "Vessel A"
+      ]
+    },
+    "carrierVoyageNumber": {
+      "id": "#/properties/carrierVoyageNumber",
+      "type": "string",
+      "title": "The carrierVoyageNumber schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "2015W"
+      ]
+    },
+    "UNLocationCode": {
+      "id": "#/properties/UNLocationCode",
+      "type": "string",
+      "title": "The UNLocationCode schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "USNYC"
+      ]
+    },
+    "UNLocationName": {
+      "id": "#/properties/UNLocationName",
+      "type": "string",
+      "title": "The UNLocationName schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "New York"
+      ]
+    },
+    "transportCallNumber": {
+      "id": "#/properties/transportCallNumber",
+      "type": "integer",
+      "title": "The transportCallNumber schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": 0,
+      "examples": [
+        2
+      ]
+    },
+    "facilityTypeCode": {
+      "id": "#/properties/facilityTypeCode",
+      "type": "string",
+      "title": "The facilityTypeCode schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "POTE"
+      ]
+    },
+    "facilityCode": {
+      "id": "#/properties/facilityCode",
+      "type": "string",
+      "title": "The facilityCode schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "AEAUHADT"
+      ]
+    },
+    "otherFacility": {
+      "id": "#/properties/otherFacility",
+      "type": ["string", "null"],
+      "title": "The otherFacility schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "Depot location or address"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

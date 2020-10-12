@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "id": "http://example.com/example.json",
+  "type": "object",
+  "title": "The root schema",
+  "default": {},
+  "required": [
+    "eventID",
+    "eventType",
+    "eventDateTime",
+    "eventClassifierCode",
+    "eventTypeCode",
+    "delayReasonCode",
+    "vesselScheduleChangeRemark",
+    "transportCallID"
+  ],
+  "properties": {
+    "eventID": {
+      "id": "#/properties/eventID",
+      "type": "string",
+      "title": "The eventID schema",
+      "default": ""
+    },
+    "eventType": {
+      "id": "#/properties/eventType",
+      "type": "string",
+      "title": "The eventType schema",
+      "default": ""
+    },
+    "eventDateTime": {
+      "id": "#/properties/eventDateTime",
+      "type": "string",
+      "title": "The eventDateTime schema",
+      "default": ""
+    },
+    "eventClassifierCode": {
+      "id": "#/properties/eventClassifierCode",
+      "type": "string",
+      "title": "The eventClassifierCode schema",
+      "default": ""
+    },
+    "eventTypeCode": {
+      "id": "#/properties/eventTypeCode",
+      "type": "string",
+      "title": "The eventTypeCode schema",
+      "default": ""
+    },
+    "delayReasonCode": {
+      "id": "#/properties/delayReasonCode",
+      "type": "string",
+      "title": "The delayReasonCode schema",
+      "default": ""
+    },
+    "vesselScheduleChangeRemark": {
+      "id": "#/properties/vesselScheduleChangeRemark",
+      "type": "string",
+      "title": "The vesselScheduleChangeRemark schema",
+      "default": ""
+    },
+    "transportCallID": {
+      "id": "#/properties/transportCallID",
+      "type": "string",
+      "title": "The transportCallID schema",
+      "default": ""
+    }
+  },
+  "additionalProperties": true
+}

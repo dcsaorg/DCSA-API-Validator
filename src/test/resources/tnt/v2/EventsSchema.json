@@ -1,0 +1,207 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "id": "http://example.com/example.json",
+  "type": "array",
+  "title": "The root schema",
+  "default": [],
+  "additionalItems": true,
+  "items": {
+    "id": "#/items",
+    "anyOf": [
+      {
+        "id": "#/items/anyOf/0",
+        "type": "object",
+        "title": "The first anyOf schema",
+        "default": {},
+        "required": [
+          "eventID",
+          "eventType",
+          "eventDateTime",
+          "eventClassifierCode",
+          "eventTypeCode",
+          "delayReasonCode",
+          "vesselScheduleChangeRemark",
+          "transportCallID"
+        ],
+        "properties": {
+          "eventID": {
+            "id": "#/items/anyOf/0/properties/eventID",
+            "type": "string",
+            "title": "The eventID schema",
+            "default": ""
+          },
+          "eventType": {
+            "id": "#/items/anyOf/0/properties/eventType",
+            "type": "string",
+            "title": "The eventType schema",
+            "default": ""
+          },
+          "eventDateTime": {
+            "id": "#/items/anyOf/0/properties/eventDateTime",
+            "type": "string",
+            "title": "The eventDateTime schema",
+            "default": ""
+          },
+          "eventClassifierCode": {
+            "id": "#/items/anyOf/0/properties/eventClassifierCode",
+            "type": "string",
+            "title": "The eventClassifierCode schema",
+            "default": ""
+          },
+          "eventTypeCode": {
+            "id": "#/items/anyOf/0/properties/eventTypeCode",
+            "type": "string",
+            "title": "The eventTypeCode schema",
+            "default": ""
+          },
+          "delayReasonCode": {
+            "id": "#/items/anyOf/0/properties/delayReasonCode",
+            "type": "string",
+            "title": "The delayReasonCode schema",
+            "default": ""
+          },
+          "vesselScheduleChangeRemark": {
+            "id": "#/items/anyOf/0/properties/vesselScheduleChangeRemark",
+            "type": "string",
+            "title": "The vesselScheduleChangeRemark schema",
+            "default": ""
+          },
+          "transportCallID": {
+            "id": "#/items/anyOf/0/properties/transportCallID",
+            "type": "string",
+            "title": "The transportCallID schema",
+            "default": ""
+          }
+        },
+        "additionalProperties": true
+      },
+      {
+        "id": "#/items/anyOf/1",
+        "type": "object",
+        "title": "The second anyOf schema",
+        "default": {},
+        "required": [
+          "eventID",
+          "eventType",
+          "eventDateTime",
+          "eventClassifierCode",
+          "eventTypeCode",
+          "shipmentInformationTypeCode",
+          "shipmentID"
+        ],
+        "properties": {
+          "eventID": {
+            "id": "#/items/anyOf/1/properties/eventID",
+            "type": "string",
+            "title": "The eventID schema",
+            "default": ""
+          },
+          "eventType": {
+            "id": "#/items/anyOf/1/properties/eventType",
+            "type": "string",
+            "title": "The eventType schema",
+            "default": ""
+          },
+          "eventDateTime": {
+            "id": "#/items/anyOf/1/properties/eventDateTime",
+            "type": "string",
+            "title": "The eventDateTime schema",
+            "default": ""
+          },
+          "eventClassifierCode": {
+            "id": "#/items/anyOf/1/properties/eventClassifierCode",
+            "type": "string",
+            "title": "The eventClassifierCode schema",
+            "default": ""
+          },
+          "eventTypeCode": {
+            "id": "#/items/anyOf/1/properties/eventTypeCode",
+            "type": "string",
+            "title": "The eventTypeCode schema",
+            "default": ""
+          },
+          "shipmentInformationTypeCode": {
+            "id": "#/items/anyOf/1/properties/shipmentInformationTypeCode",
+            "type": "string",
+            "title": "The shipmentInformationTypeCode schema",
+            "default": ""
+          },
+          "shipmentID": {
+            "id": "#/items/anyOf/1/properties/shipmentID",
+            "type": "string",
+            "title": "The shipmentID schema",
+            "default": ""
+          }
+        },
+        "additionalProperties": true
+      },
+      {
+        "id": "#/items/anyOf/2",
+        "type": "object",
+        "title": "The third anyOf schema",
+        "default": {},
+        "required": [
+          "eventID",
+          "eventType",
+          "eventDateTime",
+          "eventClassifierCode",
+          "eventTypeCode",
+          "equipmentReference",
+          "emptyIndicatorCode",
+          "transportCallID"
+        ],
+        "properties": {
+          "eventID": {
+            "id": "#/items/anyOf/2/properties/eventID",
+            "type": "string",
+            "title": "The eventID schema",
+            "default": ""
+          },
+          "eventType": {
+            "id": "#/items/anyOf/2/properties/eventType",
+            "type": "string",
+            "title": "The eventType schema",
+            "default": ""
+          },
+          "eventDateTime": {
+            "id": "#/items/anyOf/2/properties/eventDateTime",
+            "type": "string",
+            "title": "The eventDateTime schema",
+            "default": ""
+          },
+          "eventClassifierCode": {
+            "id": "#/items/anyOf/2/properties/eventClassifierCode",
+            "type": "string",
+            "title": "The eventClassifierCode schema",
+            "default": ""
+          },
+          "eventTypeCode": {
+            "id": "#/items/anyOf/2/properties/eventTypeCode",
+            "type": "string",
+            "title": "The eventTypeCode schema",
+            "default": ""
+          },
+          "equipmentReference": {
+            "id": "#/items/anyOf/2/properties/equipmentReference",
+            "type": "string",
+            "title": "The equipmentReference schema",
+            "default": ""
+          },
+          "emptyIndicatorCode": {
+            "id": "#/items/anyOf/2/properties/emptyIndicatorCode",
+            "type": "string",
+            "title": "The emptyIndicatorCode schema",
+            "default": ""
+          },
+          "transportCallID": {
+            "id": "#/items/anyOf/2/properties/transportCallID",
+            "type": "string",
+            "title": "The transportCallID schema",
+            "default": ""
+          }
+        },
+        "additionalProperties": true
+      }
+    ]
+  }
+}

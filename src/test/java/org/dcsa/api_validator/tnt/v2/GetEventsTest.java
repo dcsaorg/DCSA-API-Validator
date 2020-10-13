@@ -1,4 +1,4 @@
-package org.dcsa.api_validator.tnt.v1;
+package org.dcsa.api_validator.tnt.v2;
 
 import com.github.fge.jsonschema.cfg.ValidationConfiguration;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
@@ -32,7 +32,7 @@ public class GetEventsTest {
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
-                body(matchesJsonSchemaInClasspath("tnt/v1/EventsSchema.json").
+                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                         using(jsonSchemaFactory));
     }
 
@@ -45,7 +45,7 @@ public class GetEventsTest {
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
-                body(matchesJsonSchemaInClasspath("tnt/v1/EquipmentEventsSchema.json").
+                body(matchesJsonSchemaInClasspath("tnt/v2/EquipmentEventsSchema.json").
                         using(jsonSchemaFactory));
     }
 
@@ -60,7 +60,7 @@ public class GetEventsTest {
                 get(Configuration.ROOT_URI + "/events").
                 body().asString();
 
-        List<String> equipmentReferences = JsonPath.from(json).getList("events.equipmentReference");
+        List<String> equipmentReferences = JsonPath.from(json).getList("equipmentReference");
         for (String equipmentReference : equipmentReferences) {
             given().
                     auth().
@@ -68,7 +68,7 @@ public class GetEventsTest {
                     queryParam("equipmentReference", equipmentReference).
                     get(Configuration.ROOT_URI + "/events").
                     then().
-                    body("events.equipmentReference", everyItem(equalTo(equipmentReference)));
+                    body("equipmentReference", everyItem(equalTo(equipmentReference)));
         }
     }
 
@@ -81,7 +81,7 @@ public class GetEventsTest {
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
-                body(matchesJsonSchemaInClasspath("tnt/v1/TransportEventsSchema.json").
+                body(matchesJsonSchemaInClasspath("tnt/v2/TransportEventsSchema.json").
                         using(jsonSchemaFactory));
     }
 
@@ -94,20 +94,7 @@ public class GetEventsTest {
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
-                body(matchesJsonSchemaInClasspath("tnt/v1/ShipmentEventsSchema.json").
-                        using(jsonSchemaFactory));
-    }
-
-    @Test
-    public void testTransportEquipmentEventsQueryParam() {
-        given().
-                auth().
-                oauth2(Configuration.accessToken).
-                queryParam("eventType", "TRANSPORTEQUIPMENT").
-                get(Configuration.ROOT_URI + "/events").
-                then().
-                assertThat().
-                body(matchesJsonSchemaInClasspath("tnt/v1/TransportEquipmentEventsSchema.json").
+                body(matchesJsonSchemaInClasspath("tnt/v2/ShipmentEventsSchema.json").
                         using(jsonSchemaFactory));
     }
 }

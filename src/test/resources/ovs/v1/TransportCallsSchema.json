@@ -53,10 +53,10 @@
           },
           "vesselIMONumber": {
             "id": "#/items/anyOf/0/properties/vesselIMONumber",
-            "type": "integer",
+            "type": "string",
             "title": "The vesselIMONumber schema",
             "description": "An explanation about the purpose of this instance.",
-            "default": 0
+            "default": "0"
           },
           "vesselName": {
             "id": "#/items/anyOf/0/properties/vesselName",

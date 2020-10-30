@@ -9,7 +9,7 @@
     {
       "subscriptionID": "jlke123j",
       "callbackUrl": "https://myserver.com/send/callback/here",
-      "vesselIMONumber": 1801323,
+      "vesselIMONumber": "1801323",
       "carrierVoyageNumber": "2015W",
       "UNLocationCode": "USNYC",
       "dateRange": "P4W",
@@ -50,12 +50,12 @@
     },
     "vesselIMONumber": {
       "id": "#/properties/vesselIMONumber",
-      "type": "integer",
+      "type": "string",
       "title": "The vesselIMONumber schema",
       "description": "An explanation about the purpose of this instance.",
       "default": 0,
       "examples": [
-        1801323
+        "1801323"
       ]
     },
     "carrierVoyageNumber": {

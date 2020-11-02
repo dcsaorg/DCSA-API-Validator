@@ -22,7 +22,7 @@ public class RestAssuredSimpleTest {
     }
 
     @Test
-    public void connectionSucceded() {
+    public void connectionSucceeded() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).

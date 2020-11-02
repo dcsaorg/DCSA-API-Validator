@@ -50,9 +50,9 @@ public class GetTransportCallsTest {
     public void testVesselIMONumberQueryParam() {
 
 
-        List<Integer> vesselIMONumbers = getListOfAnyAttribute("vesselIMONumber");
+        List<String> vesselIMONumbers = getListOfAnyAttribute("vesselIMONumber");
 
-        for (Integer vesselIMONumber : vesselIMONumbers) {
+        for (String vesselIMONumber : vesselIMONumbers) {
             given().
                     auth().
                     oauth2(Configuration.accessToken).

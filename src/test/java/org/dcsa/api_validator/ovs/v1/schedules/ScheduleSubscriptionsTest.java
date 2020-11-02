@@ -73,7 +73,7 @@ public class ScheduleSubscriptionsTest {
                         "    \"vesselPartnerCarrierCode\": \"MSCU,HLCU\",\n" +
                         "    \"vesselPartnerCarrierCodeListProvider\": \"NMFTA\",\n" +
                         "    \"startDate\": \"2020-04-06\",\n" +
-                        "    \"dateRange\": \"P4W\"\n" +
+                        "    \"dateRange\": \"P28D\"\n" +
                         "  }").
                 post(Configuration.ROOT_URI + "/schedules");
 

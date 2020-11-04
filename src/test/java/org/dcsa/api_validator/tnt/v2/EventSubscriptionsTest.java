@@ -77,7 +77,7 @@ public class EventSubscriptionsTest {
                         "  }").
                 post(Configuration.ROOT_URI + "/events");
 
-        lock.await(200000, TimeUnit.MILLISECONDS); //Released immediately if lock countdown is 0
+        lock.await(20000, TimeUnit.MILLISECONDS); //Released immediately if lock countdown is 0
         Assert.assertNotNull(req, "The callback request should not be null");
         Assert.assertNotNull(req.body(), "The callback request body should not be null");
         String jsonBody = req.body();

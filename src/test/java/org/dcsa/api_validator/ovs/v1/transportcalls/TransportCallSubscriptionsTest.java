@@ -71,7 +71,7 @@ public class TransportCallSubscriptionsTest {
                         "  {\n" +
                         "    \"scheduleID\": \"" + queryForScheduleID() + "\",\n" +
                         "    \"carrierServiceCode\": \"FE1\",\n" +
-                        "    \"vesselIMONumber\": \"1801323\",\n" +
+                        "    \"vesselIMONumber\": \"1801328\",\n" +
                         "    \"vesselName\": \"Vessel A\",\n" +
                         "    \"carrierVoyageNumber\": \"2015W\",\n" +
                         "    \"UNLocationCode\": \"USNYC\",\n" +

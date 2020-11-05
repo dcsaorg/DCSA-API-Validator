@@ -21,10 +21,10 @@ public class Configuration {
         else {
             accessToken = given().with()
                     .contentType(ContentType.URLENC.withCharset("UTF-8"))
-                    .formParam("client_secret", System.getenv("client_secret"))
-                    .formParam("client_id", System.getenv("client_id"))
+                    .formParam("client_secret", client_secret)
+                    .formParam("client_id", client_id)
                     .formParam("grant_type", "client_credentials")
-                    .formParam("audience", System.getenv("audience"))
+                    .formParam("audience", audience)
                     .urlEncodingEnabled(true)
                     .when()
                     .post(System.getenv("OAuthTokenUri")).jsonPath().getString("access_token");

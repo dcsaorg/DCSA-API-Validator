@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+    <test thread-count="5" name="eBLV2">
+        <packages>
+            <package name="org.dcsa.api_validator.ebl.v1"/>
+            <package name="org.dcsa.api_validator.ebl.v1.shippinginstructions"/>
+            <package name="org.dcsa.api_validator.ebl.v1.transportDocuments"/>
+            <package name="org.dcsa.api_validator.conf"/>
+        </packages>
+    </test> <!-- Test -->
+</suite> <!-- Suite -->

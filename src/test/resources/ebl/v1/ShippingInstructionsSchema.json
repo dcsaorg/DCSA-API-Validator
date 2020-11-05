@@ -1,0 +1,302 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "id": "http://example.com/example.json",
+  "type": "array",
+  "title": "The root schema",
+  "additionalItems": false,
+  "items": {
+    "id": "#/items",
+    "anyOf": [
+      {
+        "id": "#/items/anyOf/0",
+        "type": "object",
+        "title": "The first anyOf schema",
+        "required": [
+          "shippingInstructionID",
+          "carrierBookingReference",
+          "transportDocumentTypeCode",
+          "transportReference",
+          "carrierVoyageNumber",
+          "descriptionOfGoods",
+          "parties",
+          "locations",
+          "serviceType",
+          "shipmentTerm",
+          "weight",
+          "volume",
+          "weightUnit",
+          "volumeUnit",
+          "freightPayableAt",
+          "dateOfIssue",
+          "equipmentReference",
+          "ISOEquipmentCode",
+          "paymentTerm",
+          "shipmentEquipmentQuantity"
+        ],
+        "properties": {
+          "shippingInstructionID": {
+            "id": "#/items/anyOf/0/properties/shippingInstructionID",
+            "type": "string",
+            "title": "The shippingInstructionID schema"
+          },
+          "carrierBookingReference": {
+            "id": "#/items/anyOf/0/properties/carrierBookingReference",
+            "type": "string",
+            "title": "The carrierBookingReference schema"
+          },
+          "transportDocumentTypeCode": {
+            "id": "#/items/anyOf/0/properties/transportDocumentTypeCode",
+            "type": "string",
+            "title": "The transportDocumentTypeCode schema"
+          },
+          "transportReference": {
+            "id": "#/items/anyOf/0/properties/transportReference",
+            "type": "string",
+            "title": "The transportReference schema"
+          },
+          "carrierVoyageNumber": {
+            "id": "#/items/anyOf/0/properties/carrierVoyageNumber",
+            "type": "string",
+            "title": "The carrierVoyageNumber schema"
+          },
+          "descriptionOfGoods": {
+            "id": "#/items/anyOf/0/properties/descriptionOfGoods",
+            "type": "string",
+            "title": "The descriptionOfGoods schema"
+          },
+          "parties": {
+            "id": "#/items/anyOf/0/properties/parties",
+            "type": "array",
+            "title": "The parties schema",
+            "additionalItems": false,
+            "items": {
+              "id": "#/items/anyOf/0/properties/parties/items",
+              "anyOf": [
+                {
+                  "id": "#/items/anyOf/0/properties/parties/items/anyOf/0",
+                  "type": "object",
+                  "title": "The first anyOf schema",
+                  "required": [
+                    "partyType",
+                    "partyName",
+                    "email",
+                    "phoneNumber",
+                    "fax",
+                    "taxReference"
+                  ],
+                  "properties": {
+                    "partyType": {
+                      "id": "#/items/anyOf/0/properties/parties/items/anyOf/0/properties/partyType",
+                      "type": "string",
+                      "title": "The partyType schema"
+                    },
+                    "partyName": {
+                      "id": "#/items/anyOf/0/properties/parties/items/anyOf/0/properties/partyName",
+                      "type": "string",
+                      "title": "The partyName schema"
+                    },
+                    "email": {
+                      "id": "#/items/anyOf/0/properties/parties/items/anyOf/0/properties/email",
+                      "type": "string",
+                      "title": "The email schema"
+                    },
+                    "phoneNumber": {
+                      "id": "#/items/anyOf/0/properties/parties/items/anyOf/0/properties/phoneNumber",
+                      "type": "string",
+                      "title": "The phoneNumber schema"
+                    },
+                    "fax": {
+                      "id": "#/items/anyOf/0/properties/parties/items/anyOf/0/properties/fax",
+                      "type": "string",
+                      "title": "The fax schema"
+                    },
+                    "taxReference": {
+                      "id": "#/items/anyOf/0/properties/parties/items/anyOf/0/properties/taxReference",
+                      "type": "string",
+                      "title": "The taxReference schema"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "locations": {
+            "id": "#/items/anyOf/0/properties/locations",
+            "type": "array",
+            "title": "The locations schema",
+            "additionalItems": false,
+            "items": {
+              "id": "#/items/anyOf/0/properties/locations/items",
+              "anyOf": [
+                {
+                  "id": "#/items/anyOf/0/properties/locations/items/anyOf/0",
+                  "type": "object",
+                  "title": "The first anyOf schema",
+                  "required": [
+                    "locationID",
+                    "locationTypeCode"
+                  ],
+                  "properties": {
+                    "locationID": {
+                      "id": "#/items/anyOf/0/properties/locations/items/anyOf/0/properties/locationID",
+                      "type": "string",
+                      "title": "The locationID schema"
+                    },
+                    "locationTypeCode": {
+                      "id": "#/items/anyOf/0/properties/locations/items/anyOf/0/properties/locationTypeCode",
+                      "type": "string",
+                      "title": "The locationTypeCode schema"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "serviceType": {
+            "id": "#/items/anyOf/0/properties/serviceType",
+            "type": "string",
+            "title": "The serviceType schema"
+          },
+          "shipmentTerm": {
+            "id": "#/items/anyOf/0/properties/shipmentTerm",
+            "type": "string",
+            "title": "The shipmentTerm schema"
+          },
+          "weight": {
+            "id": "#/items/anyOf/0/properties/weight",
+            "type": "string",
+            "title": "The weight schema"
+          },
+          "volume": {
+            "id": "#/items/anyOf/0/properties/volume",
+            "type": "string",
+            "title": "The volume schema"
+          },
+          "weightUnit": {
+            "id": "#/items/anyOf/0/properties/weightUnit",
+            "type": "string",
+            "title": "The weightUnit schema"
+          },
+          "volumeUnit": {
+            "id": "#/items/anyOf/0/properties/volumeUnit",
+            "type": "string",
+            "title": "The volumeUnit schema"
+          },
+          "freightPayableAt": {
+            "id": "#/items/anyOf/0/properties/freightPayableAt",
+            "type": "string",
+            "title": "The freightPayableAt schema"
+          },
+          "dateOfIssue": {
+            "id": "#/items/anyOf/0/properties/dateOfIssue",
+            "type": "string",
+            "title": "The dateOfIssue schema"
+          },
+          "equipmentReference": {
+            "id": "#/items/anyOf/0/properties/equipmentReference",
+            "type": "string",
+            "title": "The equipmentReference schema"
+          },
+          "ISOEquipmentCode": {
+            "id": "#/items/anyOf/0/properties/ISOEquipmentCode",
+            "type": "string",
+            "title": "The ISOEquipmentCode schema"
+          },
+          "paymentTerm": {
+            "id": "#/items/anyOf/0/properties/paymentTerm",
+            "type": "string",
+            "title": "The paymentTerm schema"
+          },
+          "shipmentEquipmentQuantity": {
+            "id": "#/items/anyOf/0/properties/shipmentEquipmentQuantity",
+            "type": "string",
+            "title": "The shipmentEquipmentQuantity schema"
+          },
+          "documentReferenceNumber": {
+            "id": "#/items/anyOf/0/properties/documentReferenceNumber",
+            "type": "string",
+            "title": "The documentReferenceNumber schema"
+          },
+          "numberOfOriginals": {
+            "id": "#/items/anyOf/0/properties/numberOfOriginals",
+            "type": "string",
+            "title": "The numberOfOriginals schema"
+          },
+          "sealNumber": {
+            "id": "#/items/anyOf/0/properties/sealNumber",
+            "type": "string",
+            "title": "The sealNumber schema"
+          },
+          "taxReference": {
+            "id": "#/items/anyOf/0/properties/taxReference",
+            "type": "string",
+            "title": "The taxReference schema"
+          },
+          "sealSource": {
+            "id": "#/items/anyOf/0/properties/sealSource",
+            "type": "string",
+            "title": "The sealSource schema"
+          },
+          "tareWeight": {
+            "id": "#/items/anyOf/0/properties/tareWeight",
+            "type": "string",
+            "title": "The tareWeight schema"
+          },
+          "clauseContent": {
+            "id": "#/items/anyOf/0/properties/clauseContent",
+            "type": "string",
+            "title": "The clauseContent schema"
+          },
+          "carrierCode": {
+            "id": "#/items/anyOf/0/properties/carrierCode",
+            "type": "string",
+            "title": "The carrierCode schema"
+          },
+          "verifiedGrossMass": {
+            "id": "#/items/anyOf/0/properties/verifiedGrossMass",
+            "type": "string",
+            "title": "The verifiedGrossMass schema"
+          },
+          "declaredValue": {
+            "id": "#/items/anyOf/0/properties/declaredValue",
+            "type": "integer",
+            "title": "The declaredValue schema"
+          },
+          "declaredValueCurrencyCode": {
+            "id": "#/items/anyOf/0/properties/declaredValueCurrencyCode",
+            "type": "string",
+            "title": "The declaredValueCurrencyCode schema"
+          },
+          "shippingMarks": {
+            "id": "#/items/anyOf/0/properties/shippingMarks",
+            "type": "string",
+            "title": "The shippingMarks schema"
+          },
+          "exportReferenceNumber": {
+            "id": "#/items/anyOf/0/properties/exportReferenceNumber",
+            "type": "string",
+            "title": "The exportReferenceNumber schema"
+          },
+          "currencyCode": {
+            "id": "#/items/anyOf/0/properties/currencyCode",
+            "type": "string",
+            "title": "The currencyCode schema"
+          },
+          "currencyAmount": {
+            "id": "#/items/anyOf/0/properties/currencyAmount",
+            "type": "string",
+            "title": "The currencyAmount schema"
+          },
+          "SVCContract": {
+            "id": "#/items/anyOf/0/properties/SVCContract",
+            "type": "string",
+            "title": "The SVCContract schema"
+          }
+        },
+        "additionalProperties": false
+      }
+    ]
+  }
+}

@@ -8,6 +8,7 @@ import static io.restassured.RestAssured.given;
 
 public class Configuration {
     public final static String ROOT_URI = System.getenv("API_ROOT_URI");
+    public final static String CALLBACK_URI = System.getenv("CALLBACK_URI");
     public static String accessToken;
     private static String client_secret= System.getenv("client_secret");
     private static String client_id= System.getenv("client_id");

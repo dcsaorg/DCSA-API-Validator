@@ -61,6 +61,23 @@ public class EventSubscriptionsTest {
 
     @Test
     public void testCallbacks() throws InterruptedException, IOException, JSONException {
+
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                contentType("application/json").
+                body("{\n" +
+                        "  \"callbackUrl\": \""+Configuration.CALLBACK_URI+"/webhook/receive\",\n" +
+                        "  \"eventType\": [\n" +
+                        "  ],\n" +
+                        "  \"bookingReference\": \"\",\n" +
+                        "  \"transportDocumentID\": \"\",\n" +
+                        "  \"transportDocumentType\": \"\",\n" +
+                        "  \"equipmentReference\": \"\"\n" +
+                        "}").
+                post(Configuration.ROOT_URI+"/event-subscriptions").
+                then().assertThat().statusCode(201);
+
         given().
                 auth().
                 oauth2(Configuration.accessToken).
@@ -94,6 +111,21 @@ public class EventSubscriptionsTest {
 
     @Test
     public void testCallbackFilter() throws InterruptedException, JSONException {
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                contentType("application/json").
+                body("{\n" +
+                        "  \"callbackUrl\": \""+Configuration.CALLBACK_URI+"/receive-transport-events\",\n" +
+                        "  \"eventType\": \"TRANSPORT\"," +
+                        "  \"bookingReference\": \"\",\n" +
+                        "  \"transportDocumentID\": \"\",\n" +
+                        "  \"transportDocumentType\": \"\",\n" +
+                        "  \"equipmentReference\": \"\"\n" +
+                        "}").
+                post(Configuration.ROOT_URI+"/event-subscriptions").
+                then().assertThat().statusCode(201);
+
         given().
                 auth().
                 oauth2(Configuration.accessToken).

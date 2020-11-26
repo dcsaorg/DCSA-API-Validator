@@ -68,6 +68,24 @@ public class EventSubscriptionsTest {
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
                 body("{\n" +
+                        "  \"callbackUrl\": \""+Configuration.CALLBACK_URI+"/webhook/receive\",\n" +
+                        "  \"eventType\": [\n" +
+                        "  ],\n" +
+                        "  \"bookingReference\": \"\",\n" +
+                        "  \"transportDocumentID\": \"\",\n" +
+                        "  \"transportDocumentType\": \"\",\n" +
+                        "  \"equipmentReference\": \"\",\n" +
+                        "  \"scheduleID\": \"\",\n" +
+                        "  \"transportCallID\": \"\"\n" +
+                        "}").
+                post(Configuration.ROOT_URI+"/event-subscriptions").
+                then().assertThat().statusCode(201);
+
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                contentType("application/json").
+                body("{\n" +
                         "    \"eventType\": \"SHIPMENT\",\n" +
                         "    \"eventDateTime\": \"2019-11-12T07:41:00+08:30\",\n" +
                         "    \"eventClassifierCode\": \"ACT\",\n" +
@@ -96,6 +114,22 @@ public class EventSubscriptionsTest {
 
     @Test
     public void testCallbackFilter() throws InterruptedException, JSONException {
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                contentType("application/json").
+                body("{\n" +
+                        "  \"callbackUrl\": \""+Configuration.CALLBACK_URI+"/receive-transport-events\",\n" +
+                        "  \"eventType\": \"TRANSPORT\"," +
+                        "  \"bookingReference\": \"\",\n" +
+                        "  \"transportDocumentID\": \"\",\n" +
+                        "  \"transportDocumentType\": \"\",\n" +
+                        "  \"equipmentReference\": \"\",\n" +
+                        "  \"scheduleID\": \"\",\n" +
+                        "  \"transportCallID\": \"\"\n" +
+                        "}").
+                post(Configuration.ROOT_URI+"/event-subscriptions").
+                then().assertThat().statusCode(201);
         given().
                 auth().
                 oauth2(Configuration.accessToken).

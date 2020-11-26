@@ -1,3 +1,4 @@
+
 name: Run testsuite on TNT master
 
 on: [push]
@@ -8,7 +9,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Java JDK
-      uses: actions/setup-java@v1.3.0
+      uses: actions/setup-java@v1
       with:
         java-version: 11
     - name: maven-settings-xml-action
@@ -21,7 +22,7 @@ jobs:
       with:
         repository: dcsaorg/DCSA-TNT
         ref: master
-        token: ${{ secrets.read_repo_pat }}
+        token: ${{ secrets.DCSA_PACKAGES_PAT }}
     - name: Build backend
       run: mvn package -DskipTests #Need to skip the tests as they depend on a running DB
     - name: Build and run the backend microservices
@@ -36,3 +37,4 @@ jobs:
         audience: localhost
         OAuthTokenUri: https://dcsa.eu.auth0.com/oauth/token
         API_ROOT_URI: http://localhost:9090/v2
+        CALLBACK_URI: http://172.17.0.1:4567

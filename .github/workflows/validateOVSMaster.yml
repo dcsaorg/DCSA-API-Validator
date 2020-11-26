@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Java JDK
-      uses: actions/setup-java@v1.3.0
+      uses: actions/setup-java@v1
       with:
         java-version: 11
     - name: maven-settings-xml-action
@@ -21,7 +21,7 @@ jobs:
       with:
         repository: dcsaorg/DCSA-OVS
         ref: master
-        token: ${{ secrets.read_repo_pat }}
+        token: ${{ secrets.DCSA_PACKAGES_PAT }}
     - name: Build backend
       run: mvn package -DskipTests #Need to skip the tests as they depend on a running DB
     - name: Build and run the backend microservices

@@ -95,7 +95,7 @@ public class PostShippingInstructionsTest {
 
         // System.err.println(shippingInstructionsRequestBody);
 
-        given().
+        Map<?, ?> result = given().
                 auth().
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
@@ -103,8 +103,22 @@ public class PostShippingInstructionsTest {
                 post(Configuration.ROOT_URI + "/shipping-instructions").
                 then().
                 assertThat().
-                statusCode(201);
+                statusCode(201).
+                extract().body().as(Map.class);
                 //body(matchesJsonSchemaInClasspath("ebl/v1/ShippingInstructionsSchema.json").using(jsonSchemaFactory));
+
+        Object shippingInstructionID = result.get("shippingInstructionID");
+        assert shippingInstructionID instanceof String;
+
+        // Ensure that GET of the same object also work
+
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                get(Configuration.ROOT_URI + "/shipping-instructions/" + shippingInstructionID).
+                then().
+                assertThat().
+                statusCode(200);
 
 //        given().
 //                auth().

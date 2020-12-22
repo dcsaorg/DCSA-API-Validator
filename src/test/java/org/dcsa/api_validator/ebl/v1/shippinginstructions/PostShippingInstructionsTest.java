@@ -47,7 +47,6 @@ public class PostShippingInstructionsTest {
                     .object()
                         .kv("equipmentReference", "BMOU2149612")
                         .kv("verifiedGrossMass", "My verification certification")
-                        .kv("weightUnit", "KGM")
                         .kv("cargoGrossWeight", 12000)
                         .kv("cargoGrossWeightUnit", "KGM")
                         // There is no active Reefer settings for this test object

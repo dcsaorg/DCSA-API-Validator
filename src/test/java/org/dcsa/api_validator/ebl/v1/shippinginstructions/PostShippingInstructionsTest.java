@@ -33,7 +33,7 @@ public class PostShippingInstructionsTest {
                                 .kv("cargoLineItemID", "my-id").kv("shippingMarks", "Mark1").endObject()
                             .endArray()
                         .kv("descriptionOfGoods", "scrap metal")
-                        .kv("HSCode", "HS")
+                        .kv("HSCode", "411510")
                         .kv("numberOfPackages", 18)
                         .kv("weight", 13000.3)
                         .kv("volume", 12)

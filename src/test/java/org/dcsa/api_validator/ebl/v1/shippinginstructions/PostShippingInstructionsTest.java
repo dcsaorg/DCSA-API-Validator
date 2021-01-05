@@ -39,7 +39,9 @@ public class PostShippingInstructionsTest {
                         .kv("volume", 12)
                         .kv("weightUnit", "KGM")
                         .kv("volumeUnit", "MTQ")
-                        .kv("packageCode", "5H")
+                        // TODO: While it can be null, it would be nice to test with a non-null packageCode
+                        // but we do not have any in our test data.
+                        // .kv("packageCode", "5H")
                         .kv("equipmentReference", "BMOU2149612")
                         .endObject()
                     .endArray()
@@ -62,7 +64,7 @@ public class PostShippingInstructionsTest {
                         .array("seals")
                             .object()
                                 .kv("sealNumber", "Asseco's Seal")
-                                .kv("sealSource", "AO123")
+                                .kv("sealSource", "SHI")
                                 .kv("sealType", "KLP")
                                 .endObject()
                             .endArray()

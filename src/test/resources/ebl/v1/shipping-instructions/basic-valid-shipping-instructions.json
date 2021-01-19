@@ -1,12 +1,12 @@
 {
   "callbackUrl": "https://myserver.com/send/callback/here",
-  "carrierBookingReference": "BR1239719871",
   "numberOfOriginals": 4,
   "numberOfCopies": 2,
   "isPartLoad": true,
   "isElectronic": true,
   "cargoItems": [
     {
+      "carrierBookingReference": "BR1239719871",
       "cargoLineItems": [
         {
           "cargoLineItemID": "my-id",

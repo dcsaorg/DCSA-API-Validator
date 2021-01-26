@@ -1,5 +1,6 @@
 package org.dcsa.api_validator.conf;
 
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.testng.Reporter;
 import org.testng.annotations.BeforeSuite;
@@ -13,6 +14,11 @@ public class Configuration {
     private static String client_secret= System.getenv("client_secret");
     private static String client_id= System.getenv("client_id");
     private static String audience= System.getenv("audience");
+
+    @BeforeSuite(alwaysRun = true)
+    public static void enableLogging() {
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+    }
 
     @BeforeSuite(alwaysRun = true)
     public static void retrieveAccessToken() {

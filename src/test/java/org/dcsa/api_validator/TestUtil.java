@@ -1,14 +1,9 @@
 package org.dcsa.api_validator;
 
-import com.fasterxml.jackson.databind.json.JsonMapper;
-
 import java.io.*;
 import java.net.URL;
-import java.util.Map;
 
 public class TestUtil {
-
-    private static final JsonMapper JSON_MAPPER = new JsonMapper();
 
     private static InputStream openStream(String resource) throws IOException {
         URL url = Thread.currentThread().getContextClassLoader().getResource(resource);
@@ -16,10 +11,6 @@ public class TestUtil {
             throw new IllegalStateException("Cannot find json file " + resource);
         }
         return url.openStream();
-    }
-
-    public static Map<String, Object> loadJSONObjectFromFile(String resource) {
-        return parseResourceWithStream(resource, inputStream -> JSON_MAPPER.reader().readValue(inputStream));
     }
 
     public static String loadFileAsString(String resource) {
@@ -33,7 +24,6 @@ public class TestUtil {
             return stringBuilder.toString();
         });
     }
-
 
     private static void closeStream(InputStream inputStream) {
         if (inputStream != null) {

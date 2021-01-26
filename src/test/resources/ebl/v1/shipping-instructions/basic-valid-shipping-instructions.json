@@ -26,7 +26,6 @@
   "shipmentEquipments": [
     {
       "equipmentReference": "BMOU2149612",
-      "verifiedGrossMass": "My verification certification",
       "cargoGrossWeight": 12000,
       "cargoGrossWeightUnit": "KGM",
       "seals": [

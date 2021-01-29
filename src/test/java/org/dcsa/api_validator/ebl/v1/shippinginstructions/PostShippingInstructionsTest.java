@@ -91,7 +91,6 @@ public class PostShippingInstructionsTest {
 //                        "  \"tareWeight\": \"MISSING\",\n" +
 //                        "  \"clauseContent\": \"MISSING\",\n" +
 //                        "  \"carrierCode\": \"MISSING\",\n" +
-//                        "  \"verifiedGrossMass\": \"MISSING\",\n" +
 //                        "  \"declaredValue\": 0,\n" +
 //                        "  \"declaredValueCurrencyCode\": \"MISSING\",\n" +
 //                        "  \"shippingMarks\": \"MISSING\",\n" +

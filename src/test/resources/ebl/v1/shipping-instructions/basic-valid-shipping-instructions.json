@@ -25,7 +25,9 @@
   ],
   "shipmentEquipments": [
     {
-      "equipmentReference": "BMOU2149612",
+      "equipment": {
+        "equipmentReference": "BMOU2149612"
+      },
       "cargoGrossWeight": 12000,
       "cargoGrossWeightUnit": "KGM",
       "seals": [

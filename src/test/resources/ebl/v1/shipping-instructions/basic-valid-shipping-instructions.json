@@ -39,8 +39,18 @@
   ],
   "documentParties": [
     {
-      "partyID": "8dd9a4c4-4039-11eb-8770-0b2b19847fab",
-      "partyFunction": "COW",
+      "party": {
+        "partyName": "Digital Container Shipping Association",
+        "publicKey": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFzaW",
+        "streetName": "Strawinskylaan",
+        "streetNumber": "4117",
+        "floor": "4th Floor",
+        "postalCode": "1077",
+        "cityName": "ZX Amsterdam",
+        "stateRegion": "N/A",
+        "country": "Netherlands"
+      },
+      "partyFunction": "CN",
       "displayedAddress": "Soelvgade 12",
       "partyContactDetails": "+45 12345678",
       "shouldBeNotified": false

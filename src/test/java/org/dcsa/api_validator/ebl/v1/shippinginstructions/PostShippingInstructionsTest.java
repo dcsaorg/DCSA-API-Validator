@@ -27,7 +27,7 @@ public class PostShippingInstructionsTest {
                 post(Configuration.ROOT_URI + "/shipping-instructions").
                 then().
                 assertThat().
-                statusCode(201).
+                statusCode(202).
                 extract().body().as(Map.class);
                 //body(matchesJsonSchemaInClasspath("ebl/v1/ShippingInstructionsSchema.json").using(jsonSchemaFactory));
 

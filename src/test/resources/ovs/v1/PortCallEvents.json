@@ -1,0 +1,126 @@
+{
+  "$schema":"http://json-schema.org/draft-04/schema",
+  "id": "http://example.com/example.json",
+  "type":"object",
+  "title":"The root schema",
+  "default":[
+
+  ],
+  "examples":[
+    [
+      {
+        "eventID":"3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "eventType":"PORTCALL",
+        "eventDateTime":"2021-02-10T11:52:32.897Z",
+        "eventClassifierCode":"PLN",
+        "eventTypeCode":"ARRI",
+        "transportCallID":"3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "locationType":"BERTH",
+        "locationID":"string",
+        "comment":"Delayed due to bad weather",
+        "delayReasonCode":"wea"
+      }
+    ]
+  ],
+  "additionalItems":true,
+  "items":{
+    "id":"#/items",
+    "anyOf":[
+      {
+        "id":"#/items/anyOf/0",
+        "type":"object",
+        "title":"The first anyOf schema",
+        "description":"A list of PortCallEvent Objects.",
+        "default":{
+        },
+        "examples":[
+          {
+            "eventID":"3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "eventType":"PORTCALL",
+            "eventDateTime":"2021-02-10T11:52:32.897Z",
+            "eventClassifierCode":"PLN",
+            "eventTypeCode":"ARRI",
+            "transportCallID":"3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "locationType":"BERTH",
+            "locationID":"string",
+            "comment":"Delayed due to bad weather",
+            "delayReasonCode":"wea"
+          }
+        ],
+        "required":[
+          "eventID",
+          "eventType",
+          "eventDateTime",
+          "eventClassifierCode",
+          "eventTypeCode",
+          "transportCallID",
+          "locationType",
+          "locationID"
+        ],
+        "properties":{
+          "eventID":{
+            "id":"#/properties/eventID",
+            "type":"string",
+            "title":"The eventID schema",
+            "default":""
+          },
+          "eventType":{
+            "id":"#/properties/eventType",
+            "type":"string",
+            "title":"The eventType schema",
+            "default":""
+          },
+          "eventDateTime":{
+            "id":"#/properties/eventDateTime",
+            "type":"string",
+            "title":"The eventDateTime schema",
+            "default":""
+          },
+          "eventClassifierCode":{
+            "id":"#/properties/eventClassifierCode",
+            "type":"string",
+            "title":"The eventClassifierCode schema",
+            "default":""
+          },
+          "eventTypeCode":{
+            "id":"#/properties/eventTypeCode",
+            "type":"string",
+            "title":"The eventTypeCode schema",
+            "default":""
+          },
+          "transportCallID":{
+            "id":"#/properties/transportCallID",
+            "type":"string",
+            "title":"The TransportCallID schema",
+            "default":""
+          },
+          "locationType":{
+            "id":"#/properties/locationType",
+            "type":"string",
+            "title":"The locationType schema ",
+            "default":""
+          },
+          "locationID":{
+            "id":"#/properties/locationID",
+            "type":"string",
+            "title":"The locationID schema ",
+            "default":""
+          },
+          "comment":{
+            "id":"#/properties/comment",
+            "type":"string",
+            "title":"The locationID schema ",
+            "default":""
+          },
+          "delayReasonCode":{
+            "id":"#/properties/delayReasonCode",
+            "type":"string",
+            "title":"The locationID schema ",
+            "default":""
+          }
+        },
+        "additionalProperties":true
+      }
+    ]
+  }
+}

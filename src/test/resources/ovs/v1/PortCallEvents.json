@@ -1,7 +1,7 @@
 {
   "$schema":"http://json-schema.org/draft-04/schema",
   "id": "http://example.com/example.json",
-  "type":"object",
+  "type":"array",
   "title":"The root schema",
   "default":[
 
@@ -108,13 +108,13 @@
           },
           "comment":{
             "id":"#/properties/comment",
-            "type":"string",
+            "type":["string", "null"],
             "title":"The locationID schema ",
             "default":""
           },
           "delayReasonCode":{
             "id":"#/properties/delayReasonCode",
-            "type":"string",
+            "type": ["string", "null"],
             "title":"The locationID schema ",
             "default":""
           }

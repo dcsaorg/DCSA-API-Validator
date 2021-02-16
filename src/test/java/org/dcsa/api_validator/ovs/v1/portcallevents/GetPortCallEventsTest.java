@@ -20,10 +20,10 @@ public class GetPortCallEventsTest {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/transport-calls/port-call-events").
+                get(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().
                 assertThat().
-                body(matchesJsonSchemaInClasspath("ovs/v1/PortCallEvents.json").
+                body(matchesJsonSchemaInClasspath("ovs/v1/TransportEvents.json").
                 using(jsonSchemaFactory));
 
     }

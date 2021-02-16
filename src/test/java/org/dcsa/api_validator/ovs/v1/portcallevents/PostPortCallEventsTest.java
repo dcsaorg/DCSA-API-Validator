@@ -16,7 +16,7 @@ public class PostPortCallEventsTest {
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
                 body(   "  {\n" +
-                        "  \"eventType\": \"PORTCALL\",\n" +
+                        "  \"eventType\": \"TRANSPORT\",\n" +
                         "    \"eventDateTime\": \"2021-01-30T22:00:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"EST\",\n" +
                         "    \"eventTypeCode\": \"ARRI\",\n" +
@@ -26,7 +26,7 @@ public class PostPortCallEventsTest {
                         "    \"comment\": null,\n" +
                         "    \"delayReasonCode\": null" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/port-call-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
     }
 
@@ -37,7 +37,7 @@ public class PostPortCallEventsTest {
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
                 body(   "  {\n" +
-                        "  \"eventType\": \"PORTCALL\",\n" +
+                        "  \"eventType\": \"TRANSPORT\",\n" +
                         "    \"eventDateTime\": \"2021-01-30T22:00:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"REQ\",\n" +
                         "    \"eventTypeCode\": \"ARRI\",\n" +
@@ -47,7 +47,7 @@ public class PostPortCallEventsTest {
                         "    \"comment\": \"Delay due to bad Weather!\",\n" +
                         "    \"delayReasonCode\": \"WEA\"" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/port-call-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
     }
 
@@ -58,7 +58,7 @@ public class PostPortCallEventsTest {
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
                 body(   "  {\n" +
-                        "  \"eventType\": \"PORTCALL\",\n" +
+                        "  \"eventType\": \"TRANSPORT\",\n" +
                         "    \"eventDateTime\": \"2021-01-30T22:00:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"PLN\",\n" +
                         "    \"eventTypeCode\": \"ARRI\",\n" +
@@ -68,7 +68,7 @@ public class PostPortCallEventsTest {
                         "    \"comment\": null,\n" +
                         "    \"delayReasonCode\": null" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/port-call-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
     }
 
@@ -80,7 +80,7 @@ public class PostPortCallEventsTest {
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
                 body(   "  {\n" +
-                        "  \"eventType\": \"PORTCALL\",\n" +
+                        "  \"eventType\": \"TRANSPORT\",\n" +
                         "    \"eventDateTime\": \"2021-01-30T20:20:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"EST\",\n" +
                         "    \"eventTypeCode\": \"ARRI\",\n" +
@@ -90,7 +90,7 @@ public class PostPortCallEventsTest {
                         "    \"comment\": null,\n" +
                         "    \"delayReasonCode\": null" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/port-call-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
     }
 
@@ -101,7 +101,7 @@ public class PostPortCallEventsTest {
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
                 body(   "  {\n" +
-                        "  \"eventType\": \"PORTCALL\",\n" +
+                        "  \"eventType\": \"TRANSPORT\",\n" +
                         "    \"eventDateTime\": \"2021-01-30T20:20:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"REQ\",\n" +
                         "    \"eventTypeCode\": \"ARRI\",\n" +
@@ -111,7 +111,7 @@ public class PostPortCallEventsTest {
                         "    \"comment\": null,\n" +
                         "    \"delayReasonCode\": null" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/port-call-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
     }
 
@@ -122,7 +122,7 @@ public class PostPortCallEventsTest {
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
                 body(   "  {\n" +
-                        "  \"eventType\": \"PORTCALL\",\n" +
+                        "  \"eventType\": \"TRANSPORT\",\n" +
                         "    \"eventDateTime\": \"2021-01-30T20:20:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"PLN\",\n" +
                         "    \"eventTypeCode\": \"ARRI\",\n" +
@@ -132,7 +132,7 @@ public class PostPortCallEventsTest {
                         "    \"comment\": null,\n" +
                         "    \"delayReasonCode\": null" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/port-call-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
     }
 
@@ -143,7 +143,7 @@ public class PostPortCallEventsTest {
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
                 body(   "  {\n" +
-                        "  \"eventType\": \"PORTCALL\",\n" +
+                        "  \"eventType\": \"TRANSPORT\",\n" +
                         "    \"eventDateTime\": \"2021-01-30T20:20:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"ACT\",\n" +
                         "    \"eventTypeCode\": \"ARRI\",\n" +
@@ -153,7 +153,7 @@ public class PostPortCallEventsTest {
                         "    \"comment\": null,\n" +
                         "    \"delayReasonCode\": null" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/port-call-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
     }
 
@@ -164,7 +164,7 @@ public class PostPortCallEventsTest {
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
                 body(   "  {\n" +
-                        "  \"eventType\": \"PORTCALL\",\n" +
+                        "  \"eventType\": \"TRANSPORT\",\n" +
                         "    \"eventDateTime\": \"2021-01-30T20:20:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"EST\",\n" +
                         "    \"eventTypeCode\": \"COPS\",\n" +
@@ -174,7 +174,7 @@ public class PostPortCallEventsTest {
                         "    \"comment\": null,\n" +
                         "    \"delayReasonCode\": null" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/port-call-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
     }
 
@@ -185,7 +185,7 @@ public class PostPortCallEventsTest {
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
                 body(   "  {\n" +
-                        "  \"eventType\": \"PORTCALL\",\n" +
+                        "  \"eventType\": \"TRANSPORT\",\n" +
                         "    \"eventDateTime\": \"2021-01-30T20:20:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"ACT\",\n" +
                         "    \"eventTypeCode\": \"COPS\",\n" +
@@ -195,7 +195,7 @@ public class PostPortCallEventsTest {
                         "    \"comment\": null,\n" +
                         "    \"delayReasonCode\": null" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/port-call-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
     }
 
@@ -206,7 +206,7 @@ public class PostPortCallEventsTest {
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
                 body(   "  {\n" +
-                        "  \"eventType\": \"PORTCALL\",\n" +
+                        "  \"eventType\": \"TRANSPORT\",\n" +
                         "    \"eventDateTime\": \"2021-01-30T20:20:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"EST\",\n" +
                         "    \"eventTypeCode\": \"DEPT\",\n" +
@@ -216,7 +216,7 @@ public class PostPortCallEventsTest {
                         "    \"comment\": null,\n" +
                         "    \"delayReasonCode\": null" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/port-call-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
     }
 
@@ -227,7 +227,7 @@ public class PostPortCallEventsTest {
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
                 body(   "  {\n" +
-                        "  \"eventType\": \"PORTCALL\",\n" +
+                        "  \"eventType\": \"TRANSPORT\",\n" +
                         "    \"eventDateTime\": \"2021-01-30T20:20:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"REQ\",\n" +
                         "    \"eventTypeCode\": \"DEPT\",\n" +
@@ -237,7 +237,7 @@ public class PostPortCallEventsTest {
                         "    \"comment\": null,\n" +
                         "    \"delayReasonCode\": null" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/port-call-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
     }
 

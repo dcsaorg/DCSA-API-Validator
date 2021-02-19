@@ -44,7 +44,8 @@
             "locationType":"BERTH",
             "locationID":"string",
             "comment":"Delayed due to bad weather",
-            "delayReasonCode":"wea"
+            "delayReasonCode":"wea",
+            "creationDateTime": "2021-02-11T11:52:32.897Z"
           }
         ],
         "required":[
@@ -55,7 +56,8 @@
           "eventTypeCode",
           "transportCallID",
           "locationType",
-          "locationID"
+          "locationID",
+          "creationDateTime"
         ],
         "properties":{
           "eventID":{
@@ -70,11 +72,19 @@
             "title":"The eventType schema",
             "default":""
           },
-          "eventDateTime":{
-            "id":"#/properties/eventDateTime",
-            "type":"string",
-            "title":"The eventDateTime schema",
-            "default":""
+          "eventDateTime": {
+            "id": "#/properties/eventDateTime",
+            "type": "string",
+            "format": "datetime",
+            "title": "The eventDateTime schema",
+            "default": ""
+          },
+          "creationDateTime": {
+            "id": "#/properties/creationDateTime",
+            "type": "string",
+            "format": "datetime",
+            "title": "The eventDateTime schema",
+            "default": ""
           },
           "eventClassifierCode":{
             "id":"#/properties/eventClassifierCode",

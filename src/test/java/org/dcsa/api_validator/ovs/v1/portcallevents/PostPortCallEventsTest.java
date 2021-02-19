@@ -24,7 +24,8 @@ public class PostPortCallEventsTest {
                         "    \"locationType\": \"BERTH\",\n" +
                         "    \"locationID\": \"Meter 100-300\",\n" +
                         "    \"comment\": null,\n" +
-                        "    \"delayReasonCode\": null" +
+                        "    \"delayReasonCode\": null," +
+                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
                         "}\n").
                 when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
@@ -45,7 +46,8 @@ public class PostPortCallEventsTest {
                         "    \"locationType\": \"BERTH\",\n" +
                         "    \"locationID\": \"Meter 100-300\",\n" +
                         "    \"comment\": \"Delay due to bad Weather!\",\n" +
-                        "    \"delayReasonCode\": \"WEA\"" +
+                        "    \"delayReasonCode\": \"WEA\"," +
+                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
                         "}\n").
                 when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
@@ -66,7 +68,8 @@ public class PostPortCallEventsTest {
                         "    \"locationType\": \"BERTH\",\n" +
                         "    \"locationID\": \"Meter 100-300\",\n" +
                         "    \"comment\": null,\n" +
-                        "    \"delayReasonCode\": null" +
+                        "    \"delayReasonCode\": null," +
+                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
                         "}\n").
                 when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
@@ -88,7 +91,8 @@ public class PostPortCallEventsTest {
                         "    \"locationType\": \"PBP\",\n" +
                         "    \"locationID\": \"Meter 100-300\",\n" +
                         "    \"comment\": null,\n" +
-                        "    \"delayReasonCode\": null" +
+                        "    \"delayReasonCode\": null," +
+                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
                         "}\n").
                 when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
@@ -109,7 +113,8 @@ public class PostPortCallEventsTest {
                         "    \"locationType\": \"PBP\",\n" +
                         "    \"locationID\": \"Meter 100-300\",\n" +
                         "    \"comment\": null,\n" +
-                        "    \"delayReasonCode\": null" +
+                        "    \"delayReasonCode\": null," +
+                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
                         "}\n").
                 when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
@@ -130,7 +135,8 @@ public class PostPortCallEventsTest {
                         "    \"locationType\": \"PBP\",\n" +
                         "    \"locationID\": \"Meter 100-300\",\n" +
                         "    \"comment\": null,\n" +
-                        "    \"delayReasonCode\": null" +
+                        "    \"delayReasonCode\": null," +
+                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
                         "}\n").
                 when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
@@ -151,7 +157,8 @@ public class PostPortCallEventsTest {
                         "    \"locationType\": \"PBP\",\n" +
                         "    \"locationID\": \"Meter 100-300\",\n" +
                         "    \"comment\": null,\n" +
-                        "    \"delayReasonCode\": null" +
+                        "    \"delayReasonCode\": null," +
+                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
                         "}\n").
                 when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
@@ -172,7 +179,8 @@ public class PostPortCallEventsTest {
                         "    \"locationType\": \"CARGO_OPS\",\n" +
                         "    \"locationID\": \"Meter 100-300\",\n" +
                         "    \"comment\": null,\n" +
-                        "    \"delayReasonCode\": null" +
+                        "    \"delayReasonCode\": null," +
+                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
                         "}\n").
                 when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
@@ -193,7 +201,8 @@ public class PostPortCallEventsTest {
                         "    \"locationType\": \"CARGO_OPS\",\n" +
                         "    \"locationID\": \"Meter 100-300\",\n" +
                         "    \"comment\": null,\n" +
-                        "    \"delayReasonCode\": null" +
+                        "    \"delayReasonCode\": null," +
+                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
                         "}\n").
                 when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
@@ -214,7 +223,8 @@ public class PostPortCallEventsTest {
                         "    \"locationType\": \"BERTH\",\n" +
                         "    \"locationID\": \"Meter 100-300\",\n" +
                         "    \"comment\": null,\n" +
-                        "    \"delayReasonCode\": null" +
+                        "    \"delayReasonCode\": null," +
+                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
                         "}\n").
                 when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));
@@ -235,7 +245,8 @@ public class PostPortCallEventsTest {
                         "    \"locationType\": \"BERTH\",\n" +
                         "    \"locationID\": \"Meter 100-300\",\n" +
                         "    \"comment\": null,\n" +
-                        "    \"delayReasonCode\": null" +
+                        "    \"delayReasonCode\": null," +
+                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
                         "}\n").
                 when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
                 then().body("$", hasKey("eventID"));

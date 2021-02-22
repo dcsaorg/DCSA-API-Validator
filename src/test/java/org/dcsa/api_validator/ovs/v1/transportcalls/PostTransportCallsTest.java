@@ -16,7 +16,7 @@ public class PostTransportCallsTest {
     @Test
     public void testPostNewTransportCall(){
         //@ToDo Change IMO Number to 6409715 after bugfix on core is done
-        String vesselIMONumber = "6409711";
+        String vesselIMONumber = "6409715";
         String vesselName = "MV Kooringa";
         String UNLocationCode =  "NLRTM";
         String UNLocationName = "Rotterdamm";

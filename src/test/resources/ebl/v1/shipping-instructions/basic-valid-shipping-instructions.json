@@ -2,7 +2,6 @@
   "callbackUrl": "https://myserver.com/send/callback/here",
   "numberOfOriginals": 4,
   "numberOfCopies": 2,
-  "isPartLoad": true,
   "isElectronic": true,
   "isShippedOnBoardType": true,
   "freightPayableAt": {

@@ -45,6 +45,16 @@
   "documentParties": [
     {
       "party": {
+        "address": {
+          "name": "DCSA",
+          "street": "Strawinskylaan",
+          "streetNumber": "4117",
+          "floor": "4th Floor",
+          "postalCode": "1077",
+          "city": "ZX Amsterdam",
+          "stateRegion": "N/A",
+          "country": "Netherlands"
+        },
         "partyName": "Digital Container Shipping Association",
         "publicKey": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFzaW"
       },

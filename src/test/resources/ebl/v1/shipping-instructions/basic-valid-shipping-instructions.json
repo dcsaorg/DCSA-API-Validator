@@ -59,8 +59,6 @@
         "publicKey": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFzaW"
       },
       "partyFunction": "CN",
-      "displayedAddress": "Soelvgade 12",
-      "partyContactDetails": "+45 12345678",
       "shouldBeNotified": false
     }
   ],

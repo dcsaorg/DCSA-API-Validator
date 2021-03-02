@@ -59,7 +59,18 @@
         "publicKey": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFzaW"
       },
       "partyFunction": "CN",
-      "shouldBeNotified": false
+      "shouldBeNotified": false,
+      "displayedAddress": [
+        "DCSA",
+        "Strawinskylaan 4117, 4th floor",
+        "1077 ZX Amsterdam",
+        "Netherlands",
+        "Att: Leather Shipments department"
+      ],
+      "partyContactDetails": {
+        "name": "John Doe",
+        "email": "john.doe@example.com"
+      }
     }
   ],
   "references": [

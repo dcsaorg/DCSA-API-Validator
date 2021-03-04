@@ -1,6 +1,7 @@
 package org.dcsa.api_validator.ebl.v1.shippinginstructions;
 
 import org.dcsa.api_validator.conf.Configuration;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.Map;
@@ -12,14 +13,14 @@ import static org.dcsa.api_validator.TestUtil.loadFileAsString;
  * Tests related to the GET /schedules endpoint
  */
 
-public class PostShippingInstructionsTest {
+public class ShippingInstructionsTest {
     //JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.newBuilder().setValidationConfiguration(ValidationConfiguration.newBuilder().setDefaultVersion(DRAFTV4).freeze()).freeze();
 
     public static final String VALID_SHIPPING_INSTRUCTIONS = loadFileAsString("ebl/v1/shipping-instructions/basic-valid-shipping-instructions.json");
 
     @Test
     public void testShippingInstructions() {
-        Map<?, ?> result = given().
+        Map<?, ?> siAfterPOST = given().
                 auth().
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
@@ -31,18 +32,33 @@ public class PostShippingInstructionsTest {
                 extract().body().as(Map.class);
                 //body(matchesJsonSchemaInClasspath("ebl/v1/ShippingInstructionsSchema.json").using(jsonSchemaFactory));
 
-        Object shippingInstructionID = result.get("shippingInstructionID");
+        Object shippingInstructionID = siAfterPOST.get("shippingInstructionID");
         assert shippingInstructionID instanceof String;
 
         // Ensure that GET of the same object also work
 
-        given().
+        Map<?, ?> siAfterGET = given().
                 auth().
                 oauth2(Configuration.accessToken).
                 get(Configuration.ROOT_URI + "/shipping-instructions/" + shippingInstructionID).
                 then().
                 assertThat().
-                statusCode(200);
+                statusCode(200).
+                extract().body().as(Map.class);
+
+        Map<?, ?> siAfterPUT = given().
+                auth().
+                oauth2(Configuration.accessToken).
+                contentType("application/json").
+                body(siAfterGET).
+                put(Configuration.ROOT_URI + "/shipping-instructions/" + shippingInstructionID).
+                then().
+                assertThat().
+                statusCode(200).
+                extract().body().as(Map.class);
+
+
+        Assert.assertEquals(siAfterGET, siAfterPUT);
 
 //        given().
 //                auth().

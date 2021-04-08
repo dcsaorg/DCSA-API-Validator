@@ -190,7 +190,7 @@ public class PostOperationsEventsTest {
                         "    \"eventClassifierCode\": \"ACT\",\n" +
                         "    \"operationsEventTypeCode\": \"STRT\",\n" +
                         "    \"transportCallID\": \"" + this.queryForTransportCallID() + "\",\n" +
-                        "    \"portCallServiceTypeCode \": \"PILO\",\n" +
+                        "    \"portCallServiceTypeCode\": \"PILO\",\n" +
                         "    \"publisher\": \"EXP\",\n" +
                         "    \"publisherRole\": \"CA\",\n" +
                         "    \"eventLocation\": \"Meter 100-300\",\n" +
@@ -214,7 +214,7 @@ public class PostOperationsEventsTest {
                         "    \"eventClassifierCode\": \"ACT\",\n" +
                         "    \"operationsEventTypeCode\": \"STRT\",\n" +
                         "    \"transportCallID\": \"" + this.queryForTransportCallID() + "\",\n" +
-                        "    \"portCallServiceTypeCode \": \"CRGO\",\n" +
+                        "    \"portCallServiceTypeCode\": \"CRGO\",\n" +
                         "    \"publisher\": \"DEHAMCTA\",\n" +
                         "    \"publisherRole\": \"TR\",\n" +
                         "    \"eventLocation\": \"Meter 100-300\",\n" +
@@ -238,7 +238,7 @@ public class PostOperationsEventsTest {
                         "    \"eventClassifierCode\": \"EST\",\n" +
                         "    \"operationsEventTypeCode\": \"CMPL\",\n" +
                         "    \"transportCallID\": \"" + this.queryForTransportCallID() + "\",\n" +
-                        "    \"portCallServiceTypeCode \": \"CRGO\",\n" +
+                        "    \"portCallServiceTypeCode\": \"CRGO\",\n" +
                         "    \"publisher\": \"DEHAMCTA\",\n" +
                         "    \"publisherRole\": \"TR\",\n" +
                         "    \"eventLocation\": \"Meter 100-300\",\n" +
@@ -262,7 +262,7 @@ public class PostOperationsEventsTest {
                         "    \"eventClassifierCode\": \"ACT\",\n" +
                         "    \"operationsEventTypeCode\": \"CMPL\",\n" +
                         "    \"transportCallID\": \"" + this.queryForTransportCallID() + "\",\n" +
-                        "    \"portCallServiceTypeCode \": \"CRGO\",\n" +
+                        "    \"portCallServiceTypeCode\": \"CRGO\",\n" +
                         "    \"publisher\": \"EXP\",\n" +
                         "    \"publisherRole\": \"CA\",\n" +
                         "    \"eventLocation\": \"Meter 100-300\",\n" +

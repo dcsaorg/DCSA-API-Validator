@@ -32,19 +32,6 @@ public class GetTransportCallsTest {
     }
 
 
-    @Test
-    public void testCarrierVoyageNumberQueryParam() {
-        List<String> carrierVoyageNumbers = getListOfAnyAttribute("carrierVoyageNumber");
-        for (String carrierVoyageNumber : carrierVoyageNumbers) {
-            given().
-                    auth().
-                    oauth2(Configuration.accessToken).
-                    queryParam("carrierVoyageNumber", carrierVoyageNumber).
-                    get(Configuration.ROOT_URI + "/transport-calls").
-                    then().
-                    body("carrierVoyageNumber", everyItem(equalTo(carrierVoyageNumber)));
-        }
-    }
 
     @Test
     public void testVesselIMONumberQueryParam() {

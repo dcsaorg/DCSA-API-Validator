@@ -17,14 +17,9 @@
         "default": {},
         "required": [
           "transportCallID",
-          "scheduleID",
-          "carrierServiceCode",
           "vesselIMONumber",
           "vesselName",
-          "carrierVoyageNumber",
-          "UNLocationCode",
-          "UNLocationName",
-          "transportCallNumber",
+          "transportCallSequenceNumber",
           "facilityTypeCode",
           "facilityCode",
           "otherFacility"
@@ -34,20 +29,6 @@
             "id": "#/items/anyOf/0/properties/transportCallID",
             "type": "string",
             "title": "The transportCallID schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": ""
-          },
-          "scheduleID": {
-            "id": "#/items/anyOf/0/properties/scheduleID",
-            "type": "string",
-            "title": "The scheduleID schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": ""
-          },
-          "carrierServiceCode": {
-            "id": "#/items/anyOf/0/properties/carrierServiceCode",
-            "type": "string",
-            "title": "The carrierServiceCode schema",
             "description": "An explanation about the purpose of this instance.",
             "default": ""
           },
@@ -65,31 +46,10 @@
             "description": "An explanation about the purpose of this instance.",
             "default": ""
           },
-          "carrierVoyageNumber": {
-            "id": "#/items/anyOf/0/properties/carrierVoyageNumber",
-            "type": "string",
-            "title": "The carrierVoyageNumber schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": ""
-          },
-          "UNLocationCode": {
-            "id": "#/items/anyOf/0/properties/UNLocationCode",
-            "type": "string",
-            "title": "The UNLocationCode schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": ""
-          },
-          "UNLocationName": {
-            "id": "#/items/anyOf/0/properties/UNLocationName",
-            "type": "string",
-            "title": "The UNLocationName schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": ""
-          },
-          "transportCallNumber": {
+          "transportCallSequenceNumber": {
             "id": "#/items/anyOf/0/properties/transportCallNumber",
             "type": "integer",
-            "title": "The transportCallNumber schema",
+            "title": "The transportCallSequenceNumber schema",
             "description": "An explanation about the purpose of this instance.",
             "default": 0
           },
@@ -112,6 +72,13 @@
             "type": ["string", "null"],
             "title": "The otherFacility schema",
             "description": "An explanation about the purpose of this instance.",
+            "default": ""
+          },
+          "locationID": {
+            "id": "#/items/anyOf/0/properties/locationID",
+            "type": ["string", "null"],
+            "title": "The UUID of a location",
+            "description": "A UUID to identify a known location.",
             "default": ""
           }
         },

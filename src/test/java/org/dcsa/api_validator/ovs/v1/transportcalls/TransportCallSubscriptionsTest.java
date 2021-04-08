@@ -69,14 +69,9 @@ public class TransportCallSubscriptionsTest {
                 contentType("application/json").
                 body(" \n" +
                         "  {\n" +
-                        "    \"scheduleID\": \"" + queryForScheduleID() + "\",\n" +
-                        "    \"carrierServiceCode\": \"FE1\",\n" +
                         "    \"vesselIMONumber\": \"1801322\",\n" +
                         "    \"vesselName\": \"Vessel A\",\n" +
-                        "    \"carrierVoyageNumber\": \"2015W\",\n" +
-                        "    \"UNLocationCode\": \"USNYC\",\n" +
-                        "    \"UNLocationName\": \"New York\",\n" +
-                        "    \"transportCallNumber\": 2,\n" +
+                        "    \"transportCallSequenceNumber\": 2,\n" +
                         "    \"facilityTypeCode\": \"POTE\",\n" +
                         "    \"facilityCode\": \"AEAUHADT\",\n" +
                         "    \"otherFacility\": \"Depot location or address\"\n" +
@@ -110,14 +105,9 @@ public class TransportCallSubscriptionsTest {
                 contentType("application/json").
                 body(" \n" +
                         "  {\n" +
-                        "    \"scheduleID\": \"" + queryForScheduleID() + "\",\n" +
-                        "    \"carrierServiceCode\": \"FE1\",\n" +
                         "    \"vesselIMONumber\": \"1801322\",\n" +
                         "    \"vesselName\": \"Vessel A\",\n" +
-                        "    \"carrierVoyageNumber\": \"2015W\",\n" +
-                        "    \"UNLocationCode\": \"USNYC\",\n" +
-                        "    \"UNLocationName\": \"New York\",\n" +
-                        "    \"transportCallNumber\": 2,\n" +
+                        "    \"transportCallSequenceNumber\": 2,\n" +
                         "    \"facilityTypeCode\": \"POTE\",\n" +
                         "    \"facilityCode\": \"AEAUHADT\",\n" +
                         "    \"otherFacility\": \"Depot location or address\"\n" +
@@ -130,12 +120,6 @@ public class TransportCallSubscriptionsTest {
 
     }
 
-    private String queryForScheduleID() {
 
-        String scheduleID = given().auth().oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/schedules").body().jsonPath().getList("scheduleID").get(0).toString();
-        Assert.assertNotNull(scheduleID);
-        return scheduleID;
-    }
 
 }

@@ -8,14 +8,10 @@
   "examples": [
     {
       "transportCallID": "123e4567-e89b-12d3-a456-426614174000",
-      "scheduleID": "123e4567-e89b-12d3-a456-426614174000",
-      "carrierServiceCode": "FE1",
       "vesselIMONumber": "1801323",
       "vesselName": "Vessel A",
       "carrierVoyageNumber": "2015W",
-      "UNLocationCode": "USNYC",
-      "UNLocationName": "New York",
-      "transportCallNumber": 2,
+      "transportCallSequenceNumber": 2,
       "facilityTypeCode": "POTE",
       "facilityCode": "AEAUHADT",
       "otherFacility": "Depot location or address"
@@ -23,14 +19,9 @@
   ],
   "required": [
     "transportCallID",
-    "scheduleID",
-    "carrierServiceCode",
     "vesselIMONumber",
     "vesselName",
-    "carrierVoyageNumber",
-    "UNLocationCode",
-    "UNLocationName",
-    "transportCallNumber",
+    "transportCallSequenceNumber",
     "facilityTypeCode",
     "facilityCode",
     "otherFacility"
@@ -44,26 +35,6 @@
       "default": "",
       "examples": [
         "123e4567-e89b-12d3-a456-426614174000"
-      ]
-    },
-    "scheduleID": {
-      "id": "#/properties/scheduleID",
-      "type": "string",
-      "title": "The scheduleID schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": "",
-      "examples": [
-        "123e4567-e89b-12d3-a456-426614174000"
-      ]
-    },
-    "carrierServiceCode": {
-      "id": "#/properties/carrierServiceCode",
-      "type": "string",
-      "title": "The carrierServiceCode schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": "",
-      "examples": [
-        "FE1"
       ]
     },
     "vesselIMONumber": {
@@ -96,28 +67,9 @@
         "2015W"
       ]
     },
-    "UNLocationCode": {
-      "id": "#/properties/UNLocationCode",
-      "type": "string",
-      "title": "The UNLocationCode schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": "",
-      "examples": [
-        "USNYC"
-      ]
-    },
-    "UNLocationName": {
-      "id": "#/properties/UNLocationName",
-      "type": "string",
-      "title": "The UNLocationName schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": "",
-      "examples": [
-        "New York"
-      ]
-    },
-    "transportCallNumber": {
-      "id": "#/properties/transportCallNumber",
+
+    "transportCallSequenceNumber": {
+      "id": "#/properties/transportCallSequenceNumber",
       "type": "integer",
       "title": "The transportCallNumber schema",
       "description": "An explanation about the purpose of this instance.",

@@ -29,14 +29,9 @@ public class PostTransportCallsTest {
                 contentType("application/json").
                 body(" \n" +
                         "  {\n" +
-                        "    \"scheduleID\": \"" + queryForScheduleID() + "\",\n" +
-                        "    \"carrierServiceCode\": \"EXP2\",\n" +
                         "    \"vesselIMONumber\": \""+vesselIMONumber+ "\",\n" +
                         "    \"vesselName\": \""+vesselName+ "\",\n" +
-                        "    \"carrierVoyageNumber\": \"2015W\",\n" +
-                        "    \"UNLocationCode\": \""+UNLocationCode+"\",\n" +
-                        "    \"UNLocationName\": \""+UNLocationName+"\",\n" +
-                        "    \"transportCallNumber\": 2,\n" +
+                        "    \"transportCallSequenceNumber\": 2,\n" +
                         "    \"facilityTypeCode\": \"POTE\",\n" +
                         "    \"facilityCode\": \""+facilityCode+"\",\n" +
                         "    \"otherFacility\": \"\"\n" +
@@ -46,19 +41,11 @@ public class PostTransportCallsTest {
                 post(Configuration.ROOT_URI + "/transport-calls").
                 then().body("vesselIMONumber", equalTo(vesselIMONumber)).
                 body("vesselName", equalTo(vesselName)).
-                body("UNLocationCode", equalTo(UNLocationCode)).
-                body("UNLocationName", equalTo(UNLocationName)).
                 body("facilityCode", equalTo(facilityCode)).
                 body("$", hasKey("transportCallID"));
 
         }
 
 
-    private String queryForScheduleID() {
 
-        String scheduleID = given().auth().oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/schedules").body().jsonPath().getList("scheduleID").get(0).toString();
-        Assert.assertNotNull(scheduleID);
-        return scheduleID;
-    }
 }

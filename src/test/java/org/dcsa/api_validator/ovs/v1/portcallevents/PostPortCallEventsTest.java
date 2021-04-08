@@ -10,245 +10,315 @@ import static org.hamcrest.Matchers.hasKey;
 public class PostPortCallEventsTest {
 
     @Test
-    public void testPostNewETABerth(){
+    public void testPostNewETABerth() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
-                body(   "  {\n" +
-                        "  \"eventType\": \"TRANSPORT\",\n" +
-                        "    \"eventDateTime\": \"2021-01-30T22:00:00+02:00\",\n" +
+                body("  {\n" +
+                        "  \"eventType\": \"OPERATIONS\",\n" +
+                        "    \"eventDateTime\": \"2021-04-07T22:00:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"EST\",\n" +
-                        "    \"eventTypeCode\": \"ARRI\",\n" +
-                        "    \"transportCallID\": \""+this.queryForTransportCallID()+"\",\n" +
-                        "    \"locationType\": \"BERTH\",\n" +
-                        "    \"locationID\": \"Meter 100-300\",\n" +
-                        "    \"comment\": null,\n" +
+                        "    \"operationsEventTypeCode\": \"ARRI\",\n" +
+                        "    \"transportCallID\": \"" + this.queryForTransportCallID() + "\",\n" +
+                        "    \"facilityTypeCode\": \"BRTH\",\n" +
+                        "    \"publisher\": \"EXP\",\n" +
+                        "    \"publisherRole\": \"CA\",\n" +
+                        "    \"eventLocation\": \"Meter 100-300\",\n" +
+                        "    \"changeRemark\": null,\n" +
                         "    \"delayReasonCode\": null," +
-                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
+                        "    \"eventCreatedDateTime\": \"2021-01-30T15:00:00+02:00\"" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/operations-events").
                 then().body("$", hasKey("eventID"));
     }
 
     @Test
-    public void testPostNewRTABerth(){
+    public void testPostNewRTABerth() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
-                body(   "  {\n" +
-                        "  \"eventType\": \"TRANSPORT\",\n" +
-                        "    \"eventDateTime\": \"2021-01-30T22:00:00+02:00\",\n" +
+                body("  {\n" +
+                        "  \"eventType\": \"OPERATIONS\",\n" +
+                        "    \"eventDateTime\": \"2021-04-07T22:00:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"REQ\",\n" +
-                        "    \"eventTypeCode\": \"ARRI\",\n" +
-                        "    \"transportCallID\": \""+this.queryForTransportCallID()+"\",\n" +
-                        "    \"locationType\": \"BERTH\",\n" +
-                        "    \"locationID\": \"Meter 100-300\",\n" +
-                        "    \"comment\": \"Delay due to bad Weather!\",\n" +
-                        "    \"delayReasonCode\": \"WEA\"," +
-                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
+                        "    \"operationsEventTypeCode\": \"ARRI\",\n" +
+                        "    \"transportCallID\": \"" + this.queryForTransportCallID() + "\",\n" +
+                        "    \"facilityTypeCode\": \"BRTH\",\n" +
+                        "    \"publisher\": \"DEHAMCTA\",\n" +
+                        "    \"publisherRole\": \"TR\",\n" +
+                        "    \"eventLocation\": \"Meter 100-300\",\n" +
+                        "    \"changeRemark\": null,\n" +
+                        "    \"delayReasonCode\": null," +
+                        "    \"eventCreatedDateTime\": \"2021-01-30T15:00:00+02:00\"" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/operations-events").
                 then().body("$", hasKey("eventID"));
     }
 
     @Test
-    public void testPostNewPTABerth(){
+    public void testPostNewPTABerth() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
-                body(   "  {\n" +
-                        "  \"eventType\": \"TRANSPORT\",\n" +
-                        "    \"eventDateTime\": \"2021-01-30T22:00:00+02:00\",\n" +
+                body("  {\n" +
+                        "  \"eventType\": \"OPERATIONS\",\n" +
+                        "    \"eventDateTime\": \"2021-04-07T22:00:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"PLN\",\n" +
-                        "    \"eventTypeCode\": \"ARRI\",\n" +
-                        "    \"transportCallID\": \""+this.queryForTransportCallID()+"\",\n" +
-                        "    \"locationType\": \"BERTH\",\n" +
-                        "    \"locationID\": \"Meter 100-300\",\n" +
-                        "    \"comment\": null,\n" +
+                        "    \"operationsEventTypeCode\": \"ARRI\",\n" +
+                        "    \"transportCallID\": \"" + this.queryForTransportCallID() + "\",\n" +
+                        "    \"facilityTypeCode\": \"BRTH\",\n" +
+                        "    \"publisher\": \"EXP\",\n" +
+                        "    \"publisherRole\": \"CA\",\n" +
+                        "    \"eventLocation\": \"Meter 100-300\",\n" +
+                        "    \"changeRemark\": null,\n" +
                         "    \"delayReasonCode\": null," +
-                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
+                        "    \"eventCreatedDateTime\": \"2021-01-30T15:00:00+02:00\"" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/operations-events").
                 then().body("$", hasKey("eventID"));
     }
 
 
     @Test
-    public void testPostNewETAPBP(){
+    public void testPostNewETAPBP() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
-                body(   "  {\n" +
-                        "  \"eventType\": \"TRANSPORT\",\n" +
-                        "    \"eventDateTime\": \"2021-01-30T20:20:00+02:00\",\n" +
+                body("  {\n" +
+                        "  \"eventType\": \"OPERATIONS\",\n" +
+                        "    \"eventDateTime\": \"2021-04-07T19:00:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"EST\",\n" +
-                        "    \"eventTypeCode\": \"ARRI\",\n" +
-                        "    \"transportCallID\": \""+this.queryForTransportCallID()+"\",\n" +
-                        "    \"locationType\": \"PBP\",\n" +
-                        "    \"locationID\": \"Meter 100-300\",\n" +
-                        "    \"comment\": null,\n" +
+                        "    \"operationsEventTypeCode\": \"ARRI\",\n" +
+                        "    \"transportCallID\": \"" + this.queryForTransportCallID() + "\",\n" +
+                        "    \"facilityTypeCode\": \"PBPL\",\n" +
+                        "    \"publisher\": \"EXP\",\n" +
+                        "    \"publisherRole\": \"CA\",\n" +
+                        "    \"eventLocation\": \"Meter 100-300\",\n" +
+                        "    \"changeRemark\": null,\n" +
                         "    \"delayReasonCode\": null," +
-                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
+                        "    \"eventCreatedDateTime\": \"2021-01-30T15:00:00+02:00\"" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/operations-events").
                 then().body("$", hasKey("eventID"));
     }
 
     @Test
-    public void testPostNewRTAPBP(){
+    public void testPostNewRTAPBP() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
-                body(   "  {\n" +
-                        "  \"eventType\": \"TRANSPORT\",\n" +
-                        "    \"eventDateTime\": \"2021-01-30T20:20:00+02:00\",\n" +
+                body("  {\n" +
+                        "  \"eventType\": \"OPERATIONS\",\n" +
+                        "    \"eventDateTime\": \"2021-04-07T19:00:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"REQ\",\n" +
-                        "    \"eventTypeCode\": \"ARRI\",\n" +
-                        "    \"transportCallID\": \""+this.queryForTransportCallID()+"\",\n" +
-                        "    \"locationType\": \"PBP\",\n" +
-                        "    \"locationID\": \"Meter 100-300\",\n" +
-                        "    \"comment\": null,\n" +
+                        "    \"operationsEventTypeCode\": \"ARRI\",\n" +
+                        "    \"transportCallID\": \"" + this.queryForTransportCallID() + "\",\n" +
+                        "    \"facilityTypeCode\": \"PBPL\",\n" +
+                        "    \"publisher\": \"DEHAM\",\n" +
+                        "    \"publisherRole\": \"POR\",\n" +
+                        "    \"eventLocation\": \"Meter 100-300\",\n" +
+                        "    \"changeRemark\": null,\n" +
                         "    \"delayReasonCode\": null," +
-                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
+                        "    \"eventCreatedDateTime\": \"2021-01-30T15:00:00+02:00\"" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/operations-events").
                 then().body("$", hasKey("eventID"));
     }
 
     @Test
-    public void testPostNewPTAPBP(){
+    public void testPostNewPTAPBP() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
-                body(   "  {\n" +
-                        "  \"eventType\": \"TRANSPORT\",\n" +
-                        "    \"eventDateTime\": \"2021-01-30T20:20:00+02:00\",\n" +
+                body("  {\n" +
+                        "  \"eventType\": \"OPERATIONS\",\n" +
+                        "    \"eventDateTime\": \"2021-04-07T19:00:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"PLN\",\n" +
-                        "    \"eventTypeCode\": \"ARRI\",\n" +
-                        "    \"transportCallID\": \""+this.queryForTransportCallID()+"\",\n" +
-                        "    \"locationType\": \"PBP\",\n" +
-                        "    \"locationID\": \"Meter 100-300\",\n" +
-                        "    \"comment\": null,\n" +
+                        "    \"operationsEventTypeCode\": \"ARRI\",\n" +
+                        "    \"transportCallID\": \"" + this.queryForTransportCallID() + "\",\n" +
+                        "    \"facilityTypeCode\": \"PBPL\",\n" +
+                        "    \"publisher\": \"EXP\",\n" +
+                        "    \"publisherRole\": \"CA\",\n" +
+                        "    \"eventLocation\": \"Meter 100-300\",\n" +
+                        "    \"changeRemark\": null,\n" +
                         "    \"delayReasonCode\": null," +
-                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
+                        "    \"eventCreatedDateTime\": \"2021-01-30T15:00:00+02:00\"" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/operations-events").
                 then().body("$", hasKey("eventID"));
     }
 
     @Test
-    public void testPostNewATAPBP(){
+    public void testPostNewATAPBP() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
-                body(   "  {\n" +
-                        "  \"eventType\": \"TRANSPORT\",\n" +
-                        "    \"eventDateTime\": \"2021-01-30T20:20:00+02:00\",\n" +
+                body("  {\n" +
+                        "  \"eventType\": \"OPERATIONS\",\n" +
+                        "    \"eventDateTime\": \"2021-04-07T19:30:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"ACT\",\n" +
-                        "    \"eventTypeCode\": \"ARRI\",\n" +
-                        "    \"transportCallID\": \""+this.queryForTransportCallID()+"\",\n" +
-                        "    \"locationType\": \"PBP\",\n" +
-                        "    \"locationID\": \"Meter 100-300\",\n" +
-                        "    \"comment\": null,\n" +
+                        "    \"operationsEventTypeCode\": \"ARRI\",\n" +
+                        "    \"transportCallID\": \"" + this.queryForTransportCallID() + "\",\n" +
+                        "    \"facilityTypeCode\": \"PBPL\",\n" +
+                        "    \"publisher\": \"EXP\",\n" +
+                        "    \"publisherRole\": \"CA\",\n" +
+                        "    \"eventLocation\": \"Meter 100-300\",\n" +
+                        "    \"changeRemark\": null,\n" +
                         "    \"delayReasonCode\": null," +
-                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
+                        "    \"eventCreatedDateTime\": \"2021-01-30T15:00:00+02:00\"" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/operations-events").
                 then().body("$", hasKey("eventID"));
     }
 
     @Test
-    public void testPostNewETCCOPS(){
+    public void testPostNewATSPilot() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
-                body(   "  {\n" +
-                        "  \"eventType\": \"TRANSPORT\",\n" +
-                        "    \"eventDateTime\": \"2021-01-30T20:20:00+02:00\",\n" +
-                        "    \"eventClassifierCode\": \"EST\",\n" +
-                        "    \"eventTypeCode\": \"COPS\",\n" +
-                        "    \"transportCallID\": \""+this.queryForTransportCallID()+"\",\n" +
-                        "    \"locationType\": \"CARGO_OPS\",\n" +
-                        "    \"locationID\": \"Meter 100-300\",\n" +
-                        "    \"comment\": null,\n" +
-                        "    \"delayReasonCode\": null," +
-                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
-                        "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
-                then().body("$", hasKey("eventID"));
-    }
-
-    @Test
-    public void testPostNewATCCOPS(){
-        given().
-                auth().
-                oauth2(Configuration.accessToken).
-                contentType("application/json").
-                body(   "  {\n" +
-                        "  \"eventType\": \"TRANSPORT\",\n" +
-                        "    \"eventDateTime\": \"2021-01-30T20:20:00+02:00\",\n" +
+                body("  {\n" +
+                        "  \"eventType\": \"OPERATIONS\",\n" +
+                        "    \"eventDateTime\": \"2021-04-07T19:30:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"ACT\",\n" +
-                        "    \"eventTypeCode\": \"COPS\",\n" +
-                        "    \"transportCallID\": \""+this.queryForTransportCallID()+"\",\n" +
-                        "    \"locationType\": \"CARGO_OPS\",\n" +
-                        "    \"locationID\": \"Meter 100-300\",\n" +
-                        "    \"comment\": null,\n" +
+                        "    \"operationsEventTypeCode\": \"STRT\",\n" +
+                        "    \"transportCallID\": \"" + this.queryForTransportCallID() + "\",\n" +
+                        "    \"portCallServiceTypeCode \": \"PILO\",\n" +
+                        "    \"publisher\": \"EXP\",\n" +
+                        "    \"publisherRole\": \"CA\",\n" +
+                        "    \"eventLocation\": \"Meter 100-300\",\n" +
+                        "    \"changeRemark\": null,\n" +
                         "    \"delayReasonCode\": null," +
-                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
+                        "    \"eventCreatedDateTime\": \"2021-01-30T15:00:00+02:00\"" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/operations-events").
                 then().body("$", hasKey("eventID"));
     }
 
     @Test
-    public void testPostNewETDBerth(){
+    public void testPostNewATSCOPS() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
-                body(   "  {\n" +
-                        "  \"eventType\": \"TRANSPORT\",\n" +
-                        "    \"eventDateTime\": \"2021-01-30T20:20:00+02:00\",\n" +
+                body("  {\n" +
+                        "  \"eventType\": \"OPERATIONS\",\n" +
+                        "    \"eventDateTime\": \"2021-04-08T05:00:00+02:00\",\n" +
+                        "    \"eventClassifierCode\": \"ACT\",\n" +
+                        "    \"operationsEventTypeCode\": \"STRT\",\n" +
+                        "    \"transportCallID\": \"" + this.queryForTransportCallID() + "\",\n" +
+                        "    \"portCallServiceTypeCode \": \"CRGO\",\n" +
+                        "    \"publisher\": \"DEHAMCTA\",\n" +
+                        "    \"publisherRole\": \"TR\",\n" +
+                        "    \"eventLocation\": \"Meter 100-300\",\n" +
+                        "    \"changeRemark\": null,\n" +
+                        "    \"delayReasonCode\": null," +
+                        "    \"eventCreatedDateTime\": \"2021-01-30T15:00:00+02:00\"" +
+                        "}\n").
+                when().post(Configuration.ROOT_URI + "/transport-calls/operations-events").
+                then().body("$", hasKey("eventID"));
+    }
+
+    @Test
+    public void testPostNewETCCOPS() {
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                contentType("application/json").
+                body("  {\n" +
+                        "  \"eventType\": \"OPERATIONS\",\n" +
+                        "    \"eventDateTime\": \"2021-04-09T01:00:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"EST\",\n" +
-                        "    \"eventTypeCode\": \"DEPT\",\n" +
-                        "    \"transportCallID\": \""+this.queryForTransportCallID()+"\",\n" +
-                        "    \"locationType\": \"BERTH\",\n" +
-                        "    \"locationID\": \"Meter 100-300\",\n" +
-                        "    \"comment\": null,\n" +
+                        "    \"operationsEventTypeCode\": \"CMPL\",\n" +
+                        "    \"transportCallID\": \"" + this.queryForTransportCallID() + "\",\n" +
+                        "    \"portCallServiceTypeCode \": \"CRGO\",\n" +
+                        "    \"publisher\": \"DEHAMCTA\",\n" +
+                        "    \"publisherRole\": \"TR\",\n" +
+                        "    \"eventLocation\": \"Meter 100-300\",\n" +
+                        "    \"changeRemark\": null,\n" +
                         "    \"delayReasonCode\": null," +
-                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
+                        "    \"eventCreatedDateTime\": \"2021-01-30T15:00:00+02:00\"" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/operations-events").
                 then().body("$", hasKey("eventID"));
     }
 
     @Test
-    public void testPostNewRBerth(){
+    public void testPostNewATCCOPS() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
-                body(   "  {\n" +
-                        "  \"eventType\": \"TRANSPORT\",\n" +
-                        "    \"eventDateTime\": \"2021-01-30T20:20:00+02:00\",\n" +
+                body("  {\n" +
+                        "  \"eventType\": \"OPERATIONS\",\n" +
+                        "    \"eventDateTime\": \"2021-04-09T02:00:00+02:00\",\n" +
+                        "    \"eventClassifierCode\": \"ACT\",\n" +
+                        "    \"operationsEventTypeCode\": \"CMPL\",\n" +
+                        "    \"transportCallID\": \"" + this.queryForTransportCallID() + "\",\n" +
+                        "    \"portCallServiceTypeCode \": \"CRGO\",\n" +
+                        "    \"publisher\": \"EXP\",\n" +
+                        "    \"publisherRole\": \"CA\",\n" +
+                        "    \"eventLocation\": \"Meter 100-300\",\n" +
+                        "    \"changeRemark\": null,\n" +
+                        "    \"delayReasonCode\": null," +
+                        "    \"eventCreatedDateTime\": \"2021-01-30T15:00:00+02:00\"" +
+                        "}\n").
+                when().post(Configuration.ROOT_URI + "/transport-calls/operations-events").
+                then().body("$", hasKey("eventID"));
+    }
+
+    @Test
+    public void testPostNewETDBerth() {
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                contentType("application/json").
+                body("  {\n" +
+                        "  \"eventType\": \"OPERATIONS\",\n" +
+                        "    \"eventDateTime\": \"2021-04-09T16:00:00+02:00\",\n" +
+                        "    \"eventClassifierCode\": \"EST\",\n" +
+                        "    \"operationsEventTypeCode\": \"DEPA\",\n" +
+                        "    \"transportCallID\": \"" + this.queryForTransportCallID() + "\",\n" +
+                        "    \"facilityTypeCode\": \"BRTH\",\n" +
+                        "    \"publisher\": \"EXP\",\n" +
+                        "    \"publisherRole\": \"CA\",\n" +
+                        "    \"eventLocation\": \"Meter 100-300\",\n" +
+                        "    \"changeRemark\": null,\n" +
+                        "    \"delayReasonCode\": null," +
+                        "    \"eventCreatedDateTime\": \"2021-01-30T15:00:00+02:00\"" +
+                        "}\n").
+                when().post(Configuration.ROOT_URI + "/transport-calls/operations-events").
+                then().body("$", hasKey("eventID"));
+    }
+
+    @Test
+    public void testPostNewRTDBerth() {
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                contentType("application/json").
+                body("  {\n" +
+                        "  \"eventType\": \"OPERATIONS\",\n" +
+                        "    \"eventDateTime\": \"2021-04-09T16:00:00+02:00\",\n" +
                         "    \"eventClassifierCode\": \"REQ\",\n" +
-                        "    \"eventTypeCode\": \"DEPT\",\n" +
-                        "    \"transportCallID\": \""+this.queryForTransportCallID()+"\",\n" +
-                        "    \"locationType\": \"BERTH\",\n" +
-                        "    \"locationID\": \"Meter 100-300\",\n" +
-                        "    \"comment\": null,\n" +
+                        "    \"operationsEventTypeCode\": \"DEPA\",\n" +
+                        "    \"transportCallID\": \"" + this.queryForTransportCallID() + "\",\n" +
+                        "    \"facilityTypeCode\": \"BRTH\",\n" +
+                        "    \"publisher\": \"DEHAM\",\n" +
+                        "    \"publisherRole\": \"POR\",\n" +
+                        "    \"eventLocation\": \"Meter 100-300\",\n" +
+                        "    \"changeRemark\": null,\n" +
                         "    \"delayReasonCode\": null," +
-                        "    \"creationDateTime\": \"2021-01-01T15:00:00+02:00\"" +
+                        "    \"eventCreatedDateTime\": \"2021-01-30T15:00:00+02:00\"" +
                         "}\n").
-                when().post(Configuration.ROOT_URI + "/transport-calls/transport-events").
+                when().post(Configuration.ROOT_URI + "/transport-calls/operations-events").
                 then().body("$", hasKey("eventID"));
     }
 

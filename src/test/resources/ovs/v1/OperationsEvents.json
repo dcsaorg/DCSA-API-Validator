@@ -1,0 +1,186 @@
+{
+  "$schema":"http://json-schema.org/draft-04/schema",
+  "id": "http://example.com/example.json",
+  "type":"array",
+  "title":"The root schema",
+  "default":[
+
+  ],
+  "examples":[
+    [
+      {
+        "eventID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "eventType": "OPERATIONS",
+        "eventDateTime": "2021-04-08T10:55:23.623Z",
+        "eventClassifierCode": "EST",
+        "transportCallID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "eventCreatedDateTime": "2021-04-08T10:55:23.623Z",
+        "operationsEventTypeCode": "ARRI",
+        "publisher": "DEHAMCTA",
+        "publisherRole": "TR",
+        "eventLocation": "Bollard 5 - 15",
+        "portCallServiceTypeCode": "CRGO",
+        "facilityTypeCode": "BRTH",
+        "changeRemark": "WEA",
+        "delayReasonCode": ""
+      }
+    ]
+  ],
+  "additionalItems":true,
+  "items":{
+    "id":"#/items",
+    "anyOf":[
+      {
+        "id":"#/items/anyOf/0",
+        "type":"object",
+        "title":"The first anyOf schema",
+        "description":"A list of PortCallEvent Objects.",
+        "default":{
+        },
+        "examples":[
+          {
+            "eventID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "eventType": "OPERATIONS",
+            "eventDateTime": "2021-04-08T10:55:23.623Z",
+            "eventClassifierCode": "EST",
+            "transportCallID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "eventCreatedDateTime": "2021-04-08T10:55:23.623Z",
+            "operationsEventTypeCode": "ARRI",
+            "publisher": "DEHAMCTA",
+            "publisherRole": "TR",
+            "eventLocation": "Bollard 5 - 15",
+            "portCallServiceTypeCode": "CRGO",
+            "facilityTypeCode": "BRTH",
+            "changeRemark": "WEA",
+            "delayReasonCode": "",
+            "locationID": "fbd617b6-815d-455f-a9d6-21055e87ed13"
+          }
+        ],
+        "required":[
+          "eventID",
+          "eventType",
+          "eventDateTime",
+          "eventClassifierCode",
+          "transportCallID",
+          "operationsEventTypeCode",
+          "publisher",
+          "publisherRole",
+          "eventLocation"
+
+        ],
+
+        "anyOf": [
+          {
+            "required": [
+              "portCallServiceTypeCode"
+            ]
+          },
+          {
+            "required": [
+              "facilityTypeCode"
+            ]
+          }
+        ],
+
+        "properties":{
+          "eventID":{
+            "id":"#/properties/eventID",
+            "type":"string",
+            "title":"The eventID schema",
+            "default":""
+          },
+          "eventType":{
+            "id":"#/properties/eventType",
+            "type":"string",
+            "title":"The eventType schema",
+            "default":""
+          },
+          "eventDateTime": {
+            "id": "#/properties/eventDateTime",
+            "type": "string",
+            "format": "datetime",
+            "title": "The eventDateTime schema",
+            "default": ""
+          },
+          "eventCreatedDateTime": {
+            "id": "#/properties/eventCreatedDateTime",
+            "type": "string",
+            "format": "datetime",
+            "title": "The date and time of creation for the event",
+            "default": ""
+          },
+          "eventClassifierCode":{
+            "id":"#/properties/eventClassifierCode",
+            "type":"string",
+            "title":"The eventClassifierCode schema",
+            "default":""
+          },
+          "operationsEventTypeCode":{
+            "id":"#/properties/operationsEventTypeCode",
+            "type":"string",
+            "title":"The operationsEventTypeCode schema",
+            "default":""
+          },
+          "transportCallID":{
+            "id":"#/properties/transportCallID",
+            "type":"string",
+            "title":"The TransportCallID schema",
+            "default":""
+          },
+
+          "publisher":{
+            "id":"#/properties/publisher",
+            "type":"string",
+            "title":"The publisher schema",
+            "default":""
+          },
+
+          "publisherRole":{
+            "id":"#/properties/publisherRole",
+            "type":"string",
+            "title":"The publisherRole schema",
+            "default":""
+          },
+
+          "eventLocation":{
+            "id":"#/properties/eventLocation",
+            "type":"string",
+            "title":"The eventLocation schema ",
+            "default":""
+          },
+          "portCallServiceTypeCode":{
+            "id":"#/properties/portCallServiceTypeCode",
+            "type":["string", "null"],
+            "title":"The portCallServiceTypeCode schema ",
+            "default":""
+          },
+          "facilityTypeCode":{
+            "id":"#/properties/facilityTypeCode",
+            "type":["string", "null"],
+            "title":"The facilityTypeCode schema ",
+            "default":""
+          },
+          "changeRemark":{
+            "id":"#/properties/changeRemark",
+            "type":["string", "null"],
+            "title":"The changeRemark schema ",
+            "default":""
+          },
+          "delayReasonCode":{
+            "id":"#/properties/delayReasonCode",
+            "type": ["string", "null"],
+            "title":"The locationID schema ",
+            "default":""
+          },
+          "locationID":{
+            "id":"#/properties/locationID",
+            "type":["string", "null"],
+            "title":"The locationID schema ",
+            "default":""
+          }
+        },
+        "additionalProperties":true
+      }
+    ]
+  }
+}

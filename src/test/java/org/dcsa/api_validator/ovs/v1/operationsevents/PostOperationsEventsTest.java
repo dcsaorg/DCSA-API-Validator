@@ -1,4 +1,4 @@
-package org.dcsa.api_validator.ovs.v1.portcallevents;
+package org.dcsa.api_validator.ovs.v1.operationsevents;
 
 import org.dcsa.api_validator.conf.Configuration;
 import org.testng.Assert;
@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasKey;
 
-public class PostPortCallEventsTest {
+public class PostOperationsEventsTest {
 
     @Test
     public void testPostNewETABerth() {

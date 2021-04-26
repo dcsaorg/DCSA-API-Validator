@@ -30,7 +30,7 @@ public class ScheduleSubscriptionsTest {
     @BeforeMethod
     void setup() {
         cleanUp();
-        Spark.port(4567);
+        Spark.port(Configuration.getCallbackListenPort());
         Spark.post("v1/webhook/receive-schedule-2", (req, res) -> {
             if(req.body()==null) return "Ignoring null callback received"; //Not sure why this sometimes happens. May be a problem in the API, for now we ignore it to avoid tests failing sporadically
             this.scheduleRequest1 = req;

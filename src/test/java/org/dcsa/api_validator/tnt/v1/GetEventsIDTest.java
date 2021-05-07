@@ -11,7 +11,6 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static com.github.fge.jsonschema.SchemaVersion.DRAFTV4;
-import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.is;

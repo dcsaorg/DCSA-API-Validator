@@ -13,6 +13,8 @@ import spark.Spark;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -61,8 +63,7 @@ public class EventSubscriptionsTest {
 
     @Test
     public void testCallbacks() throws InterruptedException, IOException, JSONException {
-
-        given().
+        Map<?, ?> subscription = given().
                 auth().
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
@@ -76,7 +77,10 @@ public class EventSubscriptionsTest {
                         "  \"equipmentReference\": \"\"\n" +
                         "}").
                 post(Configuration.ROOT_URI+"/event-subscriptions").
-                then().assertThat().statusCode(201);
+                then().
+                assertThat().
+                statusCode(201).
+                extract().body().as(Map.class);
 
         given().
                 auth().
@@ -92,7 +96,19 @@ public class EventSubscriptionsTest {
                         "        }").
                 post(Configuration.ROOT_URI + "/events");
 
+        UUID subscriptionID = assertValueIsSubscriptionID(subscription.get("subscriptionID"));
+
         lock.await(20000, TimeUnit.MILLISECONDS); //Released immediately if lock countdown is 0
+
+        // Delete the subscription again to ensure we clean up after ourselves before moving on with the test
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                delete(Configuration.ROOT_URI + "/event-subscriptions/" + subscriptionID).
+                then().
+                assertThat().
+                statusCode(204);
+
         Assert.assertNotNull(req, "The callback request should not be null");
         Assert.assertNotNull(req.body(), "The callback request body should not be null");
         String jsonBody = req.body();
@@ -111,7 +127,7 @@ public class EventSubscriptionsTest {
 
     @Test
     public void testCallbackFilter() throws InterruptedException, JSONException {
-        given().
+        Map<?, ?> subscription = given().
                 auth().
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
@@ -124,7 +140,10 @@ public class EventSubscriptionsTest {
                         "  \"equipmentReference\": \"\"\n" +
                         "}").
                 post(Configuration.ROOT_URI+"/event-subscriptions").
-                then().assertThat().statusCode(201);
+                then().
+                assertThat().
+                statusCode(201).
+                extract().body().as(Map.class);
 
         given().
                 auth().
@@ -141,8 +160,33 @@ public class EventSubscriptionsTest {
                 post(Configuration.ROOT_URI + "/events");
 
         lock2.await(3000, TimeUnit.MILLISECONDS); //Released immediately if lock countdown is 0
+        // Delete the subscription again to ensure we clean up after ourselves before moving on with the test
+        UUID subscriptionID = assertValueIsSubscriptionID(subscription.get("subscriptionID"));
+
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                delete(Configuration.ROOT_URI + "/event-subscriptions/" + subscriptionID).
+                then().
+                assertThat().
+                statusCode(204);
+
         Assert.assertNull(reqTransportEvent, "The callback request should be null"); //The body should be null, since only transport events must be sent to this endpoint
 
+    }
+
+    private static UUID assertValueIsSubscriptionID(Object v) {
+        Assert.assertNotNull(v, "Resulting subscription had no subscriptionID");
+        Assert.assertTrue(v instanceof String,
+                "The SubscriptionID must be an UUID/String, was: " + v.getClass().getSimpleName());
+
+        UUID uuid = null;
+        try {
+            uuid = UUID.fromString((String) v);
+        } catch (IllegalArgumentException e) {
+            Assert.fail("The SubscriptionID must be an UUID/String, but " + v + " could not be parsed as one", e);
+        }
+        return uuid;
     }
 
 }

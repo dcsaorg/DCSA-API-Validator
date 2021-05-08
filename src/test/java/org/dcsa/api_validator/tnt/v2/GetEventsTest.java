@@ -32,6 +32,7 @@ public class GetEventsTest {
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
+                statusCode(200).
                 body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                         using(jsonSchemaFactory));
     }
@@ -45,6 +46,7 @@ public class GetEventsTest {
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
+                statusCode(200).
                 body(matchesJsonSchemaInClasspath("tnt/v2/EquipmentEventsSchema.json").
                         using(jsonSchemaFactory));
     }
@@ -58,7 +60,9 @@ public class GetEventsTest {
                 oauth2(Configuration.accessToken).
                 queryParam("eventType", "EQUIPMENT,TRANSPORTEQUIPMENT").
                 get(Configuration.ROOT_URI + "/events").
-                body().asString();
+                then().
+                statusCode(200).
+                extract().body().asString();
 
         List<String> equipmentReferences = JsonPath.from(json).getList("equipmentReference");
         for (String equipmentReference : equipmentReferences) {
@@ -68,6 +72,7 @@ public class GetEventsTest {
                     queryParam("equipmentReference", equipmentReference).
                     get(Configuration.ROOT_URI + "/events").
                     then().
+                    statusCode(200).
                     body("equipmentReference", everyItem(equalTo(equipmentReference)));
         }
     }
@@ -81,6 +86,7 @@ public class GetEventsTest {
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
+                statusCode(200).
                 body(matchesJsonSchemaInClasspath("tnt/v2/TransportEventsSchema.json").
                         using(jsonSchemaFactory));
     }
@@ -94,6 +100,7 @@ public class GetEventsTest {
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
+                statusCode(200).
                 body(matchesJsonSchemaInClasspath("tnt/v2/ShipmentEventsSchema.json").
                         using(jsonSchemaFactory));
     }

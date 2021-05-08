@@ -117,7 +117,7 @@ public class EventSubscriptionsTest {
                 contentType("application/json").
                 body("{\n" +
                         "  \"callbackUrl\": \""+Configuration.CALLBACK_URI+"/receive-transport-events\",\n" +
-                        "  \"eventType\": \"TRANSPORT\"," +
+                        "  \"eventType\": [\"TRANSPORT\"]," +
                         "  \"bookingReference\": \"\",\n" +
                         "  \"transportDocumentID\": \"\",\n" +
                         "  \"transportDocumentType\": \"\",\n" +

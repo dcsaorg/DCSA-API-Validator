@@ -21,31 +21,43 @@ import java.util.concurrent.TimeUnit;
 import static io.restassured.RestAssured.given;
 
 public class EventSubscriptionsTest {
+
+    public static final String SUBSCRIPTION_PATH_PREFIX = "/test/tntv1/webhook";
+
     //Don't reuse request objects to reduce risk of other unrelated events affecting the tests
     private Request req;
     private Request reqTransportEvent;
     private CountDownLatch lock = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
     private CountDownLatch lock2 = new CountDownLatch(1); //Initialize countdown at 1, when count is 0 lock is released
 
+    private static String callbackContext(String name) {
+        if (name == null || name.equals("")) {
+            throw new IllegalArgumentException("name must be not null and non-empty");
+        }
+        return SUBSCRIPTION_PATH_PREFIX + "/" + name;
+    }
+
+    private static String callbackUri(String name) {
+        return Configuration.CALLBACK_URI + callbackContext(name);
+    }
+
     @BeforeMethod
     void setup() {
         cleanUp();
         Spark.port(Configuration.getCallbackListenPort());
-        Spark.post("/webhook/receive", (req, res) -> {
+        Spark.post(callbackContext("receive"), (req, res) -> {
             if(req.body()==null) return "Ignoring null callback received"; //Not sure why this sometimes happens. May be a problem in the API, for now we ignore it to avoid tests failing sporadically
             this.req = req;
             lock.countDown(); //Release lock
             return "Callback received!";
         });
-        Spark.post("/webhook/receive-transport-events", (req, res) -> {
+        Spark.post(callbackContext("receive-transport-events"), (req, res) -> {
             if(req.body()==null) return "Ignoring null callback received"; //Not sure why this sometimes happens. May be a problem in the API, for now we ignore it to avoid tests failing sporadically
             this.reqTransportEvent = req;
             lock2.countDown(); //Release lock
             return "Callback received!";
         });
         Spark.awaitInitialization();
-
-
     }
 
     private void cleanUp() {
@@ -68,7 +80,7 @@ public class EventSubscriptionsTest {
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
                 body("{\n" +
-                        "  \"callbackUrl\": \""+Configuration.CALLBACK_URI+"/webhook/receive\",\n" +
+                        "  \"callbackUrl\": \"" + callbackUri("receive") + "\",\n" +
                         "  \"eventType\": [\n" +
                         "  ],\n" +
                         "  \"bookingReference\": \"\",\n" +
@@ -132,7 +144,7 @@ public class EventSubscriptionsTest {
                 oauth2(Configuration.accessToken).
                 contentType("application/json").
                 body("{\n" +
-                        "  \"callbackUrl\": \""+Configuration.CALLBACK_URI+"/receive-transport-events\",\n" +
+                        "  \"callbackUrl\": \"" + callbackUri("receive-transport-events") + "\",\n" +
                         "  \"eventType\": [\"TRANSPORT\"]," +
                         "  \"bookingReference\": \"\",\n" +
                         "  \"transportDocumentID\": \"\",\n" +

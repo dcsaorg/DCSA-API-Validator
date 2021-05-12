@@ -6,6 +6,7 @@ import org.everit.json.schema.loader.SchemaLoader;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.junit.jupiter.api.Assertions;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -143,6 +144,83 @@ public class EventSubscriptionsTest {
             schema.validate(jsonSubject); // throws a ValidationException if this object is invalid
         }
 
+    }
+
+
+    @Test
+    public void testSubscriptionCRUD() {
+        String origCallbackURI = callbackUri("not-used-orig");
+        String updatedCallbackURI = callbackUri("not-used-updated");
+        Map<?, ?> subscriptionAfterPOST = given().
+                auth().
+                oauth2(Configuration.accessToken).
+                contentType("application/json").
+                body("{\n" +
+                        "  \"callbackUrl\": \"" + origCallbackURI + "\",\n" +
+                        "  \"eventType\": [\n" +
+                        "  ],\n" +
+                        "  \"bookingReference\": \"\",\n" +
+                        "  \"transportDocumentID\": \"\",\n" +
+                        "  \"transportDocumentType\": \"\",\n" +
+                        "  \"equipmentReference\": \"\",\n" +
+                        "  \"scheduleID\": \"\",\n" +
+                        "  \"transportCallID\": \"\"\n" +
+                        "}").
+                post(Configuration.ROOT_URI+"/event-subscriptions").
+                then().
+                assertThat().
+                statusCode(201).
+                extract().body().as(Map.class);
+
+        UUID subscriptionID = assertValueIsSubscriptionID(subscriptionAfterPOST.get("subscriptionID"));
+
+        @SuppressWarnings({"unchecked"})
+        Map<String, Object> subscriptionAfterGET = (Map<String, Object>) given().
+                auth().
+                oauth2(Configuration.accessToken).
+                get(Configuration.ROOT_URI+"/event-subscriptions/" + subscriptionID).
+                then().
+                assertThat().
+                statusCode(200).
+                extract().body().as(Map.class);
+
+        Assertions.assertEquals(subscriptionID, assertValueIsSubscriptionID(subscriptionAfterPOST.get("subscriptionID")));
+        Assertions.assertEquals(origCallbackURI, subscriptionAfterGET.get("callbackUrl"));
+
+        subscriptionAfterGET.put("callbackUrl", updatedCallbackURI);
+
+        Map<?, ?> subscriptionAfterPUT = given().
+                auth().
+                oauth2(Configuration.accessToken).
+                contentType("application/json").
+                body(subscriptionAfterGET).
+                put(Configuration.ROOT_URI+"/event-subscriptions/" + subscriptionID).
+                then().
+                assertThat().
+                statusCode(200).
+                extract().body().as(Map.class);
+
+        Assertions.assertEquals(updatedCallbackURI, subscriptionAfterPUT.get("callbackUrl"));
+
+        Map<?, ?> subscriptionAfterPUT2GET = given().
+                auth().
+                oauth2(Configuration.accessToken).
+                get(Configuration.ROOT_URI+"/event-subscriptions/" + subscriptionID).
+                then().
+                assertThat().
+                statusCode(200).
+                extract().body().as(Map.class);
+
+        // PUT + following GET should be the same
+        Assertions.assertEquals(subscriptionAfterPUT, subscriptionAfterPUT2GET);
+
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                delete(Configuration.ROOT_URI + "/event-subscriptions/" + subscriptionID).
+                then().
+                assertThat().
+                statusCode(204);
     }
 
     @Test

@@ -11,6 +11,7 @@ public class Configuration {
     public final static String ROOT_URI = System.getenv("API_ROOT_URI");
     public final static String CALLBACK_URI = System.getenv("CALLBACK_URI");
     private final static int CALLBACK_LISTEN_PORT = readPortFromEnv("CALLBACK_LISTEN_PORT", "4567");
+    public static final boolean MAY_USE_POST_EVENTS_ENDPOINT = getEnvBool("DCSA_API_VALIDATOR_MAY_USE_POST_EVENTS_ENDPOINT", false);
     public static String accessToken;
     private static String client_secret= System.getenv("client_secret");
     private static String client_id= System.getenv("client_id");
@@ -44,6 +45,15 @@ public class Configuration {
                     .when()
                     .post(System.getenv("OAuthTokenUri")).jsonPath().getString("access_token");
         }
+    }
+
+    private static boolean getEnvBool(String name, boolean defaultValue) {
+        String envValue = System.getenv(name);
+        boolean value = defaultValue;
+        if (envValue != null) {
+            value = Boolean.parseBoolean(envValue);
+        }
+        return value;
     }
 
     private static int readPortFromEnv(String name, String defaultText) {

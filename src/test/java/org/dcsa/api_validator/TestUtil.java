@@ -1,9 +1,18 @@
 package org.dcsa.api_validator;
 
+import org.dcsa.api_validator.conf.Configuration;
+import org.testng.SkipException;
+
 import java.io.*;
 import java.net.URL;
 
 public class TestUtil {
+
+    public static void assumesPostEventsEndpoints() {
+        if (!Configuration.MAY_USE_POST_EVENTS_ENDPOINT) {
+            throw new SkipException("Test requires the unofficial POST /events endpoint");
+        }
+    }
 
     private static InputStream openStream(String resource) throws IOException {
         URL url = Thread.currentThread().getContextClassLoader().getResource(resource);

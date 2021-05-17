@@ -1,5 +1,6 @@
 package org.dcsa.api_validator.tnt.v2;
 
+import org.dcsa.api_validator.TestUtil;
 import org.dcsa.api_validator.conf.Configuration;
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.loader.SchemaLoader;
@@ -78,6 +79,7 @@ public class EventSubscriptionsTest {
 
     @Test
     public void testCallbacks() throws InterruptedException, IOException, JSONException {
+        TestUtil.assumesPostEventsEndpoints();
         Map<?, ?> subscription = given().
                 auth().
                 oauth2(Configuration.accessToken).
@@ -225,6 +227,7 @@ public class EventSubscriptionsTest {
 
     @Test
     public void testCallbackFilter() throws InterruptedException, JSONException {
+        TestUtil.assumesPostEventsEndpoints();
         Map<?, ?> subscription = given().
                 auth().
                 oauth2(Configuration.accessToken).

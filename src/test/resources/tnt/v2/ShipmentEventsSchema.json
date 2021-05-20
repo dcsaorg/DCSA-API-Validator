@@ -15,6 +15,7 @@
         "required": [
           "eventID",
           "eventType",
+          "eventCreatedDateTime",
           "eventDateTime",
           "eventClassifierCode",
           "eventTypeCode",
@@ -32,6 +33,11 @@
             "id": "#/items/anyOf/0/properties/eventType",
             "type": "string",
             "title": "The eventType schema",
+            "default": ""
+          },
+          "eventCreatedDateTime": {
+            "type": "string",
+            "title": "The eventDateTime schema",
             "default": ""
           },
           "eventDateTime": {

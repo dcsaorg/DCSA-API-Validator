@@ -4,6 +4,7 @@ import org.dcsa.api_validator.TestUtil;
 import org.dcsa.api_validator.conf.Configuration;
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.loader.SchemaLoader;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -26,6 +27,8 @@ import static io.restassured.RestAssured.given;
 
 public class EventSubscriptionsTest {
 
+    public static final String SUBSCRIPTION_SECRET = "MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3"
+            +  "ODkwMTIzNA==";
     public static final String SUBSCRIPTION_PATH_PREFIX = "/test/tntv2/webhook";
 
     //Don't reuse request objects to reduce risk of other unrelated events affecting the tests
@@ -88,6 +91,7 @@ public class EventSubscriptionsTest {
                         "  \"callbackUrl\": \"" + callbackUri("receive") + "\",\n" +
                         "  \"eventType\": [\n" +
                         "  ],\n" +
+                        "  \"secret\": \"" + SUBSCRIPTION_SECRET + "\",\n" +
                         "  \"bookingReference\": \"\",\n" +
                         "  \"transportDocumentID\": \"\",\n" +
                         "  \"transportDocumentType\": \"\",\n" +
@@ -137,15 +141,16 @@ public class EventSubscriptionsTest {
         String jsonBody = req.body();
 
         System.out.println("The testCallbacks() test received the body: " + jsonBody);
-        //Validate that the callback body is a Shipment Event
-        JSONObject jsonSubject = new JSONObject(jsonBody);
+        //Validate that the callback body is a list of Shipment Events
+        JSONArray jsonSubject = new JSONArray(jsonBody);
 
-        try (InputStream inputStream = getClass().getResourceAsStream("/tnt/v2/ShipmentEventSchema.json")) {
+        try (InputStream inputStream = getClass().getResourceAsStream("/tnt/v2/ShipmentEventsSchema.json")) {
             JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
             Schema schema = SchemaLoader.load(rawSchema);
             schema.validate(jsonSubject); // throws a ValidationException if this object is invalid
         }
-
+        // There is exactly one event for us.
+        Assert.assertEquals(jsonSubject.length(), 1);
     }
 
 
@@ -161,6 +166,7 @@ public class EventSubscriptionsTest {
                         "  \"callbackUrl\": \"" + origCallbackURI + "\",\n" +
                         "  \"eventType\": [\n" +
                         "  ],\n" +
+                        "  \"secret\": \"" + SUBSCRIPTION_SECRET + "\",\n" +
                         "  \"bookingReference\": \"\",\n" +
                         "  \"transportDocumentID\": \"\",\n" +
                         "  \"transportDocumentType\": \"\",\n" +
@@ -175,6 +181,7 @@ public class EventSubscriptionsTest {
                 extract().body().as(Map.class);
 
         UUID subscriptionID = assertValueIsSubscriptionID(subscriptionAfterPOST.get("subscriptionID"));
+        Assertions.assertNull(subscriptionAfterPOST.get("secret"), "POST /event-subscription MUST NOT return the secret!");
 
         @SuppressWarnings({"unchecked"})
         Map<String, Object> subscriptionAfterGET = (Map<String, Object>) given().
@@ -188,6 +195,7 @@ public class EventSubscriptionsTest {
 
         Assertions.assertEquals(subscriptionID, assertValueIsSubscriptionID(subscriptionAfterPOST.get("subscriptionID")));
         Assertions.assertEquals(origCallbackURI, subscriptionAfterGET.get("callbackUrl"));
+        Assertions.assertNull(subscriptionAfterGET.get("secret"), "GET /event-subscription/{ID} MUST NOT return the secret!");
 
         subscriptionAfterGET.put("callbackUrl", updatedCallbackURI);
 
@@ -203,6 +211,7 @@ public class EventSubscriptionsTest {
                 extract().body().as(Map.class);
 
         Assertions.assertEquals(updatedCallbackURI, subscriptionAfterPUT.get("callbackUrl"));
+        Assertions.assertNull(subscriptionAfterPUT.get("secret"), "PUT /event-subscription/{ID} MUST NOT return the secret!");
 
         Map<?, ?> subscriptionAfterPUT2GET = given().
                 auth().
@@ -235,6 +244,7 @@ public class EventSubscriptionsTest {
                 body("{\n" +
                         "  \"callbackUrl\": \"" + callbackUri("receive-transport-events") + "\",\n" +
                         "  \"eventType\": [\"TRANSPORT\"]," +
+                        "  \"secret\": \"" + SUBSCRIPTION_SECRET + "\",\n" +
                         "  \"bookingReference\": \"\",\n" +
                         "  \"transportDocumentID\": \"\",\n" +
                         "  \"transportDocumentType\": \"\",\n" +

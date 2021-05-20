@@ -3,6 +3,38 @@
   "type": "object",
   "title": "The root schema",
   "description": "The root schema comprises the entire JSON document.",
+  "definitions": {
+    "eventID": {
+      "type": "string",
+      "title": "The eventID schema",
+      "default": ""
+    },
+    "eventType": {
+      "type": "string",
+      "title": "The eventType schema",
+      "default": ""
+    },
+    "eventCreatedDateTime": {
+      "type": "string",
+      "title": "The eventDateTime schema",
+      "default": ""
+    },
+    "eventDateTime": {
+      "type": "string",
+      "title": "The eventDateTime schema",
+      "default": ""
+    },
+    "eventClassifierCode": {
+      "type": "string",
+      "title": "The eventClassifierCode schema",
+      "default": ""
+    },
+    "eventTypeCode": {
+      "type": "string",
+      "title": "The eventTypeCode schema",
+      "default": ""
+    }
+  },
   "oneOf": [
     {
       "type": "object",
@@ -11,6 +43,7 @@
       "required": [
         "eventID",
         "eventType",
+        "eventCreatedDateTime",
         "eventDateTime",
         "eventClassifierCode",
         "eventTypeCode",
@@ -20,34 +53,19 @@
       ],
       "properties": {
         "eventID": {
-          "id": "#/properties/eventID",
-          "type": "string",
-          "title": "The eventID schema",
-          "default": ""
+          "$ref": "#/definitions/eventID"
         },
         "eventType": {
-          "id": "#/properties/eventType",
-          "type": "string",
-          "title": "The eventType schema",
-          "default": ""
+          "$ref": "#/definitions/eventType"
+        },
+        "eventCreatedDateTime": {
+          "$ref": "#/definitions/eventCreatedDateTime"
         },
         "eventDateTime": {
-          "id": "#/properties/eventDateTime",
-          "type": "string",
-          "title": "The eventDateTime schema",
-          "default": ""
+          "$ref": "#/definitions/eventDateTime"
         },
         "eventClassifierCode": {
-          "id": "#/properties/eventClassifierCode",
-          "type": "string",
-          "title": "The eventClassifierCode schema",
-          "default": ""
-        },
-        "eventTypeCode": {
-          "id": "#/properties/eventTypeCode",
-          "type": "string",
-          "title": "The eventTypeCode schema",
-          "default": ""
+          "$ref": "#/definitions/eventClassifierCode"
         },
         "delayReasonCode": {
           "id": "#/properties/delayReasonCode",
@@ -77,6 +95,7 @@
       "required": [
         "eventID",
         "eventType",
+        "eventCreatedDateTime",
         "eventDateTime",
         "eventClassifierCode",
         "eventTypeCode",
@@ -85,34 +104,19 @@
       ],
       "properties": {
         "eventID": {
-          "id": "#/properties/eventID",
-          "type": "string",
-          "title": "The eventID schema",
-          "default": ""
+          "$ref": "#/definitions/eventID"
         },
         "eventType": {
-          "id": "#/properties/eventType",
-          "type": "string",
-          "title": "The eventType schema",
-          "default": ""
+          "$ref": "#/definitions/eventType"
+        },
+        "eventCreatedDateTime": {
+          "$ref": "#/definitions/eventCreatedDateTime"
         },
         "eventDateTime": {
-          "id": "#/properties/eventDateTime",
-          "type": "string",
-          "title": "The eventDateTime schema",
-          "default": ""
+          "$ref": "#/definitions/eventDateTime"
         },
         "eventClassifierCode": {
-          "id": "#/properties/eventClassifierCode",
-          "type": "string",
-          "title": "The eventClassifierCode schema",
-          "default": ""
-        },
-        "eventTypeCode": {
-          "id": "#/properties/eventTypeCode",
-          "type": "string",
-          "title": "The eventTypeCode schema",
-          "default": ""
+          "$ref": "#/definitions/eventClassifierCode"
         },
         "shipmentInformationTypeCode": {
           "id": "#/properties/shipmentInformationTypeCode",
@@ -136,6 +140,7 @@
       "required": [
         "eventID",
         "eventType",
+        "eventCreatedDateTime",
         "eventDateTime",
         "eventClassifierCode",
         "eventTypeCode",
@@ -145,34 +150,19 @@
       ],
       "properties": {
         "eventID": {
-          "id": "#/properties/eventID",
-          "type": "string",
-          "title": "The eventID schema",
-          "default": ""
+          "$ref": "#/definitions/eventID"
         },
         "eventType": {
-          "id": "#/properties/eventType",
-          "type": "string",
-          "title": "The eventType schema",
-          "default": ""
+          "$ref": "#/definitions/eventType"
+        },
+        "eventCreatedDateTime": {
+          "$ref": "#/definitions/eventCreatedDateTime"
         },
         "eventDateTime": {
-          "id": "#/properties/eventDateTime",
-          "type": "string",
-          "title": "The eventDateTime schema",
-          "default": ""
+          "$ref": "#/definitions/eventDateTime"
         },
         "eventClassifierCode": {
-          "id": "#/properties/eventClassifierCode",
-          "type": "string",
-          "title": "The eventClassifierCode schema",
-          "default": ""
-        },
-        "eventTypeCode": {
-          "id": "#/properties/eventTypeCode",
-          "type": "string",
-          "title": "The eventTypeCode schema",
-          "default": ""
+          "$ref": "#/definitions/eventClassifierCode"
         },
         "equipmentReference": {
           "id": "#/properties/equipmentReference",

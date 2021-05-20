@@ -28,7 +28,7 @@
     },
     "eventCreatedDateTime": {
       "type": "string",
-      "title": "The eventDateTime schema",
+      "title": "The eventCreatedDateTime schema",
       "default": ""
     },
     "eventDateTime": {

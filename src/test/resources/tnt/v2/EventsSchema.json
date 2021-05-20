@@ -22,7 +22,7 @@
     },
     "eventDateTime": {
       "type": "string",
-      "title": "The eventDateTime schema",
+      "title": "The eventCreatedDateTime schema",
       "default": ""
     },
     "eventClassifierCode": {

@@ -28,7 +28,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: dcsaorg/DCSA-TNT
-        ref: update-tnt-to-match-datamodel
+        ref: master
         path: DCSA-TNT
         token: ${{ secrets.DCSA_PACKAGES_PAT }}
 

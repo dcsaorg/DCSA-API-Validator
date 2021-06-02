@@ -93,7 +93,7 @@ public class EventSubscriptionsTest {
                         "  ],\n" +
                         "  \"secret\": \"" + SUBSCRIPTION_SECRET + "\",\n" +
                         "  \"bookingReference\": \"\",\n" +
-                        "  \"transportDocumentID\": \"\",\n" +
+                        "  \"transportDocumentReference\": \"\",\n" +
                         "  \"transportDocumentType\": \"\",\n" +
                         "  \"equipmentReference\": \"\",\n" +
                         "  \"scheduleID\": \"\",\n" +
@@ -168,7 +168,7 @@ public class EventSubscriptionsTest {
                         "  ],\n" +
                         "  \"secret\": \"" + SUBSCRIPTION_SECRET + "\",\n" +
                         "  \"bookingReference\": \"\",\n" +
-                        "  \"transportDocumentID\": \"\",\n" +
+                        "  \"transportDocumentReference\": \"\",\n" +
                         "  \"transportDocumentType\": \"\",\n" +
                         "  \"equipmentReference\": \"\",\n" +
                         "  \"scheduleID\": \"\",\n" +

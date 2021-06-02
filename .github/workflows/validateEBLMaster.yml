@@ -39,7 +39,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: dcsaorg/DCSA-EBL
-        ref: master
+        ref: fix-ebl
         path: DCSA-EBL
         token: ${{ secrets.DCSA_PACKAGES_PAT }}
     - name: Build backend

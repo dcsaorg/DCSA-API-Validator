@@ -48,7 +48,7 @@
         "eventClassifierCode",
         "eventTypeCode",
         "delayReasonCode",
-        "vesselScheduleChangeRemark",
+        "changeRemark",
         "transportCallID"
       ],
       "properties": {
@@ -73,10 +73,10 @@
           "title": "The delayReasonCode schema",
           "default": ""
         },
-        "vesselScheduleChangeRemark": {
-          "id": "#/properties/vesselScheduleChangeRemark",
+        "changeRemark": {
+          "id": "#/properties/changeRemark",
           "type": "string",
-          "title": "The vesselScheduleChangeRemark schema",
+          "title": "The changeRemark schema",
           "default": ""
         },
         "transportCallID": {

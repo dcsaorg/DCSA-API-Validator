@@ -106,12 +106,12 @@ public class GetEventsTest {
     }
 
     @Test
-    public void testEventQueryParamTransportDocumentID() {
+    public void testEventQueryParamTransportDocumentReference() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
                 // Just to ensure it does not crash; we do not test data with that ID though
-                queryParam("transportDocumentID", "80d63706-7b93-4936-84fe-3ef9ef1946f0").
+                queryParam("transportDocumentReference", "80d63706-7b93-4936-84fe-3ef9ef1946f0").
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().

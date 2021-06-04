@@ -6,7 +6,7 @@
   "isShippedOnBoardType": true,
   "transportDocumentType": "SWB",
   "freightPayableAt": {
-    "locationID": "770b7624-403d-11eb-b44b-d3f4ad185386"
+    "locationName": "Port of Rotterdam"
   },
   "cargoItems": [
     {

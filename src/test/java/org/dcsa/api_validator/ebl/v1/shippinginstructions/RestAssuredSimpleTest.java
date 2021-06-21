@@ -18,7 +18,7 @@ public class RestAssuredSimpleTest {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/shipping-instructions").then().assertThat().body("size()", greaterThanOrEqualTo(0));
+                get(Configuration.ROOT_URI + "/shipping-instructions-summaries").then().assertThat().body("size()", greaterThanOrEqualTo(0));
     }
 
     @Test
@@ -26,6 +26,6 @@ public class RestAssuredSimpleTest {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/shipping-instructions").then().assertThat().statusCode(200);
+                get(Configuration.ROOT_URI + "/shipping-instructions-summaries").then().assertThat().statusCode(200);
     }
 }

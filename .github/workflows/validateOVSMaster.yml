@@ -20,7 +20,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: dcsaorg/DCSA-OVS
-        ref: master
+        ref: aligning_to_updated_IM
         token: ${{ secrets.DCSA_PACKAGES_PAT }}
     - name: Build backend
       run: mvn package -DskipTests #Need to skip the tests as they depend on a running DB
@@ -29,7 +29,7 @@ jobs:
     - name: Checkout API validator
       uses: actions/checkout@v2
     - name: Run the API validator on OVSV1
-      run: mvn -Dtest.suite=OVSV1.xml test
+      run: mvn -Dtest.suite=OVSV2.xml test
       env: 
         client_secret: ${{ secrets.AUTH0_DCSA_CLIENT_SECRET }}
         client_id: 1qEYXCbxWvjeYS8VVm1BfnfZrP3TY9n8

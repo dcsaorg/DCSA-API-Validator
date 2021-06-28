@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "type": "object",
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "default": {},
+  "examples": [
+    {
+      "subscriptionID": "jlke123j",
+      "callbackUrl": "https://myserver.com/send/callback/here",
+      "vesselIMONumber": "1801323",
+      "carrierVoyageNumber": "2015W",
+      "UNLocationCode": "USNYC"
+    }
+  ],
+  "required": [
+    "subscriptionID",
+    "callbackUrl",
+    "vesselIMONumber",
+    "carrierVoyageNumber",
+    "UNLocationCode"
+  ],
+  "properties": {
+    "subscriptionID": {
+      "id": "#/properties/subscriptionID",
+      "type": "string",
+      "title": "The subscriptionID schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "jlke123j"
+      ]
+    },
+    "callbackUrl": {
+      "id": "#/properties/callbackUrl",
+      "type": "string",
+      "title": "The callbackUrl schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "https://myserver.com/send/callback/here"
+      ]
+    },
+    "vesselIMONumber": {
+      "id": "#/properties/vesselIMONumber",
+      "type": "string",
+      "title": "The vesselIMONumber schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": 0,
+      "examples": [
+        "1801323"
+      ]
+    },
+    "carrierVoyageNumber": {
+      "id": "#/properties/carrierVoyageNumber",
+      "type": "string",
+      "title": "The carrierVoyageNumber schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "2015W"
+      ]
+    },
+    "UNLocationCode": {
+      "id": "#/properties/UNLocationCode",
+      "type": "string",
+      "title": "The UNLocationCode schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "USNYC"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

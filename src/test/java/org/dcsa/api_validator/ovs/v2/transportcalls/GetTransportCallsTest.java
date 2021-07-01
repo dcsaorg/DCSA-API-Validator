@@ -27,7 +27,7 @@ public class GetTransportCallsTest {
                 get(Configuration.ROOT_URI + "/transport-calls").
                 then().
                 assertThat().
-                body(matchesJsonSchemaInClasspath("ovs/v1/TransportCallsSchema.json").
+                body(matchesJsonSchemaInClasspath("ovs/v2/TransportCallsSchema.json").
                         using(jsonSchemaFactory));
     }
 

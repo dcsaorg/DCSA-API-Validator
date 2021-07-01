@@ -35,25 +35,13 @@ public class GetTransportCallsIDTest {
                     get(Configuration.ROOT_URI + "/transport-calls/" + id).
                     then().
                     body("transportCallID", is(id)).
-                    assertThat().body(matchesJsonSchemaInClasspath("ovs/v1/TransportCallSchema.json").using(jsonSchemaFactory));
+                    assertThat().body(matchesJsonSchemaInClasspath("ovs/v2/TransportCallSchema.json").using(jsonSchemaFactory));
         }
 
     }
 
-    //Ensures a bad request is thrown when the path parameter is not an UUID. If API implementers don't use UUIDs, then this test should be removed
     @Test
-    public void testIncorrectUUID() {
-        given().
-                auth().
-                oauth2(Configuration.accessToken).
-        get(Configuration.ROOT_URI+"/transport-calls/NOT-AN-UUID")
-                .then()
-                .assertThat().
-                statusCode(HttpStatus.SC_BAD_REQUEST);
-    }
-
-    @Test
-    public void testNotFoundUUID() {
+    public void testNotFound() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).

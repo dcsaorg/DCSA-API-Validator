@@ -11,8 +11,7 @@ import java.util.List;
 import static com.github.fge.jsonschema.SchemaVersion.DRAFTV4;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.*;
 
 /*
  * Tests related to the GET /events endpoint
@@ -33,6 +32,7 @@ public class GetEventsTest {
                 then().
                 assertThat().
                 statusCode(200).
+                body("size()", greaterThanOrEqualTo(0)).
                 body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                         using(jsonSchemaFactory));
     }
@@ -47,6 +47,7 @@ public class GetEventsTest {
                 then().
                 assertThat().
                 statusCode(200).
+                body("size()", greaterThanOrEqualTo(0)).
                 body(matchesJsonSchemaInClasspath("tnt/v2/EquipmentEventsSchema.json").
                         using(jsonSchemaFactory));
     }
@@ -55,13 +56,13 @@ public class GetEventsTest {
     @Test
     public void testEquipmentReferenceQueryParam() {
         String json = given().
-
                 auth().
                 oauth2(Configuration.accessToken).
                 queryParam("eventType", "EQUIPMENT,TRANSPORTEQUIPMENT").
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 statusCode(200).
+                body("size()", greaterThanOrEqualTo(0)).
                 extract().body().asString();
 
         List<String> equipmentReferences = JsonPath.from(json).getList("equipmentReference");
@@ -87,6 +88,7 @@ public class GetEventsTest {
                 then().
                 assertThat().
                 statusCode(200).
+                body("size()", greaterThanOrEqualTo(0)).
                 body(matchesJsonSchemaInClasspath("tnt/v2/TransportEventsSchema.json").
                         using(jsonSchemaFactory));
     }
@@ -101,6 +103,7 @@ public class GetEventsTest {
                 then().
                 assertThat().
                 statusCode(200).
+                body("size()", greaterThanOrEqualTo(0)).
                 body(matchesJsonSchemaInClasspath("tnt/v2/ShipmentEventsSchema.json").
                         using(jsonSchemaFactory));
     }
@@ -116,6 +119,7 @@ public class GetEventsTest {
                 then().
                 assertThat().
                 statusCode(200).
+                body("size()", greaterThanOrEqualTo(0)).
                 body(matchesJsonSchemaInClasspath("tnt/v2/ShipmentEventsSchema.json").
                         using(jsonSchemaFactory));
     }

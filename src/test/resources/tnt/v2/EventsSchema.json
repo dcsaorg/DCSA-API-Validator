@@ -38,18 +38,17 @@
   },
   "items": {
     "id": "#/items",
-    "anyOf": [
+    "oneOf": [
       {
-        "id": "#/items/anyOf/0",
         "type": "object",
-        "title": "The first anyOf schema",
+        "title": "The Transport Event schema",
         "default": {},
         "required": [
           "eventID",
           "eventType",
+          "eventCreatedDateTime",
           "eventDateTime",
           "eventClassifierCode",
-          "eventTypeCode",
           "delayReasonCode",
           "changeRemark",
           "transportCallID"
@@ -71,19 +70,19 @@
             "$ref": "#/definitions/eventClassifierCode"
           },
           "delayReasonCode": {
-            "id": "#/items/anyOf/0/properties/delayReasonCode",
+            "id": "#/properties/delayReasonCode",
             "type": "string",
             "title": "The delayReasonCode schema",
             "default": ""
           },
           "changeRemark": {
-            "id": "#/items/anyOf/0/properties/changeRemark",
+            "id": "#/properties/changeRemark",
             "type": "string",
             "title": "The changeRemark schema",
             "default": ""
           },
           "transportCallID": {
-            "id": "#/items/anyOf/0/properties/transportCallID",
+            "id": "#/properties/transportCallID",
             "type": "string",
             "title": "The transportCallID schema",
             "default": ""
@@ -92,16 +91,16 @@
         "additionalProperties": true
       },
       {
-        "id": "#/items/anyOf/1",
         "type": "object",
-        "title": "The second anyOf schema",
+        "title": "The Shipment Event schema",
         "default": {},
         "required": [
           "eventID",
           "eventType",
+          "eventCreatedDateTime",
           "eventDateTime",
           "eventClassifierCode",
-          "eventTypeCode",
+          "documentTypeCode",
           "shipmentInformationTypeCode",
           "shipmentID"
         ],
@@ -121,14 +120,17 @@
           "eventClassifierCode": {
             "$ref": "#/definitions/eventClassifierCode"
           },
+          "documentTypeCode": {
+            "type": "string"
+          },
           "shipmentInformationTypeCode": {
-            "id": "#/items/anyOf/1/properties/shipmentInformationTypeCode",
+            "id": "#/properties/shipmentInformationTypeCode",
             "type": "string",
             "title": "The shipmentInformationTypeCode schema",
             "default": ""
           },
           "shipmentID": {
-            "id": "#/items/anyOf/1/properties/shipmentID",
+            "id": "#/properties/shipmentID",
             "type": "string",
             "title": "The shipmentID schema",
             "default": ""
@@ -137,16 +139,15 @@
         "additionalProperties": true
       },
       {
-        "id": "#/items/anyOf/2",
         "type": "object",
-        "title": "The third anyOf schema",
+        "title": "The Equipment Event schema",
         "default": {},
         "required": [
           "eventID",
           "eventType",
+          "eventCreatedDateTime",
           "eventDateTime",
           "eventClassifierCode",
-          "eventTypeCode",
           "equipmentReference",
           "emptyIndicatorCode",
           "transportCallID"
@@ -168,19 +169,19 @@
             "$ref": "#/definitions/eventClassifierCode"
           },
           "equipmentReference": {
-            "id": "#/items/anyOf/2/properties/equipmentReference",
+            "id": "#/properties/equipmentReference",
             "type": "string",
             "title": "The equipmentReference schema",
             "default": ""
           },
           "emptyIndicatorCode": {
-            "id": "#/items/anyOf/2/properties/emptyIndicatorCode",
+            "id": "#/properties/emptyIndicatorCode",
             "type": "string",
             "title": "The emptyIndicatorCode schema",
             "default": ""
           },
           "transportCallID": {
-            "id": "#/items/anyOf/2/properties/transportCallID",
+            "id": "#/properties/transportCallID",
             "type": "string",
             "title": "The transportCallID schema",
             "default": ""

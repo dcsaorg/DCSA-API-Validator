@@ -28,11 +28,6 @@
       "type": "string",
       "title": "The eventClassifierCode schema",
       "default": ""
-    },
-    "eventTypeCode": {
-      "type": "string",
-      "title": "The eventTypeCode schema",
-      "default": ""
     }
   },
   "oneOf": [
@@ -46,7 +41,6 @@
         "eventCreatedDateTime",
         "eventDateTime",
         "eventClassifierCode",
-        "eventTypeCode",
         "delayReasonCode",
         "changeRemark",
         "transportCallID"
@@ -98,7 +92,7 @@
         "eventCreatedDateTime",
         "eventDateTime",
         "eventClassifierCode",
-        "eventTypeCode",
+        "documentTypeCode",
         "shipmentInformationTypeCode",
         "shipmentID"
       ],
@@ -117,6 +111,9 @@
         },
         "eventClassifierCode": {
           "$ref": "#/definitions/eventClassifierCode"
+        },
+        "documentTypeCode": {
+          "type": "string"
         },
         "shipmentInformationTypeCode": {
           "id": "#/properties/shipmentInformationTypeCode",
@@ -143,7 +140,6 @@
         "eventCreatedDateTime",
         "eventDateTime",
         "eventClassifierCode",
-        "eventTypeCode",
         "equipmentReference",
         "emptyIndicatorCode",
         "transportCallID"

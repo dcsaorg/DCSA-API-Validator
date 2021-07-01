@@ -4,6 +4,7 @@ import com.github.fge.jsonschema.cfg.ValidationConfiguration;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
 import io.restassured.path.json.JsonPath;
 import org.dcsa.api_validator.conf.Configuration;
+import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -11,8 +12,7 @@ import java.util.List;
 import static com.github.fge.jsonschema.SchemaVersion.DRAFTV4;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.*;
 
 /*
  * Tests related to the GET /events endpoint
@@ -33,6 +33,7 @@ public class GetEventsTest {
                 then().
                 assertThat().
                 statusCode(200).
+                body("size()", greaterThanOrEqualTo(0)).
                 body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                         using(jsonSchemaFactory));
     }
@@ -47,7 +48,9 @@ public class GetEventsTest {
                 then().
                 assertThat().
                 statusCode(200).
-                body(matchesJsonSchemaInClasspath("tnt/v2/EquipmentEventsSchema.json").
+                body("size()", greaterThanOrEqualTo(0)).
+                body("collect { it.eventType }", everyItem(equalTo("EQUIPMENT"))).
+                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                         using(jsonSchemaFactory));
     }
 
@@ -55,13 +58,16 @@ public class GetEventsTest {
     @Test
     public void testEquipmentReferenceQueryParam() {
         String json = given().
-
                 auth().
                 oauth2(Configuration.accessToken).
-                queryParam("eventType", "EQUIPMENT,TRANSPORTEQUIPMENT").
+                queryParam("eventType", "EQUIPMENT").
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 statusCode(200).
+                body("size()", greaterThanOrEqualTo(0)).
+                body("collect { it.eventType }", everyItem(equalTo("EQUIPMENT"))).
+                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
+                        using(jsonSchemaFactory)).
                 extract().body().asString();
 
         List<String> equipmentReferences = JsonPath.from(json).getList("equipmentReference");
@@ -87,7 +93,9 @@ public class GetEventsTest {
                 then().
                 assertThat().
                 statusCode(200).
-                body(matchesJsonSchemaInClasspath("tnt/v2/TransportEventsSchema.json").
+                body("size()", greaterThanOrEqualTo(0)).
+                body("collect { it.eventType }", everyItem(equalTo("TRANSPORT"))).
+                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                         using(jsonSchemaFactory));
     }
 
@@ -101,7 +109,9 @@ public class GetEventsTest {
                 then().
                 assertThat().
                 statusCode(200).
-                body(matchesJsonSchemaInClasspath("tnt/v2/ShipmentEventsSchema.json").
+                body("size()", greaterThanOrEqualTo(0)).
+                body("collect { it.eventType }", everyItem(equalTo("SHIPMENT"))).
+                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                         using(jsonSchemaFactory));
     }
 
@@ -116,7 +126,8 @@ public class GetEventsTest {
                 then().
                 assertThat().
                 statusCode(200).
-                body(matchesJsonSchemaInClasspath("tnt/v2/ShipmentEventsSchema.json").
+                body("size()", greaterThanOrEqualTo(0)).
+                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                         using(jsonSchemaFactory));
     }
 

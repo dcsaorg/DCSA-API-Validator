@@ -29,6 +29,7 @@ jobs:
       with:
         repository: dcsaorg/DCSA-TNT
         ref: master
+        submodules: recursive
         path: DCSA-TNT
         token: ${{ secrets.DCSA_PACKAGES_PAT }}
 

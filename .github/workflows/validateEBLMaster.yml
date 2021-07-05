@@ -32,6 +32,7 @@ jobs:
       with:
         repository: dcsaorg/DCSA-EBL
         ref: master
+        submodules: recursive
         path: DCSA-EBL
         token: ${{ secrets.DCSA_PACKAGES_PAT }}
     - name: Build backend

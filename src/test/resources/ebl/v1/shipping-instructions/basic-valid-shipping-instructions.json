@@ -5,8 +5,13 @@
   "isElectronic": true,
   "isShippedOnBoardType": true,
   "transportDocumentType": "SWB",
-  "freightPayableAt": {
-    "locationName": "Port of Rotterdam"
+  "invoicePayableAt": {
+    "UNLocationCode": "USNYC",
+    "address": {
+      "cityName": "København",
+      "stateRegion": "N/A",
+      "country": "Denmark"
+    }
   },
   "cargoItems": [
     {

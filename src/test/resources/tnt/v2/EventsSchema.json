@@ -3,7 +3,6 @@
   "type": "array",
   "title": "The root schema",
   "default": [],
-  "additionalItems": true,
   "definitions": {
     "eventID": {
       "type": "string",
@@ -11,29 +10,165 @@
       "default": ""
     },
     "eventType": {
-      "type": "string",
+      "enum":  ["SHIPMENT","EQUIPMENT","TRANSPORT",""],
       "title": "The eventType schema",
       "default": ""
     },
     "eventCreatedDateTime": {
-      "type": "string",
+      "type": "date-time",
       "title": "The eventCreatedDateTime schema",
       "default": ""
     },
     "eventDateTime": {
-      "type": "string",
+      "type": "date-time",
       "title": "The eventDateTime schema",
       "default": ""
     },
     "eventClassifierCode": {
-      "type": "string",
+      "enum":  ["ACT","PLN","EST",""],
       "title": "The eventClassifierCode schema",
       "default": ""
     },
-    "eventTypeCode": {
+    "transportCallID": {
       "type": "string",
-      "title": "The eventTypeCode schema",
-      "default": ""
+      "title": "The transportCallID schema",
+      "default": "",
+      "maxLength": 100
+    },
+    "references": {
+      "description": "References provided by the shipper or freight forwarder at the time of booking or at the time of providing shipping instruction.",
+      "type": "object",
+      "default": "",
+      "required": [
+        "referenceType",
+        "referenceValue"
+      ],
+      "properties": {
+        "referenceType": {
+          "id": "#/properties/references/referenceType",
+          "enum": ["FF","SI","PO","CR","AAO"]
+        },
+        "referenceValue": {
+          "id": "#/properties/references/referenceValue",
+          "default": "",
+          "type": "string",
+          "maxLength": 100
+        }
+      }
+    },
+    "documentReferences": {
+      "type": "object",
+      "title": "The documentReferences schema",
+      "default": "",
+      "properties": {
+        "documentReferenceType": {
+          "description": "Describes where the documentReferenceValue is pointing to",
+          "enum": ["BKG","TRD"]
+        },
+        "documentReferenceValue": {
+          "description": "The value of the identifier the documentReferenceType is describing",
+          "enum": ["BKG","TRD"]
+        }
+      }
+    },
+    "transportCall": {
+      "type": "object",
+      "title": "The transportCall schema",
+      "default": "",
+      "required": ["transportCallID", "modeOfTransport"],
+      "properties": {
+        "transportCallID": {
+          "$ref": "#/definitions/transportCallID"
+        },
+        "carrierServiceCode": {
+          "id": "#/transportCall/properties/carrierServiceCode",
+          "type": "string",
+          "default": "",
+          "maxLength": 5
+        },
+        "carrierVoyageNumber": {
+          "id": "#/transportCall/properties/carrierVoyageNumber",
+          "type": "string",
+          "default": "",
+          "maxLength": 50
+        },
+        "UNLocationCode": {
+          "id": "#/transportCall/properties/UNLocationCode",
+          "type": "string",
+          "default": "",
+          "maxLength": 5
+        },
+        "facilityCode": {
+          "id": "#/transportCall/properties/facilityCode",
+          "type": "string",
+          "default": "",
+          "maxLength": 6
+        },
+        "facilityCodeListProvider": {
+          "id": "#/transportCall/properties/facilityCodeListProvider",
+          "enum":  ["BIC", "SMDG"],
+          "default": ""
+        },
+        "otherFacility": {
+          "id": "#/transportCall/properties/otherFacility",
+          "type": "string",
+          "default": "",
+          "maxLength": 6
+        },
+        "modeOfTransport": {
+          "id": "#/transportCall/properties/modeOfTransport",
+          "enum":  [ "VESSEL", "RAIL", "TRUCK", "BARGE" ]
+        },
+        "vessel": {
+          "id": "#/properties/transportCall/properties/vessel",
+          "type": "object",
+          "title": "The vessel schema",
+          "default": "",
+          "required": ["vesselIMONumber"],
+          "properties": {
+            "vesselIMONumber": {
+              "id": "#/transportCall/properties/vessel/properties/vesselIMONumber",
+              "description": "The unique reference for a registered Vessel. The reference is the International Maritime Organisation (IMO) number, also sometimes known as the Lloyd's register code, which does not change during the lifetime of the vessel",
+              "type": "string",
+              "default": "",
+              "maxLength": 7
+            },
+            "vesselName": {
+              "id": "#/transportCall/properties/vessel/properties/vesselName",
+              "description": "The name of the Vessel given by the Vessel Operator and registered with IMO",
+              "type": "string",
+              "default": "",
+              "maxLength": 35
+            },
+            "vesselFlag": {
+              "id": "#/transportCall/properties/vessel/properties/vesselFlag",
+              "description": "The flag of the nation whose laws the vessel is registered under. This is the ISO 3166 two-letter country code",
+              "type": "string",
+              "default": "",
+              "maxLength": 2
+            },
+            "vesselCallSignNumber": {
+              "id": "#/transportCall/properties/vessel/properties/vesselCallSignNumber",
+              "description": "A unique alphanumeric identity that belongs to the vessel and is assigned by the International Telecommunication Union (ITU).",
+              "type": "string",
+              "default": "",
+              "maxLength": 10
+            },
+            "vesselOperatorCarrierCode": {
+              "id": "#/transportCall/properties/vessel/properties/vesselOperatorCarrierCode",
+              "description": "The carrier who is in charge of the vessel operation based on either the SMDG or SCAC code lists",
+              "type": "string",
+              "default": "",
+              "maxLength": 10
+            },
+            "vesselOperatorCarrierCodeListProvider": {
+              "id": "#/transportCall/properties/vessel/properties/vesselOperatorCarrierCodeListProvider",
+              "description": "The carrier who is in charge of the vessel operation based on either the SMDG or SCAC code lists",
+              "enum":  [ "SMDG", "NMFTA" ]
+            }
+          }
+        }
+      }
     }
   },
   "items": {
@@ -44,11 +179,11 @@
         "title": "The Transport Event schema",
         "default": {},
         "required": [
-          "eventID",
-          "eventType",
           "eventCreatedDateTime",
-          "eventDateTime",
+          "eventType",
           "eventClassifierCode",
+          "eventDateTime",
+          "transportEventTypeCode",
           "delayReasonCode",
           "changeRemark",
           "transportCallID"
@@ -60,68 +195,92 @@
           "eventType": {
             "$ref": "#/definitions/eventType"
           },
+          "eventClassifierCode": {
+            "$ref": "#/definitions/eventClassifierCode"
+          },
           "eventCreatedDateTime": {
             "$ref": "#/definitions/eventCreatedDateTime"
           },
           "eventDateTime": {
             "$ref": "#/definitions/eventDateTime"
           },
-          "eventClassifierCode": {
-            "$ref": "#/definitions/eventClassifierCode"
+          "transportEventTypeCode": {
+            "id": "#/properties/transportEventTypeCode",
+            "enum":  [ "ARRI", "DEPA" ]
           },
           "delayReasonCode": {
             "id": "#/properties/delayReasonCode",
             "type": "string",
             "title": "The delayReasonCode schema",
-            "default": ""
+            "default": "",
+            "maxLength": 3
           },
           "changeRemark": {
             "id": "#/properties/changeRemark",
             "type": "string",
             "title": "The changeRemark schema",
-            "default": ""
+            "default": "",
+            "maxLength": 250
           },
           "transportCallID": {
-            "id": "#/properties/transportCallID",
-            "type": "string",
-            "title": "The transportCallID schema",
-            "default": ""
+            "$ref": "#/definitions/transportCallID"
+          },
+          "transportCall": {
+            "$ref": "#/definitions/transportCall"
+          },
+          "documentReferences": {
+            "$ref": "#/definitions/documentReferences"
+          },
+          "references": {
+            "$ref": "#/definitions/references"
+          },
+          "eventTypeCode": {
+            "id": "#/properties/eventTypeCode",
+            "enum":  [ "ARRI", "DEPA" ]
           }
-        },
-        "additionalProperties": true
+        }
       },
       {
         "type": "object",
         "title": "The Shipment Event schema",
+        "description": "The shipment event entity is a specialization of the event entity to support specification of data that only applies to a shipment event.",
         "default": {},
         "required": [
-          "eventID",
-          "eventType",
           "eventCreatedDateTime",
-          "eventDateTime",
+          "eventType",
           "eventClassifierCode",
-          "documentTypeCode",
-          "shipmentInformationTypeCode",
-          "shipmentID"
+          "eventDateTime",
+          "shipmentEventTypeCode",
+          "documentID",
+          "documentTypeCode"
         ],
         "properties": {
           "eventID": {
             "$ref": "#/definitions/eventID"
           },
-          "eventType": {
-            "$ref": "#/definitions/eventType"
-          },
           "eventCreatedDateTime": {
             "$ref": "#/definitions/eventCreatedDateTime"
           },
-          "eventDateTime": {
-            "$ref": "#/definitions/eventDateTime"
+          "eventType": {
+            "$ref": "#/definitions/eventType"
           },
           "eventClassifierCode": {
             "$ref": "#/definitions/eventClassifierCode"
           },
-          "documentTypeCode": {
+          "eventDateTime": {
+            "$ref": "#/definitions/eventDateTime"
+          },
+          "shipmentEventTypeCode":{
+            "id": "#/properties/shipmentEventTypeCode",
+            "enum": ["RECE","DRFT","PENA","PENU","REJE","APPR","ISSU","SURR","SUBM","VOID","CONF"]
+          },
+          "documentID": {
+            "id": "#/properties/documentID",
             "type": "string"
+          },
+          "documentTypeCode": {
+            "id": "#/properties/documentTypeCode",
+            "enum": ["BKG","SHI","SRM","TRD","ARN"]
           },
           "shipmentInformationTypeCode": {
             "id": "#/properties/shipmentInformationTypeCode",
@@ -129,65 +288,118 @@
             "title": "The shipmentInformationTypeCode schema",
             "default": ""
           },
+          "reason": {
+            "id": "#/properties/reason",
+            "type": "string",
+            "description": "This field can be used to explain why a specific event has been sent.",
+            "default": ""
+          },
+          "eventTypeCode": {
+            "id": "#/properties/eventTypeCode",
+            "enum": ["RECE","DRFT","PENA","PENU","REJE","APPR","ISSU","SURR","SUBM","VOID","CONF"]
+          },
           "shipmentID": {
             "id": "#/properties/shipmentID",
             "type": "string",
-            "title": "The shipmentID schema",
+            "title": "explain why a specific event has been sent.",
             "default": ""
+          },
+          "references": {
+            "$ref": "#/definitions/references"
           }
-        },
-        "additionalProperties": true
+        }
       },
       {
         "type": "object",
         "title": "The Equipment Event schema",
         "default": {},
         "required": [
-          "eventID",
-          "eventType",
           "eventCreatedDateTime",
-          "eventDateTime",
+          "eventType",
           "eventClassifierCode",
-          "equipmentReference",
-          "emptyIndicatorCode",
-          "transportCallID"
+          "eventDateTime",
+          "equipmentEventTypeCode",
+          "emptyIndicatorCode"
         ],
         "properties": {
           "eventID": {
             "$ref": "#/definitions/eventID"
           },
+          "eventCreatedDateTime": {
+            "$ref": "#/definitions/eventCreatedDateTime"
+          },
           "eventType": {
             "$ref": "#/definitions/eventType"
           },
-          "eventCreatedDateTime": {
-            "$ref": "#/definitions/eventCreatedDateTime"
+          "eventClassifierCode": {
+            "$ref": "#/definitions/eventClassifierCode"
           },
           "eventDateTime": {
             "$ref": "#/definitions/eventDateTime"
           },
-          "eventClassifierCode": {
-            "$ref": "#/definitions/eventClassifierCode"
+          "equipmentEventTypeCode": {
+            "id": "#/properties/equipmentEventTypeCode",
+            "enum": [ "LOAD", "DISC", "GTIN", "GTOT", "STUF", "STRP" ]
           },
           "equipmentReference": {
             "id": "#/properties/equipmentReference",
             "type": "string",
             "title": "The equipmentReference schema",
-            "default": ""
+            "default": "",
+            "maxLength": 15
+          },
+          "ISOEquipmentCode": {
+            "id": "#/properties/ISOEquipmentCode",
+            "type": "string",
+            "default": "",
+            "maxLength": 4
           },
           "emptyIndicatorCode": {
             "id": "#/properties/emptyIndicatorCode",
-            "type": "string",
-            "title": "The emptyIndicatorCode schema",
-            "default": ""
+            "enum": [ "EMPTY", "LADEN" ]
           },
           "transportCallID": {
-            "id": "#/properties/transportCallID",
-            "type": "string",
-            "title": "The transportCallID schema",
-            "default": ""
+            "$ref": "#/definitions/transportCallID"
+          },
+          "transportCall": {
+            "$ref": "#/definitions/transportCall"
+          },
+          "documentReferences": {
+            "$ref": "#/definitions/documentReferences"
+          },
+          "references": {
+            "$ref": "#/definitions/references"
+          },
+          "seals": {
+            "description": "addresses the seal-related information associated with the shipment equipment. A seal is put on a shipment equipment once it is loaded. This seal is meant to stay on until the shipment equipment reaches its final destination.",
+            "type": "object",
+            "default": "",
+            "required": [
+              "sealNumber",
+              "sealType"
+            ],
+            "properties": {
+              "sealNumber": {
+                "description": "Identifies a seal affixed to the container.",
+                "default": "",
+                "type": "string",
+                "maxLength": 15
+              },
+              "sealSource": {
+                "description": "The source of the seal, namely who has affixed the seal. This attribute links to the Seal Source ID defined in the Seal Source reference data entity.",
+                "enum": [ "CAR", "SHI", "PHY", "VET", "CUS" ]
+              },
+              "sealType": {
+                "description": "The type of seal. This attribute links to the Seal Type ID defined in the Seal Type reference data entity.",
+                "enum": [ "KLP", "BLT", "WIR" ]
+              }
+            }
+          },
+          "eventTypeCode": {
+            "id": "#/properties/eventTypeCode",
+            "enum":  [ "LOAD", "DISC", "GTIN", "GTOT", "STUF", "STRP" ]
           }
-        },
-        "additionalProperties": true
+        }
       }
     ]
   }

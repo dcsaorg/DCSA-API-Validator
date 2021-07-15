@@ -186,9 +186,7 @@
         "eventClassifierCode",
         "eventDateTime",
         "transportEventTypeCode",
-        "delayReasonCode",
-        "changeRemark",
-        "transportCallID"
+        "transportCall"
       ],
       "properties": {
         "eventID": {
@@ -321,7 +319,8 @@
         "eventClassifierCode",
         "eventDateTime",
         "equipmentEventTypeCode",
-        "emptyIndicatorCode"
+        "emptyIndicatorCode",
+        "transportCall"
       ],
       "properties": {
         "eventID": {

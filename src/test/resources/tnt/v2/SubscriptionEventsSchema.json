@@ -10,9 +10,8 @@
       "default": ""
     },
     "eventType": {
-      "enum":  ["SHIPMENT","EQUIPMENT","TRANSPORT",""],
-      "title": "The eventType schema",
-      "default": ""
+      "enum":  ["SHIPMENT","EQUIPMENT","TRANSPORT"],
+      "title": "The eventType schema"
     },
     "callbackUrl": {
       "type": "string",

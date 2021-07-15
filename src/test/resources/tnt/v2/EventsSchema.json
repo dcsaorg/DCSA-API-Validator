@@ -10,24 +10,22 @@
       "default": ""
     },
     "eventType": {
-      "enum":  ["SHIPMENT","EQUIPMENT","TRANSPORT",""],
-      "title": "The eventType schema",
-      "default": ""
+      "enum":  ["SHIPMENT","EQUIPMENT","TRANSPORT"],
+      "title": "The eventType schema"
     },
     "eventCreatedDateTime": {
-      "type": "date-time",
+      "type": "string",
       "title": "The eventCreatedDateTime schema",
       "default": ""
     },
     "eventDateTime": {
-      "type": "date-time",
+      "type": "string",
       "title": "The eventDateTime schema",
       "default": ""
     },
     "eventClassifierCode": {
-      "enum":  ["ACT","PLN","EST",""],
-      "title": "The eventClassifierCode schema",
-      "default": ""
+      "enum":  ["ACT","PLN","EST"],
+      "title": "The eventClassifierCode schema"
     },
     "transportCallID": {
       "type": "string",
@@ -106,8 +104,7 @@
         },
         "facilityCodeListProvider": {
           "id": "#/transportCall/properties/facilityCodeListProvider",
-          "enum":  ["BIC", "SMDG"],
-          "default": ""
+          "enum":  ["BIC", "SMDG"]
         },
         "facilityTypeCodeTRN": {
           "id": "#/transportCall/properties/facilityTypeCodeTRN",

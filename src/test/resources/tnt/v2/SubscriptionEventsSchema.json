@@ -1,0 +1,127 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "type": "array",
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "definitions": {
+    "subscriptionID": {
+      "type": "string",
+      "title": "The subscriptionID schema",
+      "default": ""
+    },
+    "eventType": {
+      "enum":  ["SHIPMENT","EQUIPMENT","TRANSPORT"],
+      "title": "The eventType schema"
+    },
+    "callbackUrl": {
+      "type": "string",
+      "title": "The callbackUrl schema",
+      "default": ""
+    },
+    "transportCallID": {
+      "type": "string",
+      "title": "The transportCallID schema",
+      "default": "",
+      "maxLength": 100
+    }
+  },
+  "items": {
+    "id": "#/items",
+    "allOf": [
+      {
+        "type": "object",
+        "title": "The subscription Event schema",
+        "default": {},
+        "required": [
+          "callbackUrl"
+        ],
+        "properties": {
+          "subscriptionID": {
+            "$ref": "#/definitions/subscriptionID"
+          },
+          "callbackUrl": {
+            "$ref": "#/definitions/callbackUrl"
+          },
+          "eventType": {
+            "$ref": "#/definitions/eventType"
+          },
+          "shipmentEventTypeCode": {
+            "id": "#/properties/shipmentEventTypeCode",
+            "type": "string"
+          },
+          "carrierBookingReference": {
+            "id": "#/properties/carrierBookingReference",
+            "type": "string",
+            "maxLength": 35
+          },
+          "bookingReference": {
+            "id": "#/properties/bookingReference",
+            "type": "string",
+            "maxLength": 35
+          },
+          "transportDocumentID": {
+            "id": "#/properties/transportDocumentID",
+            "type": "string"
+          },
+          "transportDocumentReference": {
+            "id": "#/properties/transportDocumentReference",
+            "type": "string",
+            "maxLength": 20
+          },
+          "transportDocumentTypeCode": {
+            "id": "#/properties/transportDocumentTypeCode",
+            "type": "string"
+          },
+          "transportEventTypeCode": {
+            "id": "#/properties/transportEventTypeCode",
+            "type": "string"
+          },
+          "scheduleID": {
+            "id": "#/properties/scheduleID",
+            "type": "string"
+          },
+          "transportCallID": {
+            "$ref": "#/definitions/transportCallID"
+          },
+          "vesselIMONumber": {
+            "id": "#/properties/vesselIMONumber",
+            "description": "The unique reference for a registered Vessel. The reference is the International Maritime Organisation (IMO) number, also sometimes known as the Lloyd's register code, which does not change during the lifetime of the vessel",
+            "type": "string",
+            "default": "",
+            "maxLength": 7
+          },
+          "carrierVoyageNumber": {
+            "id": "#/properties/carrierVoyageNumber",
+            "type": "string",
+            "default": "",
+            "maxLength": 50
+          },
+          "carrierServiceCode": {
+            "id": "#/properties/carrierServiceCode",
+            "type": "string",
+            "default": "",
+            "maxLength": 5
+          },
+          "equipmentEventTypeCode": {
+            "id": "#/properties/equipmentEventTypeCode",
+            "enum": [
+              "LOAD",
+              "DISC",
+              "GTIN",
+              "GTOT",
+              "STUF",
+              "STRP"
+            ]
+          },
+          "equipmentReference": {
+            "id": "#/properties/equipmentReference",
+            "type": "string",
+            "title": "The equipmentReference schema",
+            "default": "",
+            "maxLength": 15
+          }
+        }
+      }
+    ]
+  }
+}

@@ -67,7 +67,7 @@
         },
         "documentReferenceValue": {
           "description": "The value of the identifier the documentReferenceType is describing",
-          "enum": ["BKG","TRD"]
+          "type": "string"
         }
       }
     },

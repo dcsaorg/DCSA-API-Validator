@@ -109,6 +109,10 @@
           "enum":  ["BIC", "SMDG"],
           "default": ""
         },
+        "facilityTypeCodeTRN": {
+          "id": "#/transportCall/properties/facilityTypeCodeTRN",
+          "enum":  [ "BOCR", "CLOC", "COFS", "COYA", "OFFD", "DEPO", "INTE", "POTE" ]
+        },
         "otherFacility": {
           "id": "#/transportCall/properties/otherFacility",
           "type": "string",

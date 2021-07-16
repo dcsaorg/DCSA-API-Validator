@@ -29,6 +29,7 @@ import static org.hamcrest.Matchers.*;
 public class GetEventsTest {
 
     JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.newBuilder().setValidationConfiguration(ValidationConfiguration.newBuilder().setDefaultVersion(DRAFTV4).freeze()).freeze();
+    ;
 
 
     @Test
@@ -703,8 +704,7 @@ public class GetEventsTest {
             Assert.assertTrue(dateTime1.compareTo(dateTime2) >= 0);
         }
     }
-
-
+    
     // Finds all API-Version, and then uses them each of them as a query parameter, and verifies the response
     @Test
     public void testAPIVersionQueryParam() {

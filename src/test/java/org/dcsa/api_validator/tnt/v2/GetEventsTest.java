@@ -4,10 +4,13 @@ import com.github.fge.jsonschema.cfg.ValidationConfiguration;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
 import io.restassured.path.json.JsonPath;
 import org.dcsa.api_validator.conf.Configuration;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.time.format.DateTimeFormatter;
 
 import static com.github.fge.jsonschema.SchemaVersion.DRAFTV4;
 import static io.restassured.RestAssured.given;
@@ -20,10 +23,11 @@ import static org.hamcrest.Matchers.*;
 
 // -- TODO: 1. ADD error response body for all 400-BadRequests tests
 // -- TODO: 2. ENABLE ALL TESTS
+// -- TODO: 3. Refactor as done in OVS/V2/Events using getListOfAnyAttribute function.
+
 
 public class GetEventsTest {
 
-    // -- TODO: SHARE THIS IN CLASS SO THAT TEST CAN RUN SEPARATELY
     JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.newBuilder().setValidationConfiguration(ValidationConfiguration.newBuilder().setDefaultVersion(DRAFTV4).freeze()).freeze();
 
 
@@ -93,18 +97,9 @@ public class GetEventsTest {
     //Finds all equipmentReferences, and then uses them each of them as a query parameter, and verifies the response
     @Test
     public void testEquipmentReferenceQueryParam() {
-        String json = given().
-                auth().
-                oauth2(Configuration.accessToken).
-                queryParam("eventType", "EQUIPMENT").
-                get(Configuration.ROOT_URI + "/events").
-                then().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
-                        using(jsonSchemaFactory)).
-                extract().body().asString();
-        List<String> equipmentReferences = JsonPath.from(json).<String>getList("equipmentReference").stream().distinct().collect(Collectors.toList());
+
+        List<String> equipmentReferences = getListOfAnyAttribute("equipmentReference","eventType","EQUIPMENT");
+
         for (String equipmentReference : equipmentReferences) {
 
             given().
@@ -115,7 +110,9 @@ public class GetEventsTest {
                     then().
                     statusCode(200).
                     body("equipmentReference", everyItem(equalTo(equipmentReference))).
-                    body("collect { it.eventType }", everyItem(equalTo("EQUIPMENT")));
+                    body("collect { it.eventType }", everyItem(equalTo("EQUIPMENT"))).
+                    body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
+                            using(jsonSchemaFactory));
         }
     }
 
@@ -136,19 +133,9 @@ public class GetEventsTest {
     //Finds all ShipmentEventTypeCode, and then uses them each of them as a query parameter, and verifies the response
     @Test(enabled = false)
     public void testShipmentEventTypeCodeQueryParam() {
-        String json = given().
-                auth().
-                oauth2(Configuration.accessToken).
-                queryParam("eventType", "SHIPMENT").
-                get(Configuration.ROOT_URI + "/events").
-                then().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body("collect { it.eventType }", everyItem(equalTo("SHIPMENT"))).
-                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
-                        using(jsonSchemaFactory)).
-                extract().body().asString();
-        List<String> ShipmentEventTypeCodes = JsonPath.from(json).<String>getList("shipmentEventTypeCode").stream().distinct().collect(Collectors.toList());
+
+        List<String> ShipmentEventTypeCodes = getListOfAnyAttribute("shipmentEventTypeCode","eventType","SHIPMENT");
+
         ShipmentEventTypeCodes.forEach(ShipmentEventTypeCode -> {
             given().
                     auth().
@@ -158,7 +145,9 @@ public class GetEventsTest {
                     then().
                     statusCode(200).
                     body("shipmentEventTypeCode", everyItem(equalTo(ShipmentEventTypeCode))).
-                    body("collect { it.eventType }", everyItem(equalTo("SHIPMENT")));
+                    body("collect { it.eventType }", everyItem(equalTo("SHIPMENT"))).
+                    body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
+                            using(jsonSchemaFactory));
         });
     }
 
@@ -168,7 +157,7 @@ public class GetEventsTest {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-                // Specification -> maxLength: 15
+                // Specification -> ENUM
                         queryParam("shipmentEventTypeCode", "[ABCDES,........]").
                 get(Configuration.ROOT_URI + "/events").
                 then().
@@ -179,18 +168,10 @@ public class GetEventsTest {
     //Finds all carrierBookingReference, and then uses them each of them as a query parameter, and verifies the response
     @Test(enabled = false)
     public void testCarrierBookingReferenceQueryParam() {
-        String json = given().
-                auth().
-                oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/events").
-                then().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
-                        using(jsonSchemaFactory)).
-                extract().body().asString();
-        List<String> CarrierBookingReferences = JsonPath.from(json).<String>getList("carrierBookingReference").stream().distinct().collect(Collectors.toList());
-        CarrierBookingReferences.forEach(CarrierBookingReference -> {
+
+      List<String> CarrierBookingReferences = getListOfAnyAttribute("carrierBookingReference");
+
+      CarrierBookingReferences.forEach(CarrierBookingReference -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
@@ -198,8 +179,9 @@ public class GetEventsTest {
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("carrierBookingReference", everyItem(equalTo(CarrierBookingReference)));
-
+                    body("carrierBookingReference", everyItem(equalTo(CarrierBookingReference))).
+                    body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
+                            using(jsonSchemaFactory));
         });
     }
 
@@ -220,17 +202,9 @@ public class GetEventsTest {
     //Finds all BookingReference (DEPRECATED), and then uses them each of them as a query parameter, and verifies the response
     @Test(enabled = false)
     public void testBookingReferenceQueryParam() {
-        String json = given().
-                auth().
-                oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/events").
-                then().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
-                        using(jsonSchemaFactory)).
-                extract().body().asString();
-        List<String> BookingReferences = JsonPath.from(json).<String>getList("bookingReference").stream().distinct().collect(Collectors.toList());
+
+        List<String> BookingReferences = getListOfAnyAttribute("bookingReference");
+
         BookingReferences.forEach(BookingReference -> {
             given().
                     auth().
@@ -239,25 +213,18 @@ public class GetEventsTest {
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("bookingReference", everyItem(equalTo(BookingReference)));
-
+                    body("bookingReference", everyItem(equalTo(BookingReference))).
+                    body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
+                            using(jsonSchemaFactory));
         });
     }
 
     //Finds all transportDocumentID, and then uses them each of them as a query parameter, and verifies the response
     @Test(enabled = false)
     public void testTransportDocumentIDQueryParam() {
-        String json = given().
-                auth().
-                oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/events").
-                then().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
-                        using(jsonSchemaFactory)).
-                extract().body().asString();
-        List<String> TransportDocumentIDs = JsonPath.from(json).<String>getList("transportDocumentID").stream().distinct().collect(Collectors.toList());
+
+        List<String> TransportDocumentIDs = getListOfAnyAttribute("transportDocumentID");
+
         TransportDocumentIDs.forEach(TransportDocumentID -> {
             given().
                     auth().
@@ -266,25 +233,18 @@ public class GetEventsTest {
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("transportDocumentID", everyItem(equalTo(TransportDocumentID)));
-
+                    body("transportDocumentID", everyItem(equalTo(TransportDocumentID))).
+                    body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
+                            using(jsonSchemaFactory));
         });
     }
 
     //Finds all TransportDocumentReference, and then uses them each of them as a query parameter, and verifies the response
     @Test(enabled = false)
     public void testTransportDocumentReferenceQueryParam() {
-        String json = given().
-                auth().
-                oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/events").
-                then().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
-                        using(jsonSchemaFactory)).
-                extract().body().asString();
-        List<String> TransportDocumentReferences = JsonPath.from(json).<String>getList("transportDocumentReference").stream().distinct().collect(Collectors.toList());
+
+        List<String> TransportDocumentReferences = getListOfAnyAttribute("transportDocumentReference");
+
         TransportDocumentReferences.forEach(TransportDocumentReference -> {
             given().
                     auth().
@@ -293,8 +253,9 @@ public class GetEventsTest {
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("transportDocumentReference", everyItem(equalTo(TransportDocumentReference)));
-
+                    body("transportDocumentReference", everyItem(equalTo(TransportDocumentReference))).
+                    body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
+                            using(jsonSchemaFactory));
         });
     }
 
@@ -315,17 +276,9 @@ public class GetEventsTest {
     //Finds all transportDocumentTypeCode, and then uses them each of them as a query parameter, and verifies the response
     @Test(enabled = false)
     public void testTransportDocumentTypeCodeQueryParam() {
-        String json = given().
-                auth().
-                oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/events").
-                then().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
-                        using(jsonSchemaFactory)).
-                extract().body().asString();
-        List<String> TransportDocumentTypeCodes = JsonPath.from(json).<String>getList("transportDocumentTypeCode").stream().distinct().collect(Collectors.toList());
+
+        List<String> TransportDocumentTypeCodes = getListOfAnyAttribute("transportDocumentTypeCode");
+
         TransportDocumentTypeCodes.forEach(TransportDocumentTypeCode -> {
             given().
                     auth().
@@ -334,8 +287,9 @@ public class GetEventsTest {
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("transportDocumentTypeCode", everyItem(equalTo(TransportDocumentTypeCode)));
-
+                    body("transportDocumentTypeCode", everyItem(equalTo(TransportDocumentTypeCode))).
+                    body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
+                            using(jsonSchemaFactory));
         });
     }
 
@@ -356,18 +310,9 @@ public class GetEventsTest {
     //Finds all TransportEventTypeCode, and then uses them each of them as a query parameter, and verifies the response
     @Test(enabled = false)
     public void testTransportEventTypeCodeQueryParam() {
-        String json = given().
-                auth().
-                oauth2(Configuration.accessToken).
-                queryParam("eventType", "TRANSPORT").
-                get(Configuration.ROOT_URI + "/events").
-                then().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
-                        using(jsonSchemaFactory)).
-                extract().body().asString();
-        List<String> TransportEventTypeCodes = JsonPath.from(json).<String>getList("transportEventTypeCode").stream().distinct().collect(Collectors.toList());
+
+        List<String> TransportEventTypeCodes = getListOfAnyAttribute("transportEventTypeCode","eventType","TRANSPORT");
+
         TransportEventTypeCodes.forEach(TransportEventTypeCode -> {
             given().
                     auth().
@@ -376,8 +321,9 @@ public class GetEventsTest {
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("transportEventTypeCode", everyItem(equalTo(TransportEventTypeCode)));
-
+                    body("transportEventTypeCode", everyItem(equalTo(TransportEventTypeCode))).
+                    body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
+                            using(jsonSchemaFactory));
         });
     }
 
@@ -398,22 +344,9 @@ public class GetEventsTest {
     // Finds all TransportCallID, and then uses them each of them as a query parameter, and verifies the response
     @Test
     public void testTransportCallIDQueryParam() {
-        String json = given().
-                auth().
-                oauth2(Configuration.accessToken).
-                queryParam("eventType", "EQUIPMENT,TRANSPORT").
-                get(Configuration.ROOT_URI + "/events").
-                then().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
-                        using(jsonSchemaFactory)).
-                extract().body().asString();
-        System.out.println("sax");
-        System.out.println(json);
-        List<String> TransportCallIDs = JsonPath.from(json).<String>getList("transportCallID").stream().distinct().collect(Collectors.toList());
-        System.out.println("sa");
-        System.out.println(TransportCallIDs);
+
+        List<String> TransportCallIDs = getListOfAnyAttribute("transportCallID","eventType","EQUIPMENT,TRANSPORT");
+
         TransportCallIDs.forEach(TransportCallID -> {
             given().
                     auth().
@@ -423,25 +356,18 @@ public class GetEventsTest {
                     then().
                     statusCode(200).
                     body("transportCallID", everyItem(equalTo(TransportCallID))).
-                    body("transportCall.transportCallID", everyItem(equalTo(TransportCallID)));
-
+                    body("transportCall.transportCallID", everyItem(equalTo(TransportCallID))).
+                    body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
+                            using(jsonSchemaFactory));
         });
     }
 
     // Finds all VesselIMONumber, and then uses them each of them as a query parameter, and verifies the response
     @Test(enabled = false)
     public void testVesselIMONumberQueryParam() {
-        String json = given().
-                auth().
-                oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/events").
-                then().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
-                        using(jsonSchemaFactory)).
-                extract().body().asString();
-        List<String> VesselIMONumbers = JsonPath.from(json).<String>getList("vesselIMONumber").stream().distinct().collect(Collectors.toList());
+
+        List<String> VesselIMONumbers = getListOfAnyAttribute("vesselIMONumber");
+
         VesselIMONumbers.forEach(VesselIMONumber -> {
             given().
                     auth().
@@ -450,8 +376,9 @@ public class GetEventsTest {
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("vesselIMONumber", everyItem(equalTo(VesselIMONumber)));
-
+                    body("vesselIMONumber", everyItem(equalTo(VesselIMONumber))).
+                    body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
+                            using(jsonSchemaFactory));
         });
     }
 
@@ -472,17 +399,9 @@ public class GetEventsTest {
     // Finds all CarrierVoyageNumber, and then uses them each of them as a query parameter, and verifies the response
     @Test(enabled = false)
     public void testCarrierVoyageNumberQueryParam() {
-        String json = given().
-                auth().
-                oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/events").
-                then().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
-                        using(jsonSchemaFactory)).
-                extract().body().asString();
-        List<String> CarrierVoyageNumbers = JsonPath.from(json).<String>getList("carrierVoyageNumber").stream().distinct().collect(Collectors.toList());
+
+        List<String> CarrierVoyageNumbers = getListOfAnyAttribute("carrierVoyageNumber");
+
         CarrierVoyageNumbers.forEach(CarrierVoyageNumber -> {
             given().
                     auth().
@@ -491,8 +410,9 @@ public class GetEventsTest {
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("carrierVoyageNumber", everyItem(equalTo(CarrierVoyageNumber)));
-
+                    body("carrierVoyageNumber", everyItem(equalTo(CarrierVoyageNumber))).
+                    body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
+                            using(jsonSchemaFactory));
         });
     }
 
@@ -513,17 +433,9 @@ public class GetEventsTest {
     // Finds all CarrierServiceCode, and then uses them each of them as a query parameter, and verifies the response
     @Test(enabled = false)
     public void testCarrierServiceCodeQueryParam() {
-        String json = given().
-                auth().
-                oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/events").
-                then().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
-                        using(jsonSchemaFactory)).
-                extract().body().asString();
-        List<String> CarrierServiceCodes = JsonPath.from(json).<String>getList("carrierServiceCode").stream().distinct().collect(Collectors.toList());
+
+        List<String> CarrierServiceCodes = getListOfAnyAttribute("carrierServiceCode");
+
         CarrierServiceCodes.forEach(CarrierServiceCode -> {
             given().
                     auth().
@@ -532,8 +444,9 @@ public class GetEventsTest {
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("carrierServiceCode", everyItem(equalTo(CarrierServiceCode)));
-
+                    body("carrierServiceCode", everyItem(equalTo(CarrierServiceCode))).
+                    body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
+                            using(jsonSchemaFactory));
         });
     }
 
@@ -554,18 +467,9 @@ public class GetEventsTest {
     //Finds all equipmentEventTypeCode, and then uses them each of them as a query parameter, and verifies the response
     @Test(enabled = false)
     public void testEquipmentEventTypeCodeQueryParam() {
-        String json = given().
-                auth().
-                oauth2(Configuration.accessToken).
-                queryParam("eventType", "EQUIPMENT").
-                get(Configuration.ROOT_URI + "/events").
-                then().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
-                        using(jsonSchemaFactory)).
-                extract().body().asString();
-        List<String> EquipmentEventTypeCodes = JsonPath.from(json).<String>getList("equipmentEventTypeCode").stream().distinct().collect(Collectors.toList());
+
+        List<String> EquipmentEventTypeCodes = getListOfAnyAttribute("equipmentEventTypeCode","eventType","EQUIPMENT");
+
         EquipmentEventTypeCodes.forEach(EquipmentEventTypeCode -> {
             given().
                     auth().
@@ -575,7 +479,9 @@ public class GetEventsTest {
                     then().
                     statusCode(200).
                     body("equipmentEventTypeCode", everyItem(equalTo(EquipmentEventTypeCode))).
-                    body("collect { it.eventType }", everyItem(equalTo("EQUIPMENT")));
+                    body("collect { it.eventType }", everyItem(equalTo("EQUIPMENT"))).
+                    body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
+                            using(jsonSchemaFactory));
         });
     }
 
@@ -596,17 +502,9 @@ public class GetEventsTest {
     // Finds all EventCreatedDateTime, and then uses them each of them as a query parameter, and verifies the response
     @Test(enabled = false)
     public void testEventCreatedDateTimeQueryParam() {
-        String json = given().
-                auth().
-                oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/events").
-                then().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
-                        using(jsonSchemaFactory)).
-                extract().body().asString();
-        List<String> EventCreatedDateTimes = JsonPath.from(json).<String>getList("eventCreatedDateTime").stream().distinct().collect(Collectors.toList());
+
+        List<String> EventCreatedDateTimes = getListOfAnyAttribute("eventCreatedDateTime");
+
         EventCreatedDateTimes.forEach(EventCreatedDateTime -> {
             given().
                     auth().
@@ -615,8 +513,9 @@ public class GetEventsTest {
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("eventCreatedDateTime", everyItem(equalTo(EventCreatedDateTime)));
-
+                    body("eventCreatedDateTime", everyItem(equalTo(EventCreatedDateTime))).
+                    body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
+                            using(jsonSchemaFactory));
         });
     }
 
@@ -698,17 +597,9 @@ public class GetEventsTest {
     // Finds all limit, and then uses them each of them as a query parameter, and verifies the response
     @Test(enabled = false)
     public void testLimitQueryParam() {
-        String json = given().
-                auth().
-                oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/events").
-                then().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
-                        using(jsonSchemaFactory)).
-                extract().body().asString();
-        List<String> Limits = JsonPath.from(json).<String>getList("limit").stream().distinct().collect(Collectors.toList());
+
+        List<String> Limits = getListOfAnyAttribute("limits");
+
         Limits.forEach(Limit -> {
             given().
                     auth().
@@ -717,8 +608,9 @@ public class GetEventsTest {
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("limit", everyItem(equalTo(Limit)));
-
+                    body("limit", everyItem(equalTo(Limit))).
+                    body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
+                            using(jsonSchemaFactory));
         });
     }
 
@@ -739,6 +631,96 @@ public class GetEventsTest {
     // Finds all Cursor, and then uses them each of them as a query parameter, and verifies the response
     @Test(enabled = false)
     public void testCursorQueryParam() {
+
+        List<String> Cursors = getListOfAnyAttribute("cursor");
+
+        Cursors.forEach(Cursor -> {
+            given().
+                    auth().
+                    oauth2(Configuration.accessToken).
+                    queryParam("cursor", Cursor).
+                    get(Configuration.ROOT_URI + "/events").
+                    then().
+                    statusCode(200).
+                    body("cursor", everyItem(equalTo(Cursor))).
+                    body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
+                            using(jsonSchemaFactory));
+        });
+    }
+
+    // Test sorting:ASC (descending) and if order is respected.
+    @Test
+    public void testSortAscEventCreatedDateTimeQueryParam() {
+
+        List<String> eventCreatedDateTimesSorted = getListOfAnyAttribute("eventCreatedDateTime","sort","eventCreatedDateTime:ASC");
+        int n = eventCreatedDateTimesSorted.size();
+
+        for (int i = 1; i < n; i++) {
+            OffsetDateTime dateTime1 = OffsetDateTime.parse(eventCreatedDateTimesSorted.get(i-1) , DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+            OffsetDateTime dateTime2 = OffsetDateTime.parse(eventCreatedDateTimesSorted.get(i) , DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+            Assert.assertTrue(dateTime1.compareTo(dateTime2) <= 0);
+        }
+    }
+
+    // Test sorting:DESC (descending) and if order is respected.
+    @Test
+    public void testSortDescEventCreatedDateTimeQueryParam() {
+
+        List<String> eventCreatedDateTimesSorted = getListOfAnyAttribute("eventCreatedDateTime","sort","eventCreatedDateTime:DESC");
+        int n = eventCreatedDateTimesSorted.size();
+
+        for (int i = 1; i < n; i++) {
+            OffsetDateTime dateTime1 = OffsetDateTime.parse(eventCreatedDateTimesSorted.get(i-1) , DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+            OffsetDateTime dateTime2 = OffsetDateTime.parse(eventCreatedDateTimesSorted.get(i) , DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+            Assert.assertTrue(dateTime1.compareTo(dateTime2) >= 0);
+        }
+    }
+
+    // Test sorting:ASC (descending) and if order is respected.
+    @Test
+    public void testSortAscEventDateTimeQueryParam() {
+
+        List<String> eventCreatedDateTimesSorted = getListOfAnyAttribute("eventDateTime","sort","eventDateTime:ASC");
+        int n = eventCreatedDateTimesSorted.size();
+
+        for (int i = 1; i < n; i++) {
+            OffsetDateTime dateTime1 = OffsetDateTime.parse(eventCreatedDateTimesSorted.get(i-1) , DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+            OffsetDateTime dateTime2 = OffsetDateTime.parse(eventCreatedDateTimesSorted.get(i) , DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+            Assert.assertTrue(dateTime1.compareTo(dateTime2) <= 0);
+        }
+    }
+
+    // Test sorting:DESC (descending) and if order is respected.
+    @Test
+    public void testSortDescEventDateTimeQueryParam() {
+
+        List<String> eventCreatedDateTimesSorted = getListOfAnyAttribute("eventDateTime","sort","eventDateTime:DESC");
+        int n = eventCreatedDateTimesSorted.size();
+
+        for (int i = 1; i < n; i++) {
+            OffsetDateTime dateTime1 = OffsetDateTime.parse(eventCreatedDateTimesSorted.get(i-1) , DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+            OffsetDateTime dateTime2 = OffsetDateTime.parse(eventCreatedDateTimesSorted.get(i) , DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+            Assert.assertTrue(dateTime1.compareTo(dateTime2) >= 0);
+        }
+    }
+
+
+    // Finds all API-Version, and then uses them each of them as a query parameter, and verifies the response
+    @Test
+    public void testAPIVersionQueryParam() {
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                header("API-Version", "2").
+                get(Configuration.ROOT_URI + "/events").
+                then().
+                statusCode(200).
+                body("size()", greaterThanOrEqualTo(0)).
+                body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
+                        using(jsonSchemaFactory));
+    }
+
+    private List getListOfAnyAttribute(String attribute) {
         String json = given().
                 auth().
                 oauth2(Configuration.accessToken).
@@ -749,33 +731,24 @@ public class GetEventsTest {
                 body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                         using(jsonSchemaFactory)).
                 extract().body().asString();
-        List<String> Cursors = JsonPath.from(json).<String>getList("cursor").stream().distinct().collect(Collectors.toList());
-        Cursors.forEach(Cursor -> {
-            given().
-                    auth().
-                    oauth2(Configuration.accessToken).
-                    queryParam("cursor", Cursor).
-                    get(Configuration.ROOT_URI + "/events").
-                    then().
-                    statusCode(200).
-                    body("cursor", everyItem(equalTo(Cursor)));
 
-        });
+        return JsonPath.from(json).getList(attribute).stream().distinct().collect(Collectors.toList());
     }
 
-    // Finds all API-Version, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
-    public void testAPIVersionQueryParam() {
-        given().
+    private List getListOfAnyAttribute(String attribute, String queryParam, String queryParamValue) {
+        String json = given().
+
                 auth().
                 oauth2(Configuration.accessToken).
-                queryParam("API-Version", "v2").
-                get(Configuration.ROOT_URI + "v2/events").
+                queryParam(queryParam, queryParamValue).
+                get(Configuration.ROOT_URI + "/events").
                 then().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
                 body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
-                        using(jsonSchemaFactory));
-    }
+                        using(jsonSchemaFactory)).
+                extract().body().asString();
 
+        return JsonPath.from(json).getList(attribute).stream().distinct().collect(Collectors.toList());
+    }
 }

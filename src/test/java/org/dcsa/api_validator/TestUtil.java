@@ -1,10 +1,12 @@
 package org.dcsa.api_validator;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.dcsa.api_validator.conf.Configuration;
 import org.testng.SkipException;
 
 import java.io.*;
 import java.net.URL;
+import java.util.Map;
 
 public class TestUtil {
 
@@ -53,6 +55,17 @@ public class TestUtil {
         } finally {
             closeStream(inputStream);
         }
+    }
+
+    public static Map<?, ?> jsonToMap(String json){
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Map<String, String> map = mapper.readValue(json, Map.class);
+            return map;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private interface ParserFunction<T, R> {

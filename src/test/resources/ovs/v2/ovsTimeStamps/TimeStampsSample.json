@@ -1,0 +1,49 @@
+{
+  "publisher": {
+    "partyName": "Asseco Denmark",
+    "taxReference1": "CVR-25645774",
+    "taxReference2": "CVR-25645774",
+    "publicKey": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFzaW",
+    "address": {
+      "name": "Henrik",
+      "street": "Kronprincessegade",
+      "streetNumber": "54",
+      "floor": "5. sal",
+      "postCode": "1306",
+      "city": "København",
+      "stateRegion": "N/A",
+      "country": "Denmark"
+    },
+    "nmftaCode": "MMCU"
+  },
+  "publisherRole": "DDS",
+  "vesselIMONumber": "1801323",
+  "UNLocationCode": "USNYC",
+  "facilitySMDGCode": "APMT",
+  "facilityTypeCode": "BRTH",
+  "eventClassifierCode": "EST",
+  "operationsEventTypeCode": "STRT",
+  "eventLocation": {
+    "locationName": "Eiffel Tower",
+    "latitude": "48.85855005644273",
+    "longitude": "2.294492036190964",
+    "UNLocationCode": "USNYC",
+    "address": {
+      "name": "Henrik",
+      "street": "Kronprincessegade",
+      "streetNumber": "54",
+      "floor": "5. sal",
+      "postCode": "1306",
+      "city": "København",
+      "stateRegion": "N/A",
+      "country": "Denmark"
+    }
+  },
+  "vesselPosition": {
+    "latitude": "48.85855005644273",
+    "longitude": "2.294492036190964"
+  },
+  "modeOfTransport": "VESSEL",
+  "portCallServiceTypeCode": "BUNK",
+  "eventDateTime": "2019-11-12T07:41:00+08:30"
+}

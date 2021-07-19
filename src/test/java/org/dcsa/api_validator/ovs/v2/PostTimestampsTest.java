@@ -20,7 +20,7 @@ public class PostTimestampsTest {
 
     public static final String VALID_TIMESTAMP = loadFileAsString("ovs/v2/ovsTimeStamps/TimeStampsSample.json");
 
-    @Test//(enabled = false)
+    @Test
     public void testTransportCallsNoMandatoryParameters() {
         given().
                 auth().
@@ -45,7 +45,7 @@ public class PostTimestampsTest {
     }
 
     // These are mandatory parameters and is the main test
-    @Test//(enabled = false)
+    @Test
     public void testTimestampRequiredParameters() {
         given().
                 auth().
@@ -59,7 +59,7 @@ public class PostTimestampsTest {
                 statusCode(204);
     }
 
-    @Test//(enabled = false)
+    @Test
     public void testFacilitySMDGCodeQueryParam() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -81,7 +81,7 @@ public class PostTimestampsTest {
     }
 
     // Test facilitySMDGCode, fails as specification -> maxLength:6 & ENUM
-    @Test//(enabled = false)
+    @Test
     public void testFacilitySMDGCodeFalseFormat() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -114,7 +114,7 @@ public class PostTimestampsTest {
                 statusCode(400);
     }
 
-    @Test//(enabled = false)
+    @Test
     public void testEventLocationQueryParam() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -136,7 +136,7 @@ public class PostTimestampsTest {
     }
 
     // Test EventLocation, fails as format is JSON.
-    @Test//(enabled = false)
+    @Test
     public void testEventLocationFalseFormat() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -170,7 +170,7 @@ public class PostTimestampsTest {
                 statusCode(400);
     }
 
-    @Test//(enabled = false)
+    @Test
     public void testVesselPositionQueryParam() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -192,7 +192,7 @@ public class PostTimestampsTest {
     }
 
     // Test vesselPosition, fails as as format is JSON & (latitude & longitude required).
-    @Test//(enabled = false)
+    @Test
     public void testVesselPositionFalseFormat() {
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
         map.remove("facilitySMDGCode");
@@ -225,7 +225,7 @@ public class PostTimestampsTest {
                 statusCode(400);
     }
 
-    @Test//(enabled = false)
+    @Test
     public void testModeOfTransportQueryParam() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -247,7 +247,7 @@ public class PostTimestampsTest {
     }
 
     // Test modeOfTransport, fails as VES is not ENUM.
-    @Test//(enabled = false)
+    @Test
     public void testModeOfTransportFalseFormat() {
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
         map.remove("facilitySMDGCode");
@@ -280,7 +280,7 @@ public class PostTimestampsTest {
                 statusCode(400);
     }
 
-    @Test//(enabled = false)
+    @Test
     public void testMandatoryPublisherQueryParamFalseFormat() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -333,7 +333,7 @@ public class PostTimestampsTest {
                 statusCode(400);
     }
 
-    @Test//(enabled = false)
+    @Test
     public void testMandatoryPublisherRoleQueryParamFalseFormat() {
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
 
@@ -362,7 +362,7 @@ public class PostTimestampsTest {
     }
 
     // Missing mandatory VesselIMONumber parameter
-    @Test//(enabled = false)
+    @Test
     public void testMandatoryVesselIMONumberQueryParamFalseFormat() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -403,7 +403,7 @@ public class PostTimestampsTest {
                 statusCode(400);
     }
 
-    @Test//(enabled = false)
+    @Test
     public void testMandatoryUNLocationCodeQueryParamFalseFormat() {
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
 
@@ -443,7 +443,7 @@ public class PostTimestampsTest {
                 statusCode(400);
     }
 
-    @Test//(enabled = false)
+    @Test
     public void testMandatoryFacilityTypeCodeQueryParamFalseFormat() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -485,7 +485,7 @@ public class PostTimestampsTest {
     }
 
     // Missing mandatory EventClassifierCode parameter
-    @Test//(enabled = false)
+    @Test
     public void testMandatoryEventClassifierCodeQueryParamFalseFormat() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -515,7 +515,7 @@ public class PostTimestampsTest {
     }
 
     // Missing mandatory OperationsEventTypeCode parameter
-    @Test//(enabled = false)
+    @Test
     public void testMandatoryOperationsEventTypeCodeQueryParamFalseFormat() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -545,7 +545,7 @@ public class PostTimestampsTest {
     }
 
     // Missing mandatory EventDateTime parameter
-    @Test//(enabled = false)
+    @Test
     public void testMandatoryEventDateTimeQueryParamFalseFormat() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);

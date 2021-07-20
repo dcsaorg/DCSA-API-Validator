@@ -5,8 +5,13 @@
   "isElectronic": true,
   "isShippedOnBoardType": true,
   "transportDocumentType": "SWB",
-  "freightPayableAt": {
-    "locationName": "Port of Rotterdam"
+  "invoicePayableAt": {
+    "UNLocationCode": "DKCPH",
+    "address": {
+      "cityName": "København",
+      "stateRegion": "N/A",
+      "country": "Denmark"
+    }
   },
   "cargoItems": [
     {
@@ -52,7 +57,7 @@
           "streetNumber": "4117",
           "floor": "4th Floor",
           "postalCode": "1077",
-          "city": "ZX Amsterdam",
+          "cityName": "ZX Amsterdam",
           "stateRegion": "N/A",
           "country": "Netherlands"
         },

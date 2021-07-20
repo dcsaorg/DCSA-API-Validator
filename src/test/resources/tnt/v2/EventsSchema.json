@@ -131,7 +131,7 @@
           },
           "shipmentID": {
             "id": "#/properties/shipmentID",
-            "type": "string",
+            "type": ["string", "null"],
             "title": "The shipmentID schema",
             "default": ""
           }

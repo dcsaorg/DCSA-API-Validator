@@ -28,13 +28,13 @@ jobs:
       run: docker-compose -f docker-compose.yml up -d -V
     - name: Checkout API validator
       uses: actions/checkout@v2
-    - name: Run the API validator on OVSV1
+    - name: Run the API validator on OVSV2
       run: mvn -Dtest.suite=OVSV2.xml test
       env: 
         client_secret: ${{ secrets.AUTH0_DCSA_CLIENT_SECRET }}
         client_id: 1qEYXCbxWvjeYS8VVm1BfnfZrP3TY9n8
         audience: localhost
         OAuthTokenUri: https://dcsa.eu.auth0.com/oauth/token
-        API_ROOT_URI: http://localhost:9090/v1
+        API_ROOT_URI: http://localhost:9090/v2
         CALLBACK_URI: http://172.17.0.1:4567
         DCSA_API_VALIDATOR_MAY_USE_POST_EVENTS_ENDPOINT: true

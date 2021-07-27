@@ -100,19 +100,17 @@ public class GetEventsTest {
     @Test
     public void testEquipmentReferenceQueryParam() {
 
-        List<String> EquipmentReferences = getListOfAnyAttribute("equipmentReference","eventType","EQUIPMENT");
+        List<String> equipmentReferences = getListOfAnyAttribute("equipmentReference","eventType","EQUIPMENT");
 
-        for (String EquipmentReference : EquipmentReferences) {
-            System.out.println("eqr");
-            System.out.println(EquipmentReference);
+        for (String equipmentReference : equipmentReferences) {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("equipmentReference", EquipmentReference).
+                    queryParam("equipmentReference", equipmentReference).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("equipmentReference", everyItem(equalTo(EquipmentReference))).
+                    body("equipmentReference", everyItem(equalTo(equipmentReference))).
                     body("collect { it.eventType }", everyItem(equalTo("EQUIPMENT"))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
@@ -141,17 +139,17 @@ public class GetEventsTest {
     @Test
     public void testShipmentEventTypeCodeQueryParam() {
 
-        List<String> ShipmentEventTypeCodes = getListOfAnyAttribute("shipmentEventTypeCode","eventType","SHIPMENT");
+        List<String> shipmentEventTypeCodes = getListOfAnyAttribute("shipmentEventTypeCode","eventType","SHIPMENT");
 
-        ShipmentEventTypeCodes.forEach(ShipmentEventTypeCode -> {
+        shipmentEventTypeCodes.forEach(shipmentEventTypeCode -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("shipmentEventTypeCode", ShipmentEventTypeCode).
+                    queryParam("shipmentEventTypeCode", shipmentEventTypeCode).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("shipmentEventTypeCode", everyItem(equalTo(ShipmentEventTypeCode))).
+                    body("shipmentEventTypeCode", everyItem(equalTo(shipmentEventTypeCode))).
                     body("collect { it.eventType }", everyItem(equalTo("SHIPMENT"))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
@@ -181,17 +179,17 @@ public class GetEventsTest {
     @Test
     public void testCarrierBookingReferenceQueryParam() {
 
-      List<String> CarrierBookingReferences = getListOfAnyAttribute("carrierBookingReference");
+      List<String> carrierBookingReferences = getListOfAnyAttribute("carrierBookingReference");
 
-      CarrierBookingReferences.forEach(CarrierBookingReference -> {
+        carrierBookingReferences.forEach(carrierBookingReference -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("carrierBookingReference", CarrierBookingReference).
+                    queryParam("carrierBookingReference", carrierBookingReference).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("carrierBookingReference", everyItem(equalTo(CarrierBookingReference))).
+                    body("carrierBookingReference", everyItem(equalTo(carrierBookingReference))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
@@ -220,17 +218,17 @@ public class GetEventsTest {
     @Test
     public void testBookingReferenceQueryParam() {
 
-        List<String> BookingReferences = getListOfAnyAttribute("bookingReference");
+        List<String> bookingReferences = getListOfAnyAttribute("bookingReference");
 
-        BookingReferences.forEach(BookingReference -> {
+        bookingReferences.forEach(bookingReference -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("bookingReference", BookingReference).
+                    queryParam("bookingReference", bookingReference).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("bookingReference", everyItem(equalTo(BookingReference))).
+                    body("bookingReference", everyItem(equalTo(bookingReference))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
@@ -240,17 +238,17 @@ public class GetEventsTest {
     @Test
     public void testTransportDocumentIDQueryParam() {
 
-        List<String> TransportDocumentIDs = getListOfAnyAttribute("transportDocumentID");
+        List<String> transportDocumentIDs = getListOfAnyAttribute("transportDocumentID");
 
-        TransportDocumentIDs.forEach(TransportDocumentID -> {
+        transportDocumentIDs.forEach(transportDocumentID -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("transportDocumentID", TransportDocumentID).
+                    queryParam("transportDocumentID", transportDocumentID).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("transportDocumentID", everyItem(equalTo(TransportDocumentID))).
+                    body("transportDocumentID", everyItem(equalTo(transportDocumentID))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
@@ -260,17 +258,17 @@ public class GetEventsTest {
     @Test
     public void testTransportDocumentReferenceQueryParam() {
 
-        List<String> TransportDocumentReferences = getListOfAnyAttribute("transportDocumentReference");
+        List<String> transportDocumentReferences = getListOfAnyAttribute("transportDocumentReference");
 
-        TransportDocumentReferences.forEach(TransportDocumentReference -> {
+        transportDocumentReferences.forEach(transportDocumentReference -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("transportDocumentReference", TransportDocumentReference).
+                    queryParam("transportDocumentReference", transportDocumentReference).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("transportDocumentReference", everyItem(equalTo(TransportDocumentReference))).
+                    body("transportDocumentReference", everyItem(equalTo(transportDocumentReference))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
@@ -301,17 +299,17 @@ public class GetEventsTest {
     // TODO: LOOK INTO THIS!
     public void testTransportDocumentTypeCodeQueryParam() {
 
-        List<String> TransportDocumentTypeCodes = getListOfAnyAttribute("transportDocumentTypeCode");
+        List<String> transportDocumentTypeCodes = getListOfAnyAttribute("transportDocumentTypeCode");
 
-        TransportDocumentTypeCodes.forEach(TransportDocumentTypeCode -> {
+        transportDocumentTypeCodes.forEach(transportDocumentTypeCode -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("transportDocumentTypeCode", TransportDocumentTypeCode).
+                    queryParam("transportDocumentTypeCode", transportDocumentTypeCode).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("transportDocumentTypeCode", everyItem(equalTo(TransportDocumentTypeCode))).
+                    body("transportDocumentTypeCode", everyItem(equalTo(transportDocumentTypeCode))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
@@ -336,17 +334,17 @@ public class GetEventsTest {
     @Test
     public void testTransportEventTypeCodeQueryParam() {
 
-        List<String> TransportEventTypeCodes = getListOfAnyAttribute("transportEventTypeCode","eventType","TRANSPORT");
+        List<String> transportEventTypeCodes = getListOfAnyAttribute("transportEventTypeCode","eventType","TRANSPORT");
 
-        TransportEventTypeCodes.forEach(TransportEventTypeCode -> {
+        transportEventTypeCodes.forEach(transportEventTypeCode -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("transportEventTypeCode", TransportEventTypeCode).
+                    queryParam("transportEventTypeCode", transportEventTypeCode).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("transportEventTypeCode", everyItem(equalTo(TransportEventTypeCode))).
+                    body("transportEventTypeCode", everyItem(equalTo(transportEventTypeCode))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
@@ -375,18 +373,18 @@ public class GetEventsTest {
     @Test
     public void testTransportCallIDQueryParam() {
 
-        List<String> TransportCallIDs = getListOfAnyAttribute("transportCallID","eventType","EQUIPMENT,TRANSPORT");
+        List<String> transportCallIDs = getListOfAnyAttribute("transportCallID","eventType","EQUIPMENT,TRANSPORT");
 
-        TransportCallIDs.forEach(TransportCallID -> {
+        transportCallIDs.forEach(transportCallID -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("transportCallID", TransportCallID).
+                    queryParam("transportCallID", transportCallID).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("transportCallID", everyItem(equalTo(TransportCallID))).
-                    body("transportCall.transportCallID", everyItem(equalTo(TransportCallID))).
+                    body("transportCallID", everyItem(equalTo(transportCallID))).
+                    body("transportCall.transportCallID", everyItem(equalTo(transportCallID))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
@@ -396,17 +394,17 @@ public class GetEventsTest {
     @Test
     public void testVesselIMONumberQueryParam() {
 
-        List<String> VesselIMONumbers = getListOfAnyAttribute("vesselIMONumber");
+        List<String> vesselIMONumbers = getListOfAnyAttribute("vesselIMONumber");
 
-        VesselIMONumbers.forEach(VesselIMONumber -> {
+        vesselIMONumbers.forEach(vesselIMONumber -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("vesselIMONumber", VesselIMONumber).
+                    queryParam("vesselIMONumber", vesselIMONumber).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("vesselIMONumber", everyItem(equalTo(VesselIMONumber))).
+                    body("vesselIMONumber", everyItem(equalTo(vesselIMONumber))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
@@ -435,17 +433,17 @@ public class GetEventsTest {
     @Test
     public void testCarrierVoyageNumberQueryParam() {
 
-        List<String> CarrierVoyageNumbers = getListOfAnyAttribute("carrierVoyageNumber");
+        List<String> carrierVoyageNumbers = getListOfAnyAttribute("carrierVoyageNumber");
 
-        CarrierVoyageNumbers.forEach(CarrierVoyageNumber -> {
+        carrierVoyageNumbers.forEach(carrierVoyageNumber -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("carrierVoyageNumber", CarrierVoyageNumber).
+                    queryParam("carrierVoyageNumber", carrierVoyageNumber).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("carrierVoyageNumber", everyItem(equalTo(CarrierVoyageNumber))).
+                    body("carrierVoyageNumber", everyItem(equalTo(carrierVoyageNumber))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
@@ -469,17 +467,17 @@ public class GetEventsTest {
     @Test
     public void testCarrierServiceCodeQueryParam() {
 
-        List<String> CarrierServiceCodes = getListOfAnyAttribute("carrierServiceCode");
+        List<String> carrierServiceCodes = getListOfAnyAttribute("carrierServiceCode");
 
-        CarrierServiceCodes.forEach(CarrierServiceCode -> {
+        carrierServiceCodes.forEach(carrierServiceCode -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("carrierServiceCode", CarrierServiceCode).
+                    queryParam("carrierServiceCode", carrierServiceCode).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("carrierServiceCode", everyItem(equalTo(CarrierServiceCode))).
+                    body("carrierServiceCode", everyItem(equalTo(carrierServiceCode))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
@@ -507,17 +505,17 @@ public class GetEventsTest {
     @Test
     public void testEquipmentEventTypeCodeQueryParam() {
 
-        List<String> EquipmentEventTypeCodes = getListOfAnyAttribute("equipmentEventTypeCode","eventType","EQUIPMENT");
+        List<String> equipmentEventTypeCodes = getListOfAnyAttribute("equipmentEventTypeCode","eventType","EQUIPMENT");
 
-        EquipmentEventTypeCodes.forEach(EquipmentEventTypeCode -> {
+        equipmentEventTypeCodes.forEach(equipmentEventTypeCode -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("equipmentEventTypeCode", EquipmentEventTypeCode).
+                    queryParam("equipmentEventTypeCode", equipmentEventTypeCode).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("equipmentEventTypeCode", everyItem(equalTo(EquipmentEventTypeCode))).
+                    body("equipmentEventTypeCode", everyItem(equalTo(equipmentEventTypeCode))).
                     body("collect { it.eventType }", everyItem(equalTo("EQUIPMENT"))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
@@ -546,17 +544,17 @@ public class GetEventsTest {
     @Test
     public void testEventCreatedDateTimeQueryParam() {
 
-        List<String> EventCreatedDateTimes = getListOfAnyAttribute("eventCreatedDateTime");
+        List<String> eventCreatedDateTimes = getListOfAnyAttribute("eventCreatedDateTime");
 
-        EventCreatedDateTimes.forEach(EventCreatedDateTime -> {
+        eventCreatedDateTimes.forEach(eventCreatedDateTime -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("eventCreatedDateTime", EventCreatedDateTime).
+                    queryParam("eventCreatedDateTime", eventCreatedDateTime).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("eventCreatedDateTime", everyItem(equalTo(EventCreatedDateTime))).
+                    body("eventCreatedDateTime", everyItem(equalTo(eventCreatedDateTime))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
@@ -639,21 +637,19 @@ public class GetEventsTest {
 
     // Finds all limit, and then uses them each of them as a query parameter, and verifies the response
     @Test
-    public void testLimitQueryParam() {
+    public void testlimitQueryParam() {
 
-        List<String> Limits = getListOfAnyAttribute("limits");
+        List<String> limits = getListOfAnyAttribute("limits");
 
-        Limits.forEach(Limit -> {
-            System.out.println("limit1s");
-            System.out.println(Limit);
+        limits.forEach(limit -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("limit", Limit).
+                    queryParam("limit", limit).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("limit", everyItem(equalTo(Limit))).
+                    body("limit", everyItem(equalTo(limit))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
@@ -665,7 +661,7 @@ public class GetEventsTest {
      * Test disabled as the MINIMUM is not respected. Should return 400 according to API specification.
      * TODO: 1. Respect MINIMUM and enable test.
      */
-    public void testLimitFalseFormat() {
+    public void testlimitFalseFormat() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
@@ -677,21 +673,21 @@ public class GetEventsTest {
                 statusCode(400);
     }
 
-    // Finds all Cursor, and then uses them each of them as a query parameter, and verifies the response
+    // Finds all cursor, and then uses them each of them as a query parameter, and verifies the response
     @Test
-    public void testCursorQueryParam() {
+    public void testcursorQueryParam() {
 
-        List<String> Cursors = getListOfAnyAttribute("cursor");
+        List<String> cursors = getListOfAnyAttribute("cursor");
 
-        Cursors.forEach(Cursor -> {
+        cursors.forEach(cursor -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("cursor", Cursor).
+                    queryParam("cursor", cursor).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("cursor", everyItem(equalTo(Cursor))).
+                    body("cursor", everyItem(equalTo(cursor))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });

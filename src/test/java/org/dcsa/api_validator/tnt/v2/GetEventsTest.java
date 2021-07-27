@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.time.format.DateTimeFormatter;
 
@@ -99,26 +100,31 @@ public class GetEventsTest {
     @Test
     public void testEquipmentReferenceQueryParam() {
 
-        List<String> equipmentReferences = getListOfAnyAttribute("equipmentReference","eventType","EQUIPMENT");
+        List<String> EquipmentReferences = getListOfAnyAttribute("equipmentReference","eventType","EQUIPMENT");
 
-        for (String equipmentReference : equipmentReferences) {
-
+        for (String EquipmentReference : EquipmentReferences) {
+            System.out.println("eqr");
+            System.out.println(EquipmentReference);
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("equipmentReference", equipmentReference).
+                    queryParam("equipmentReference", EquipmentReference).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("equipmentReference", everyItem(equalTo(equipmentReference))).
+                    body("equipmentReference", everyItem(equalTo(EquipmentReference))).
                     body("collect { it.eventType }", everyItem(equalTo("EQUIPMENT"))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         }
     }
 
-    // Test equipmentReferences, fails as formatting is wrong.
+    // Test equipmentReferences, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    /*
+     * Test disabled as the maxlength is not respected. Should return 400 according to API specification.
+     * TODO: 1. Respect the MaxLength and enable test.
+     */
     public void testEquipmentReferenceQueryFalseFormat() {
             given().
                 auth().
@@ -132,7 +138,7 @@ public class GetEventsTest {
     }
 
     //Finds all ShipmentEventTypeCode, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testShipmentEventTypeCodeQueryParam() {
 
         List<String> ShipmentEventTypeCodes = getListOfAnyAttribute("shipmentEventTypeCode","eventType","SHIPMENT");
@@ -152,8 +158,13 @@ public class GetEventsTest {
         });
     }
 
-    // Test shipmentEventTypeCode, fails as formatting is wrong.
+    // Test shipmentEventTypeCode, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    /*
+     * Test disabled as ENUM is not respected. listed in specification.
+     * Should return 400 according to API specification.
+     * TODO: 1. Respect the ENUM and enable test.
+     * */
     public void testShipmentEventTypeCodeQueryFalseFormat() {
         given().
                 auth().
@@ -167,7 +178,7 @@ public class GetEventsTest {
     }
 
     //Finds all carrierBookingReference, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testCarrierBookingReferenceQueryParam() {
 
       List<String> CarrierBookingReferences = getListOfAnyAttribute("carrierBookingReference");
@@ -186,8 +197,13 @@ public class GetEventsTest {
         });
     }
 
-    // Test carrierBookingReference, fails as formatting is wrong.
+    // Test carrierBookingReference, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    /*
+    * Test disabled as code does not respect the 35 max length listed in specification.
+    * Should return 400 according to API specification.
+     * TODO: 1. Respect the MaxLength and enable test.
+    * */
     public void testCarrierBookingReferenceQueryFalseFormat() {
         given().
                 auth().
@@ -201,7 +217,7 @@ public class GetEventsTest {
     }
 
     //Finds all BookingReference (DEPRECATED), and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testBookingReferenceQueryParam() {
 
         List<String> BookingReferences = getListOfAnyAttribute("bookingReference");
@@ -221,7 +237,7 @@ public class GetEventsTest {
     }
 
     //Finds all transportDocumentID, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testTransportDocumentIDQueryParam() {
 
         List<String> TransportDocumentIDs = getListOfAnyAttribute("transportDocumentID");
@@ -241,7 +257,7 @@ public class GetEventsTest {
     }
 
     //Finds all TransportDocumentReference, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testTransportDocumentReferenceQueryParam() {
 
         List<String> TransportDocumentReferences = getListOfAnyAttribute("transportDocumentReference");
@@ -260,8 +276,13 @@ public class GetEventsTest {
         });
     }
 
-    // Test TransportDocumentReference, fails as formatting is wrong.
+    // Test TransportDocumentReference, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    /*
+     * Test disabled as code does not respect the 20 max length listed in specification.
+     * Should return 400 according to API specification.
+     * TODO: 1. Respect the MaxLength and enable test.
+     * */
     public void testTransportDocumentReferenceQueryFalseFormat() {
         given().
                 auth().
@@ -274,8 +295,10 @@ public class GetEventsTest {
                 statusCode(400);
     }
 
-    //Finds all transportDocumentTypeCode, and then uses them each of them as a query parameter, and verifies the response
+    //Finds all transportDocumentTypeCode, then uses them each of them as a query parameter, and verifies the response
     @Test(enabled = false)
+    // // MAJOR: RETURNS 500-response, should return 200.
+    // TODO: LOOK INTO THIS!
     public void testTransportDocumentTypeCodeQueryParam() {
 
         List<String> TransportDocumentTypeCodes = getListOfAnyAttribute("transportDocumentTypeCode");
@@ -294,8 +317,9 @@ public class GetEventsTest {
         });
     }
 
-    // Test TransportDocumentReference, fails as formatting is wrong.
+    // Test TransportDocumentReference, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    // MAJOR: RETURNS 500-response, should return 400.
     public void testTransportDocumentTypeCodeFalseFormat() {
         given().
                 auth().
@@ -309,7 +333,7 @@ public class GetEventsTest {
     }
 
     //Finds all TransportEventTypeCode, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testTransportEventTypeCodeQueryParam() {
 
         List<String> TransportEventTypeCodes = getListOfAnyAttribute("transportEventTypeCode","eventType","TRANSPORT");
@@ -328,8 +352,13 @@ public class GetEventsTest {
         });
     }
 
-    // Test TransportDocumentReference, fails as formatting is wrong.
+    // Test TransportDocumentReference, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    /*
+     * Test disabled as code does not respect the 20 max length listed in specification.
+     * Should return 400 according to API specification.
+     * TODO: 1. Respect the MaxLength and enable test.
+     * */
     public void testTransportEventTypeCodeFalseFormat() {
         given().
                 auth().
@@ -364,7 +393,7 @@ public class GetEventsTest {
     }
 
     // Finds all VesselIMONumber, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testVesselIMONumberQueryParam() {
 
         List<String> VesselIMONumbers = getListOfAnyAttribute("vesselIMONumber");
@@ -383,8 +412,13 @@ public class GetEventsTest {
         });
     }
 
-    // Test VesselIMONumber, fails as formatting is wrong.
+    // Test VesselIMONumber, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    /*
+     * Test disabled as code does not respect the 7 max length listed in specification.
+     * Should return 400 according to API specification.
+     * TODO: 1. Respect the MaxLength and enable test.
+     * */
     public void testVesselIMONumberFalseFormat() {
         given().
                 auth().
@@ -398,7 +432,7 @@ public class GetEventsTest {
     }
 
     // Finds all CarrierVoyageNumber, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testCarrierVoyageNumberQueryParam() {
 
         List<String> CarrierVoyageNumbers = getListOfAnyAttribute("carrierVoyageNumber");
@@ -417,8 +451,8 @@ public class GetEventsTest {
         });
     }
 
-    // Test CarrierVoyageNumber, fails as formatting is wrong.
-    @Test(enabled = false)
+    // Test CarrierVoyageNumber, response should be 400 as formatting is wrong.
+    @Test
     public void testCarrierVoyageNumberFalseFormat() {
         given().
                 auth().
@@ -432,7 +466,7 @@ public class GetEventsTest {
     }
 
     // Finds all CarrierServiceCode, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testCarrierServiceCodeQueryParam() {
 
         List<String> CarrierServiceCodes = getListOfAnyAttribute("carrierServiceCode");
@@ -451,8 +485,12 @@ public class GetEventsTest {
         });
     }
 
-    // Test CarrierServiceCode, fails as formatting is wrong.
+    // Test CarrierServiceCode, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    /*
+    * Test disabled as the maxlength is not respected. Should return 400 according to API specification.
+    * TODO: 1. Respect the MaxLength and enable test.
+     */
     public void testCarrierServiceCodeFalseFormat() {
         given().
                 auth().
@@ -466,7 +504,7 @@ public class GetEventsTest {
     }
 
     //Finds all equipmentEventTypeCode, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testEquipmentEventTypeCodeQueryParam() {
 
         List<String> EquipmentEventTypeCodes = getListOfAnyAttribute("equipmentEventTypeCode","eventType","EQUIPMENT");
@@ -486,8 +524,12 @@ public class GetEventsTest {
         });
     }
 
-    // Test equipmentEventTypeCode, fails as formatting is wrong.
+    // Test equipmentEventTypeCode, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    /*
+     * Test disabled as the ENUM is not respected. Should return 400 according to API specification.
+     * TODO: 1. Respect ENUM and enable test.
+     */
     public void testEquipmentEventTypeCodeFalseFormat() {
         given().
                 auth().
@@ -501,7 +543,7 @@ public class GetEventsTest {
     }
 
     // Finds all EventCreatedDateTime, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testEventCreatedDateTimeQueryParam() {
 
         List<String> EventCreatedDateTimes = getListOfAnyAttribute("eventCreatedDateTime");
@@ -521,7 +563,7 @@ public class GetEventsTest {
     }
 
     // Test eventCreatedDateTime, all formats.
-    @Test(enabled = false)
+    @Test
     public void testEventCreatedDateTimeFormats() {
         given().
                 auth().
@@ -537,7 +579,7 @@ public class GetEventsTest {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-                        queryParam("eventCreatedDateTime:gt", "=2019-04-01T14:12:56+01:00").
+                        queryParam("eventCreatedDateTime:gt", "2019-04-01T14:12:56+01:00").
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
@@ -581,8 +623,8 @@ public class GetEventsTest {
     }
 
 
-    // Test eventCreatedDateTime, fails as formatting is wrong.
-    @Test(enabled = false)
+    // Test eventCreatedDateTime, response should be 400 as formatting is wrong.
+    @Test
     public void testEventCreatedDateTimeFalseFormat() {
         given().
                 auth().
@@ -596,12 +638,14 @@ public class GetEventsTest {
     }
 
     // Finds all limit, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testLimitQueryParam() {
 
         List<String> Limits = getListOfAnyAttribute("limits");
 
         Limits.forEach(Limit -> {
+            System.out.println("limit1s");
+            System.out.println(Limit);
             given().
                     auth().
                     oauth2(Configuration.accessToken).
@@ -615,14 +659,18 @@ public class GetEventsTest {
         });
     }
 
-    // Test limit, fails as formatting is wrong.
+    // Test limit, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    /*
+     * Test disabled as the MINIMUM is not respected. Should return 400 according to API specification.
+     * TODO: 1. Respect MINIMUM and enable test.
+     */
     public void testLimitFalseFormat() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
                 // Specification -> minimum: 1
-                        queryParam("eventCreatedDateTime", "0").
+                        queryParam("limit", "0").
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
@@ -630,7 +678,7 @@ public class GetEventsTest {
     }
 
     // Finds all Cursor, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testCursorQueryParam() {
 
         List<String> Cursors = getListOfAnyAttribute("cursor");
@@ -732,7 +780,7 @@ public class GetEventsTest {
                         using(jsonSchemaFactory)).
                 extract().body().asString();
 
-        return JsonPath.from(json).getList(attribute).stream().distinct().collect(Collectors.toList());
+        return JsonPath.from(json).getList(attribute).stream().filter(Objects::nonNull).distinct().collect(Collectors.toList());
     }
 
     private List getListOfAnyAttribute(String attribute, String queryParam, String queryParamValue) {
@@ -749,6 +797,6 @@ public class GetEventsTest {
                         using(jsonSchemaFactory)).
                 extract().body().asString();
 
-        return JsonPath.from(json).getList(attribute).stream().distinct().collect(Collectors.toList());
+        return JsonPath.from(json).getList(attribute).stream().filter(Objects::nonNull).distinct().collect(Collectors.toList());
     }
 }

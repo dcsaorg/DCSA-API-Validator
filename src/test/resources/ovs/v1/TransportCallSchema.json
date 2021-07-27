@@ -9,7 +9,7 @@
       "transportCallID": "123e4567-e89b-12d3-a456-426614174000",
       "scheduleID": "123e4567-e89b-12d3-a456-426614174000",
       "carrierServiceCode": "FE1",
-      "vesselIMONumber": "1801323",
+      "vesselIMONumber": "9321483",
       "vesselName": "Vessel A",
       "carrierVoyageNumber": "2015W",
       "UNLocationCode": "USNYC",
@@ -72,7 +72,7 @@
       "description": "An explanation about the purpose of this instance.",
       "default": 0,
       "examples": [
-        "1801323"
+        "9321483"
       ]
     },
     "vesselName": {

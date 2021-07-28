@@ -30,7 +30,7 @@ public class GetEventsTest {
 
     JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.newBuilder().setValidationConfiguration(ValidationConfiguration.newBuilder().setDefaultVersion(DRAFTV4).freeze()).freeze();
 
-    @Test(enabled = false)
+    @Test
     public void testTransportCalls() {
         given().
                 auth().
@@ -43,7 +43,7 @@ public class GetEventsTest {
                         using(jsonSchemaFactory));
     }
 
-    @Test(enabled = false)
+    @Test
     public void testNotFound() {
         given().
                 auth().
@@ -54,7 +54,7 @@ public class GetEventsTest {
                 statusCode(HttpStatus.SC_NOT_FOUND);
     }
 
-    @Test(enabled = false)
+    @Test
     public void testTransportEventsQueryParam() {
         given().
                 auth().
@@ -69,7 +69,7 @@ public class GetEventsTest {
                         using(jsonSchemaFactory));
     }
 
-    @Test(enabled = false)
+    @Test
     public void testOperationsEventsQueryParam() {
         given().
                 auth().
@@ -84,7 +84,7 @@ public class GetEventsTest {
                         using(jsonSchemaFactory));
     }
 
-    @Test(enabled = false)
+    @Test
     public void testTransportEventTypeCodeQueryParam() {
 
         List<String> transportEventTypeCodes = getListOfAnyAttribute("transportEventTypeCode");
@@ -103,7 +103,7 @@ public class GetEventsTest {
         }
 
     }
-    @Test(enabled = false)
+    @Test
     public void testTransportEventTypeCodeQueryParamFalseFormat() {
 
         List<String> transportEventTypeCodes = Arrays.asList("","2z","ABCS");
@@ -120,7 +120,7 @@ public class GetEventsTest {
         }
     }
 
-    @Test(enabled = false)
+    @Test
     public void testTransportCallIdsQueryParam() {
 
         List<String> ids = getListOfAnyAttribute("transportCallID");
@@ -141,7 +141,7 @@ public class GetEventsTest {
 
     }
 
-    @Test(enabled = false)
+    @Test
     public void testVesselIMONumberQueryParam() {
 
         List<String> vesselIMONumbers = getListOfAnyAttribute("vesselIMONumber");
@@ -158,7 +158,7 @@ public class GetEventsTest {
         }
     }
 
-    @Test(enabled = false)
+    @Test
     public void testVesselIMONumberQueryParamFalseFormat() {
 
         List<String> vesselIMONumbers = Arrays.asList("2weqqqqqqwz","ABCtrytytrySwqe");
@@ -175,7 +175,7 @@ public class GetEventsTest {
         }
     }
 
-    @Test(enabled = false)
+    @Test
     public void testCarrierVoyageNumberQueryParam() {
 
         List<String> carrierVoyageNumbers = getListOfAnyAttribute("carrierVoyageNumber");
@@ -195,7 +195,7 @@ public class GetEventsTest {
     }
 
 
-    @Test(enabled = false)
+    @Test
     public void testCarrierVoyageNumberQueryParamFalseFormat() {
         // specification -> maxLength:50
         List<String> carrierVoyageNumbers =  Arrays.asList("ABCtrytytrySwqeABCtrytytrySwqeABCtryABCtrytytrySwqe" +
@@ -213,7 +213,7 @@ public class GetEventsTest {
         }
     }
 
-    @Test(enabled = false)
+    @Test
     public void testCarrierServiceCodeQueryParam() {
 
         List<String> carrierServiceCodes = getListOfAnyAttribute("carrierServiceCode");
@@ -230,7 +230,7 @@ public class GetEventsTest {
         }
     }
 
-    @Test(enabled = false)
+    @Test
     public void testCarrierServiceCodeQueryParamFalseFormat() {
 
         List<String> carrierServiceCodes = Arrays.asList("2weqqqqqqwz","ABCtrytytrySwqe");
@@ -247,7 +247,7 @@ public class GetEventsTest {
         }
     }
 
-    @Test(enabled = false)
+    @Test
     public void testOperationsEventTypeCodeQueryParam() {
 
         List<String> operationsEventTypeCodes = getListOfAnyAttribute("transportEventTypeCode");
@@ -267,7 +267,7 @@ public class GetEventsTest {
 
     }
 
-    @Test(enabled = false)
+    @Test
     public void testOperationsEventTypeCodeQueryParamFalseFormat() {
 
         List<String> operationsEventTypeCodes = Arrays.asList("","2z","ABCS");
@@ -284,7 +284,7 @@ public class GetEventsTest {
         }
     }
 
-    @Test(enabled = false)
+    @Test
     public void testEventCreatedDateTimeQueryParam() {
 
         List<String> eventCreatedDateTimes = getListOfAnyAttribute("EventCreatedDateTime");
@@ -304,7 +304,7 @@ public class GetEventsTest {
     }
 
     // Testing eventCreatedDateTime (gte, gt, lte, lt, eq)
-    @Test(enabled = false)
+    @Test
     public void testEventCreatedDateTimeFormats() {
         given().
                 auth().
@@ -364,7 +364,7 @@ public class GetEventsTest {
     }
 
     // Test eventCreatedDateTime, fails as formatting is wrong.
-    @Test(enabled = false)
+    @Test
     public void testEventCreatedDateTimeFalseFormat() {
         given().
                 auth().
@@ -378,7 +378,7 @@ public class GetEventsTest {
     }
 
     // Test sorting:ASC (descending) and if order is respected.
-    @Test(enabled = false)
+    @Test
     public void testSortAscEventCreatedDateTimeQueryParam() {
 
         List<String> eventCreatedDateTimesSorted = getListOfAnyAttribute("eventCreatedDateTime","sort","eventCreatedDateTime:ASC");
@@ -392,7 +392,7 @@ public class GetEventsTest {
     }
 
     // Test sorting:DESC (descending) and if order is respected.
-    @Test(enabled = false)
+    @Test
     public void testSortDescEventCreatedDateTimeQueryParam() {
 
         List<String> eventCreatedDateTimesSorted = getListOfAnyAttribute("eventCreatedDateTime","sort","eventCreatedDateTime:DESC");
@@ -406,7 +406,7 @@ public class GetEventsTest {
     }
 
     // Test sorting:ASC (descending) and if order is respected.
-    @Test(enabled = false)
+    @Test
     public void testSortAscEventDateTimeQueryParam() {
 
         List<String> eventCreatedDateTimesSorted = getListOfAnyAttribute("eventDateTime","sort","eventDateTime:ASC");
@@ -420,7 +420,7 @@ public class GetEventsTest {
     }
 
     // Test sorting:DESC (descending) and if order is respected.
-    @Test(enabled = false)
+    @Test
     public void testSortDescEventDateTimeQueryParam() {
 
         List<String> eventCreatedDateTimesSorted = getListOfAnyAttribute("eventDateTime","sort","eventDateTime:DESC");
@@ -433,7 +433,7 @@ public class GetEventsTest {
         }
     }
 
-    @Test(enabled = false)
+    @Test
     public void testLimitQueryParam() {
 
         List<String> limits = getListOfAnyAttribute("limit");
@@ -454,7 +454,7 @@ public class GetEventsTest {
     }
 
     // Test limit, fails as formatting is wrong.
-    @Test(enabled = false)
+    @Test
     public void testLimitFalseFormat() {
         given().
                 auth().
@@ -468,7 +468,7 @@ public class GetEventsTest {
     }
 
     // Finds all cursors, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testCursorQueryParam() {
 
         List<String> cursors = getListOfAnyAttribute("cursor");
@@ -489,7 +489,7 @@ public class GetEventsTest {
     }
 
     // API-Version as a header parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testAPIVersionQueryParam() {
         given().
                 auth().

@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.time.format.DateTimeFormatter;
 
@@ -102,7 +103,6 @@ public class GetEventsTest {
         List<String> equipmentReferences = getListOfAnyAttribute("equipmentReference","eventType","EQUIPMENT");
 
         for (String equipmentReference : equipmentReferences) {
-
             given().
                     auth().
                     oauth2(Configuration.accessToken).
@@ -117,8 +117,12 @@ public class GetEventsTest {
         }
     }
 
-    // Test equipmentReferences, fails as formatting is wrong.
+    // Test equipmentReferences, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    /*
+     * Test disabled as the maxlength is not respected. Should return 400 according to API specification.
+     * TODO: 1. Respect the MaxLength and enable test.
+     */
     public void testEquipmentReferenceQueryFalseFormat() {
             given().
                 auth().
@@ -132,28 +136,33 @@ public class GetEventsTest {
     }
 
     //Finds all ShipmentEventTypeCode, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testShipmentEventTypeCodeQueryParam() {
 
-        List<String> ShipmentEventTypeCodes = getListOfAnyAttribute("shipmentEventTypeCode","eventType","SHIPMENT");
+        List<String> shipmentEventTypeCodes = getListOfAnyAttribute("shipmentEventTypeCode","eventType","SHIPMENT");
 
-        ShipmentEventTypeCodes.forEach(ShipmentEventTypeCode -> {
+        shipmentEventTypeCodes.forEach(shipmentEventTypeCode -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("shipmentEventTypeCode", ShipmentEventTypeCode).
+                    queryParam("shipmentEventTypeCode", shipmentEventTypeCode).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("shipmentEventTypeCode", everyItem(equalTo(ShipmentEventTypeCode))).
+                    body("shipmentEventTypeCode", everyItem(equalTo(shipmentEventTypeCode))).
                     body("collect { it.eventType }", everyItem(equalTo("SHIPMENT"))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
     }
 
-    // Test shipmentEventTypeCode, fails as formatting is wrong.
+    // Test shipmentEventTypeCode, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    /*
+     * Test disabled as ENUM is not respected. listed in specification.
+     * Should return 400 according to API specification.
+     * TODO: 1. Respect the ENUM and enable test.
+     * */
     public void testShipmentEventTypeCodeQueryFalseFormat() {
         given().
                 auth().
@@ -167,27 +176,32 @@ public class GetEventsTest {
     }
 
     //Finds all carrierBookingReference, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testCarrierBookingReferenceQueryParam() {
 
-      List<String> CarrierBookingReferences = getListOfAnyAttribute("carrierBookingReference");
+      List<String> carrierBookingReferences = getListOfAnyAttribute("carrierBookingReference");
 
-      CarrierBookingReferences.forEach(CarrierBookingReference -> {
+        carrierBookingReferences.forEach(carrierBookingReference -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("carrierBookingReference", CarrierBookingReference).
+                    queryParam("carrierBookingReference", carrierBookingReference).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("carrierBookingReference", everyItem(equalTo(CarrierBookingReference))).
+                    body("carrierBookingReference", everyItem(equalTo(carrierBookingReference))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
     }
 
-    // Test carrierBookingReference, fails as formatting is wrong.
+    // Test carrierBookingReference, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    /*
+    * Test disabled as code does not respect the 35 max length listed in specification.
+    * Should return 400 according to API specification.
+     * TODO: 1. Respect the MaxLength and enable test.
+    * */
     public void testCarrierBookingReferenceQueryFalseFormat() {
         given().
                 auth().
@@ -201,67 +215,72 @@ public class GetEventsTest {
     }
 
     //Finds all BookingReference (DEPRECATED), and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testBookingReferenceQueryParam() {
 
-        List<String> BookingReferences = getListOfAnyAttribute("bookingReference");
+        List<String> bookingReferences = getListOfAnyAttribute("bookingReference");
 
-        BookingReferences.forEach(BookingReference -> {
+        bookingReferences.forEach(bookingReference -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("bookingReference", BookingReference).
+                    queryParam("bookingReference", bookingReference).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("bookingReference", everyItem(equalTo(BookingReference))).
+                    body("bookingReference", everyItem(equalTo(bookingReference))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
     }
 
     //Finds all transportDocumentID, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testTransportDocumentIDQueryParam() {
 
-        List<String> TransportDocumentIDs = getListOfAnyAttribute("transportDocumentID");
+        List<String> transportDocumentIDs = getListOfAnyAttribute("transportDocumentID");
 
-        TransportDocumentIDs.forEach(TransportDocumentID -> {
+        transportDocumentIDs.forEach(transportDocumentID -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("transportDocumentID", TransportDocumentID).
+                    queryParam("transportDocumentID", transportDocumentID).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("transportDocumentID", everyItem(equalTo(TransportDocumentID))).
+                    body("transportDocumentID", everyItem(equalTo(transportDocumentID))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
     }
 
     //Finds all TransportDocumentReference, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testTransportDocumentReferenceQueryParam() {
 
-        List<String> TransportDocumentReferences = getListOfAnyAttribute("transportDocumentReference");
+        List<String> transportDocumentReferences = getListOfAnyAttribute("transportDocumentReference");
 
-        TransportDocumentReferences.forEach(TransportDocumentReference -> {
+        transportDocumentReferences.forEach(transportDocumentReference -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("transportDocumentReference", TransportDocumentReference).
+                    queryParam("transportDocumentReference", transportDocumentReference).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("transportDocumentReference", everyItem(equalTo(TransportDocumentReference))).
+                    body("transportDocumentReference", everyItem(equalTo(transportDocumentReference))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
     }
 
-    // Test TransportDocumentReference, fails as formatting is wrong.
+    // Test TransportDocumentReference, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    /*
+     * Test disabled as code does not respect the 20 max length listed in specification.
+     * Should return 400 according to API specification.
+     * TODO: 1. Respect the MaxLength and enable test.
+     * */
     public void testTransportDocumentReferenceQueryFalseFormat() {
         given().
                 auth().
@@ -274,28 +293,31 @@ public class GetEventsTest {
                 statusCode(400);
     }
 
-    //Finds all transportDocumentTypeCode, and then uses them each of them as a query parameter, and verifies the response
+    //Finds all transportDocumentTypeCode, then uses them each of them as a query parameter, and verifies the response
     @Test(enabled = false)
+    // // MAJOR: RETURNS 500-response, should return 200.
+    // TODO: LOOK INTO THIS!
     public void testTransportDocumentTypeCodeQueryParam() {
 
-        List<String> TransportDocumentTypeCodes = getListOfAnyAttribute("transportDocumentTypeCode");
+        List<String> transportDocumentTypeCodes = getListOfAnyAttribute("transportDocumentTypeCode");
 
-        TransportDocumentTypeCodes.forEach(TransportDocumentTypeCode -> {
+        transportDocumentTypeCodes.forEach(transportDocumentTypeCode -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("transportDocumentTypeCode", TransportDocumentTypeCode).
+                    queryParam("transportDocumentTypeCode", transportDocumentTypeCode).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("transportDocumentTypeCode", everyItem(equalTo(TransportDocumentTypeCode))).
+                    body("transportDocumentTypeCode", everyItem(equalTo(transportDocumentTypeCode))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
     }
 
-    // Test TransportDocumentReference, fails as formatting is wrong.
+    // Test TransportDocumentReference, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    // MAJOR: RETURNS 500-response, should return 400.
     public void testTransportDocumentTypeCodeFalseFormat() {
         given().
                 auth().
@@ -309,27 +331,32 @@ public class GetEventsTest {
     }
 
     //Finds all TransportEventTypeCode, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testTransportEventTypeCodeQueryParam() {
 
-        List<String> TransportEventTypeCodes = getListOfAnyAttribute("transportEventTypeCode","eventType","TRANSPORT");
+        List<String> transportEventTypeCodes = getListOfAnyAttribute("transportEventTypeCode","eventType","TRANSPORT");
 
-        TransportEventTypeCodes.forEach(TransportEventTypeCode -> {
+        transportEventTypeCodes.forEach(transportEventTypeCode -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("transportEventTypeCode", TransportEventTypeCode).
+                    queryParam("transportEventTypeCode", transportEventTypeCode).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("transportEventTypeCode", everyItem(equalTo(TransportEventTypeCode))).
+                    body("transportEventTypeCode", everyItem(equalTo(transportEventTypeCode))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
     }
 
-    // Test TransportDocumentReference, fails as formatting is wrong.
+    // Test TransportDocumentReference, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    /*
+     * Test disabled as code does not respect the 20 max length listed in specification.
+     * Should return 400 according to API specification.
+     * TODO: 1. Respect the MaxLength and enable test.
+     * */
     public void testTransportEventTypeCodeFalseFormat() {
         given().
                 auth().
@@ -346,45 +373,50 @@ public class GetEventsTest {
     @Test
     public void testTransportCallIDQueryParam() {
 
-        List<String> TransportCallIDs = getListOfAnyAttribute("transportCallID","eventType","EQUIPMENT,TRANSPORT");
+        List<String> transportCallIDs = getListOfAnyAttribute("transportCallID","eventType","EQUIPMENT,TRANSPORT");
 
-        TransportCallIDs.forEach(TransportCallID -> {
+        transportCallIDs.forEach(transportCallID -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("transportCallID", TransportCallID).
+                    queryParam("transportCallID", transportCallID).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("transportCallID", everyItem(equalTo(TransportCallID))).
-                    body("transportCall.transportCallID", everyItem(equalTo(TransportCallID))).
+                    body("transportCallID", everyItem(equalTo(transportCallID))).
+                    body("transportCall.transportCallID", everyItem(equalTo(transportCallID))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
     }
 
     // Finds all VesselIMONumber, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testVesselIMONumberQueryParam() {
 
-        List<String> VesselIMONumbers = getListOfAnyAttribute("vesselIMONumber");
+        List<String> vesselIMONumbers = getListOfAnyAttribute("vesselIMONumber");
 
-        VesselIMONumbers.forEach(VesselIMONumber -> {
+        vesselIMONumbers.forEach(vesselIMONumber -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("vesselIMONumber", VesselIMONumber).
+                    queryParam("vesselIMONumber", vesselIMONumber).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("vesselIMONumber", everyItem(equalTo(VesselIMONumber))).
+                    body("vesselIMONumber", everyItem(equalTo(vesselIMONumber))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
     }
 
-    // Test VesselIMONumber, fails as formatting is wrong.
+    // Test VesselIMONumber, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    /*
+     * Test disabled as code does not respect the 7 max length listed in specification.
+     * Should return 400 according to API specification.
+     * TODO: 1. Respect the MaxLength and enable test.
+     * */
     public void testVesselIMONumberFalseFormat() {
         given().
                 auth().
@@ -398,27 +430,27 @@ public class GetEventsTest {
     }
 
     // Finds all CarrierVoyageNumber, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testCarrierVoyageNumberQueryParam() {
 
-        List<String> CarrierVoyageNumbers = getListOfAnyAttribute("carrierVoyageNumber");
+        List<String> carrierVoyageNumbers = getListOfAnyAttribute("carrierVoyageNumber");
 
-        CarrierVoyageNumbers.forEach(CarrierVoyageNumber -> {
+        carrierVoyageNumbers.forEach(carrierVoyageNumber -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("carrierVoyageNumber", CarrierVoyageNumber).
+                    queryParam("carrierVoyageNumber", carrierVoyageNumber).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("carrierVoyageNumber", everyItem(equalTo(CarrierVoyageNumber))).
+                    body("carrierVoyageNumber", everyItem(equalTo(carrierVoyageNumber))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
     }
 
-    // Test CarrierVoyageNumber, fails as formatting is wrong.
-    @Test(enabled = false)
+    // Test CarrierVoyageNumber, response should be 400 as formatting is wrong.
+    @Test
     public void testCarrierVoyageNumberFalseFormat() {
         given().
                 auth().
@@ -432,27 +464,31 @@ public class GetEventsTest {
     }
 
     // Finds all CarrierServiceCode, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testCarrierServiceCodeQueryParam() {
 
-        List<String> CarrierServiceCodes = getListOfAnyAttribute("carrierServiceCode");
+        List<String> carrierServiceCodes = getListOfAnyAttribute("carrierServiceCode");
 
-        CarrierServiceCodes.forEach(CarrierServiceCode -> {
+        carrierServiceCodes.forEach(carrierServiceCode -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("carrierServiceCode", CarrierServiceCode).
+                    queryParam("carrierServiceCode", carrierServiceCode).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("carrierServiceCode", everyItem(equalTo(CarrierServiceCode))).
+                    body("carrierServiceCode", everyItem(equalTo(carrierServiceCode))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
     }
 
-    // Test CarrierServiceCode, fails as formatting is wrong.
+    // Test CarrierServiceCode, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    /*
+    * Test disabled as the maxlength is not respected. Should return 400 according to API specification.
+    * TODO: 1. Respect the MaxLength and enable test.
+     */
     public void testCarrierServiceCodeFalseFormat() {
         given().
                 auth().
@@ -466,28 +502,32 @@ public class GetEventsTest {
     }
 
     //Finds all equipmentEventTypeCode, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testEquipmentEventTypeCodeQueryParam() {
 
-        List<String> EquipmentEventTypeCodes = getListOfAnyAttribute("equipmentEventTypeCode","eventType","EQUIPMENT");
+        List<String> equipmentEventTypeCodes = getListOfAnyAttribute("equipmentEventTypeCode","eventType","EQUIPMENT");
 
-        EquipmentEventTypeCodes.forEach(EquipmentEventTypeCode -> {
+        equipmentEventTypeCodes.forEach(equipmentEventTypeCode -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("equipmentEventTypeCode", EquipmentEventTypeCode).
+                    queryParam("equipmentEventTypeCode", equipmentEventTypeCode).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("equipmentEventTypeCode", everyItem(equalTo(EquipmentEventTypeCode))).
+                    body("equipmentEventTypeCode", everyItem(equalTo(equipmentEventTypeCode))).
                     body("collect { it.eventType }", everyItem(equalTo("EQUIPMENT"))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
     }
 
-    // Test equipmentEventTypeCode, fails as formatting is wrong.
+    // Test equipmentEventTypeCode, response should be 400 as formatting is wrong.
     @Test(enabled = false)
+    /*
+     * Test disabled as the ENUM is not respected. Should return 400 according to API specification.
+     * TODO: 1. Respect ENUM and enable test.
+     */
     public void testEquipmentEventTypeCodeFalseFormat() {
         given().
                 auth().
@@ -501,27 +541,27 @@ public class GetEventsTest {
     }
 
     // Finds all EventCreatedDateTime, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
+    @Test
     public void testEventCreatedDateTimeQueryParam() {
 
-        List<String> EventCreatedDateTimes = getListOfAnyAttribute("eventCreatedDateTime");
+        List<String> eventCreatedDateTimes = getListOfAnyAttribute("eventCreatedDateTime");
 
-        EventCreatedDateTimes.forEach(EventCreatedDateTime -> {
+        eventCreatedDateTimes.forEach(eventCreatedDateTime -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("eventCreatedDateTime", EventCreatedDateTime).
+                    queryParam("eventCreatedDateTime", eventCreatedDateTime).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("eventCreatedDateTime", everyItem(equalTo(EventCreatedDateTime))).
+                    body("eventCreatedDateTime", everyItem(equalTo(eventCreatedDateTime))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
     }
 
     // Test eventCreatedDateTime, all formats.
-    @Test(enabled = false)
+    @Test
     public void testEventCreatedDateTimeFormats() {
         given().
                 auth().
@@ -537,7 +577,7 @@ public class GetEventsTest {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-                        queryParam("eventCreatedDateTime:gt", "=2019-04-01T14:12:56+01:00").
+                        queryParam("eventCreatedDateTime:gt", "2019-04-01T14:12:56+01:00").
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
@@ -581,8 +621,8 @@ public class GetEventsTest {
     }
 
 
-    // Test eventCreatedDateTime, fails as formatting is wrong.
-    @Test(enabled = false)
+    // Test eventCreatedDateTime, response should be 400 as formatting is wrong.
+    @Test
     public void testEventCreatedDateTimeFalseFormat() {
         given().
                 auth().
@@ -596,54 +636,58 @@ public class GetEventsTest {
     }
 
     // Finds all limit, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
-    public void testLimitQueryParam() {
+    @Test
+    public void testlimitQueryParam() {
 
-        List<String> Limits = getListOfAnyAttribute("limits");
+        List<String> limits = getListOfAnyAttribute("limits");
 
-        Limits.forEach(Limit -> {
+        limits.forEach(limit -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("limit", Limit).
+                    queryParam("limit", limit).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("limit", everyItem(equalTo(Limit))).
+                    body("limit", everyItem(equalTo(limit))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
     }
 
-    // Test limit, fails as formatting is wrong.
+    // Test limit, response should be 400 as formatting is wrong.
     @Test(enabled = false)
-    public void testLimitFalseFormat() {
+    /*
+     * Test disabled as the MINIMUM is not respected. Should return 400 according to API specification.
+     * TODO: 1. Respect MINIMUM and enable test.
+     */
+    public void testlimitFalseFormat() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
                 // Specification -> minimum: 1
-                        queryParam("eventCreatedDateTime", "0").
+                        queryParam("limit", "0").
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
                 statusCode(400);
     }
 
-    // Finds all Cursor, and then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
-    public void testCursorQueryParam() {
+    // Finds all cursor, and then uses them each of them as a query parameter, and verifies the response
+    @Test
+    public void testcursorQueryParam() {
 
-        List<String> Cursors = getListOfAnyAttribute("cursor");
+        List<String> cursors = getListOfAnyAttribute("cursor");
 
-        Cursors.forEach(Cursor -> {
+        cursors.forEach(cursor -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("cursor", Cursor).
+                    queryParam("cursor", cursor).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).
-                    body("cursor", everyItem(equalTo(Cursor))).
+                    body("cursor", everyItem(equalTo(cursor))).
                     body(matchesJsonSchemaInClasspath("tnt/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
@@ -732,7 +776,7 @@ public class GetEventsTest {
                         using(jsonSchemaFactory)).
                 extract().body().asString();
 
-        return JsonPath.from(json).getList(attribute).stream().distinct().collect(Collectors.toList());
+        return JsonPath.from(json).getList(attribute).stream().filter(Objects::nonNull).distinct().collect(Collectors.toList());
     }
 
     private List getListOfAnyAttribute(String attribute, String queryParam, String queryParamValue) {
@@ -749,6 +793,6 @@ public class GetEventsTest {
                         using(jsonSchemaFactory)).
                 extract().body().asString();
 
-        return JsonPath.from(json).getList(attribute).stream().distinct().collect(Collectors.toList());
+        return JsonPath.from(json).getList(attribute).stream().filter(Objects::nonNull).distinct().collect(Collectors.toList());
     }
 }

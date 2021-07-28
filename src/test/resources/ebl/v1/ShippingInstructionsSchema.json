@@ -25,7 +25,7 @@
           "volume",
           "weightUnit",
           "volumeUnit",
-          "freightPayableAt",
+          "invoicePayableAt",
           "dateOfIssue",
           "equipmentReference",
           "ISOEquipmentCode",
@@ -183,10 +183,10 @@
             "type": "string",
             "title": "The volumeUnit schema"
           },
-          "freightPayableAt": {
-            "id": "#/items/anyOf/0/properties/freightPayableAt",
+          "invoicePayableAt": {
+            "id": "#/items/anyOf/0/properties/invoicePayableAt",
             "type": "string",
-            "title": "The freightPayableAt schema"
+            "title": "The invoicePayableAt schema"
           },
           "dateOfIssue": {
             "id": "#/items/anyOf/0/properties/dateOfIssue",

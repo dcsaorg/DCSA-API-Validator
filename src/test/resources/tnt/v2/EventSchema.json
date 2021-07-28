@@ -298,7 +298,6 @@
         "shipmentID": {
           "id": "#/properties/shipmentID",
           "type": "string",
-          "title": "explain why a specific event has been sent.",
           "default": ""
         },
         "references": {

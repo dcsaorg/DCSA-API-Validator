@@ -12,6 +12,7 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.github.fge.jsonschema.SchemaVersion.DRAFTV4;
@@ -37,7 +38,8 @@ public class GetEventsTest {
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
-                body(matchesJsonSchemaInClasspath("ovs/v2/TransportCallsSchema.json").
+                statusCode(200).
+                body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
                         using(jsonSchemaFactory));
     }
 
@@ -63,7 +65,7 @@ public class GetEventsTest {
                 assertThat().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("ovs/v2/TransportCallSchema.json").
+                body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
                         using(jsonSchemaFactory));
     }
 
@@ -78,36 +80,40 @@ public class GetEventsTest {
                 assertThat().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("ovs/v2/TransportCallSchema.json").
+                body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
                         using(jsonSchemaFactory));
     }
 
     @Test(enabled = false)
     public void testTransportEventTypeCodeQueryParam() {
 
-        List<String> TransportEventTypeCodes = getListOfAnyAttribute("transportEventTypeCode");
+        List<String> transportEventTypeCodes = getListOfAnyAttribute("transportEventTypeCode");
 
-        for (String TransportEventTypeCode : TransportEventTypeCodes) {
+        for (String transportEventTypeCode : transportEventTypeCodes) {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    get(Configuration.ROOT_URI + "/events/" + TransportEventTypeCode).
+                    queryParam("transportEventTypeCode", transportEventTypeCode).
+                    get(Configuration.ROOT_URI + "/events").
                     then().
-                    body("transportEventTypeCode", is(TransportEventTypeCode)).
-                    assertThat().body(matchesJsonSchemaInClasspath("ovs/v2/TransportCallSchema.json").using(jsonSchemaFactory));
+                    assertThat().
+                    statusCode(200).
+                    body("transportEventTypeCode", is(transportEventTypeCode)).
+                    body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
         }
 
     }
     @Test(enabled = false)
     public void testTransportEventTypeCodeQueryParamFalseFormat() {
 
-        List<String> TransportEventTypeCodes = Arrays.asList("","2z","ABCS");
+        List<String> transportEventTypeCodes = Arrays.asList("","2z","ABCS");
 
-        for (String TransportEventTypeCode : TransportEventTypeCodes) {
+        for (String transportEventTypeCode : transportEventTypeCodes) {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    get(Configuration.ROOT_URI + "/events/" + TransportEventTypeCode).
+                    queryParam("transportEventTypeCode", transportEventTypeCode).
+                    get(Configuration.ROOT_URI + "/events").
                     then().
                     assertThat().
                     statusCode(400);
@@ -123,12 +129,14 @@ public class GetEventsTest {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    get(Configuration.ROOT_URI + "/events/" + id).
+                    queryParam("transportCallID", id).
+                    get(Configuration.ROOT_URI + "/events").
                     then().
                     body("transportCallID", is(id)).
                     assertThat().
                     statusCode(200).
-                    body(matchesJsonSchemaInClasspath("ovs/v2/TransportCallSchema.json").using(jsonSchemaFactory));
+                    body("vesselIMONumber", everyItem(equalTo(id))).
+                    body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
         }
 
     }
@@ -136,30 +144,31 @@ public class GetEventsTest {
     @Test(enabled = false)
     public void testVesselIMONumberQueryParam() {
 
-        List<String> VesselIMONumbers = getListOfAnyAttribute("vesselIMONumber");
+        List<String> vesselIMONumbers = getListOfAnyAttribute("vesselIMONumber");
 
-        for (String VesselIMONumber : VesselIMONumbers) {
+        for (String vesselIMONumber : vesselIMONumbers) {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("vesselIMONumber", VesselIMONumber).
+                    queryParam("vesselIMONumber", vesselIMONumber).
                     get(Configuration.ROOT_URI + "/events").
                     then().
-                    body("vesselIMONumber", everyItem(equalTo(VesselIMONumber))).
-                    body(matchesJsonSchemaInClasspath("ovs/v2/TransportCallSchema.json").using(jsonSchemaFactory));
+                    body("vesselIMONumber", everyItem(equalTo(vesselIMONumber))).
+                    body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
         }
     }
 
     @Test(enabled = false)
     public void testVesselIMONumberQueryParamFalseFormat() {
 
-        List<String> VesselIMONumbers = Arrays.asList("2weqqqqqqwz","ABCtrytytrySwqe");
+        List<String> vesselIMONumbers = Arrays.asList("2weqqqqqqwz","ABCtrytytrySwqe");
 
-        for (String VesselIMONumber : VesselIMONumbers) {
+        for (String vesselIMONumber : vesselIMONumbers) {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    get(Configuration.ROOT_URI + "/events/" + VesselIMONumber).
+                    queryParam("vesselIMONumber",vesselIMONumber).
+                    get(Configuration.ROOT_URI + "/events").
                     then().
                     assertThat().
                     statusCode(400);
@@ -169,19 +178,19 @@ public class GetEventsTest {
     @Test(enabled = false)
     public void testCarrierVoyageNumberQueryParam() {
 
-        List<String> CarrierVoyageNumbers = getListOfAnyAttribute("carrierVoyageNumber");
+        List<String> carrierVoyageNumbers = getListOfAnyAttribute("carrierVoyageNumber");
 
-        for (String CarrierVoyageNumber : CarrierVoyageNumbers) {
+        for (String carrierVoyageNumber : carrierVoyageNumbers) {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("carrierVoyageNumber", CarrierVoyageNumber).
+                    queryParam("carrierVoyageNumber", carrierVoyageNumber).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     assertThat().
                     statusCode(200).
-                    body("carrierVoyageNumber", everyItem(equalTo(CarrierVoyageNumber))).
-                    body(matchesJsonSchemaInClasspath("ovs/v2/TransportCallSchema.json").using(jsonSchemaFactory));
+                    body("carrierVoyageNumber", everyItem(equalTo(carrierVoyageNumber))).
+                    body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
         }
     }
 
@@ -189,14 +198,14 @@ public class GetEventsTest {
     @Test(enabled = false)
     public void testCarrierVoyageNumberQueryParamFalseFormat() {
         // specification -> maxLength:50
-        List<String> CarrierVoyageNumbers =  Arrays.asList("ABCtrytytrySwqeABCtrytytrySwqeABCtryABCtrytytrySwqe" +
+        List<String> carrierVoyageNumbers =  Arrays.asList("ABCtrytytrySwqeABCtrytytrySwqeABCtryABCtrytytrySwqe" +
                 "tytrySwqeABCtrytytrySwqeABCtrytytrySwqeABCtrytytrySwqeABCtrytytrySwqe");
 
-        for (String CarrierVoyageNumber : CarrierVoyageNumbers) {
+        for (String carrierVoyageNumber : carrierVoyageNumbers) {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("carrierVoyageNumber", CarrierVoyageNumber).
+                    queryParam("carrierVoyageNumber", carrierVoyageNumber).
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     assertThat().
@@ -207,30 +216,31 @@ public class GetEventsTest {
     @Test(enabled = false)
     public void testCarrierServiceCodeQueryParam() {
 
-        List<String> CarrierServiceCodes = getListOfAnyAttribute("vesselIMONumber");
+        List<String> carrierServiceCodes = getListOfAnyAttribute("carrierServiceCode");
 
-        for (String CarrierServiceCode : CarrierServiceCodes) {
+        for (String carrierServiceCode : carrierServiceCodes) {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("carrierServiceCode", CarrierServiceCode).
+                    queryParam("carrierServiceCode", carrierServiceCode).
                     get(Configuration.ROOT_URI + "/events").
                     then().
-                    body("carrierServiceCode", everyItem(equalTo(CarrierServiceCode))).
-                    body(matchesJsonSchemaInClasspath("ovs/v2/TransportCallSchema.json").using(jsonSchemaFactory));
+                    body("carrierServiceCode", everyItem(equalTo(carrierServiceCode))).
+                    body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
         }
     }
 
     @Test(enabled = false)
     public void testCarrierServiceCodeQueryParamFalseFormat() {
 
-        List<String> CarrierServiceCodes = Arrays.asList("2weqqqqqqwz","ABCtrytytrySwqe");
+        List<String> carrierServiceCodes = Arrays.asList("2weqqqqqqwz","ABCtrytytrySwqe");
 
-        for (String CarrierServiceCode : CarrierServiceCodes) {
+        for (String carrierServiceCode : carrierServiceCodes) {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    get(Configuration.ROOT_URI + "/events/" + CarrierServiceCode).
+                    queryParam("carrierServiceCode", carrierServiceCode).
+                    get(Configuration.ROOT_URI + "/events").
                     then().
                     assertThat().
                     statusCode(400);
@@ -240,17 +250,19 @@ public class GetEventsTest {
     @Test(enabled = false)
     public void testOperationsEventTypeCodeQueryParam() {
 
-        List<String> OperationsEventTypeCodes = getListOfAnyAttribute("transportEventTypeCode");
+        List<String> operationsEventTypeCodes = getListOfAnyAttribute("transportEventTypeCode");
 
-        for (String OperationsEventTypeCode : OperationsEventTypeCodes) {
+        for (String operationsEventTypeCode : operationsEventTypeCodes) {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    get(Configuration.ROOT_URI + "/events/" + OperationsEventTypeCode).
+                    queryParam("operationsEventTypeCode", operationsEventTypeCode).
+                    get(Configuration.ROOT_URI + "/events").
                     then().
+                    assertThat().
                     statusCode(200).
-                    body("operationsEventTypeCodes", is(OperationsEventTypeCode)).
-                    assertThat().body(matchesJsonSchemaInClasspath("ovs/v2/TransportCallSchema.json").using(jsonSchemaFactory));
+                    body("operationsEventTypeCodes", is(operationsEventTypeCode)).
+                    assertThat().body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
         }
 
     }
@@ -258,13 +270,14 @@ public class GetEventsTest {
     @Test(enabled = false)
     public void testOperationsEventTypeCodeQueryParamFalseFormat() {
 
-        List<String> OperationsEventTypeCodes = Arrays.asList("","2z","ABCS");
+        List<String> operationsEventTypeCodes = Arrays.asList("","2z","ABCS");
 
-        for (String OperationsEventTypeCode : OperationsEventTypeCodes) {
+        for (String operationsEventTypeCode : operationsEventTypeCodes) {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    get(Configuration.ROOT_URI + "/events/" + OperationsEventTypeCode).
+                    queryParam("operationsEventTypeCode", operationsEventTypeCode).
+                    get(Configuration.ROOT_URI + "/events").
                     then().
                     assertThat().
                     statusCode(400);
@@ -274,18 +287,19 @@ public class GetEventsTest {
     @Test(enabled = false)
     public void testEventCreatedDateTimeQueryParam() {
 
-        List<String> EventCreatedDateTimes = getListOfAnyAttribute("EventCreatedDateTime");
+        List<String> eventCreatedDateTimes = getListOfAnyAttribute("EventCreatedDateTime");
 
-        EventCreatedDateTimes.forEach(EventCreatedDateTime -> {
+        eventCreatedDateTimes.forEach(eventCreatedDateTime -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("eventCreatedDateTime", EventCreatedDateTime).
+                    queryParam("eventCreatedDateTime", eventCreatedDateTime).
                     get(Configuration.ROOT_URI + "/events").
                     then().
+                    assertThat().
                     statusCode(200).
-                    body("eventCreatedDateTime", everyItem(equalTo(EventCreatedDateTime))).
-                    assertThat().body(matchesJsonSchemaInClasspath("ovs/v2/TransportCallSchema.json").using(jsonSchemaFactory));
+                    body("eventCreatedDateTime", everyItem(equalTo(eventCreatedDateTime))).
+                    body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
         });
     }
 
@@ -422,17 +436,20 @@ public class GetEventsTest {
     @Test(enabled = false)
     public void testLimitQueryParam() {
 
-        List<String> Limits = getListOfAnyAttribute("limit");
+        List<String> limits = getListOfAnyAttribute("limit");
 
-        Limits.forEach(Limit -> {
+       limits.forEach(limit -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("limit", Limit).
+                    queryParam("limit", limit).
                     get(Configuration.ROOT_URI + "/events").
                     then().
+                    assertThat().
                     statusCode(200).
-                    body("limit", everyItem(equalTo(Limit)));
+                    body("limit", everyItem(equalTo(limit))).
+                    body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
+                   using(jsonSchemaFactory));
         });
     }
 
@@ -454,16 +471,18 @@ public class GetEventsTest {
     @Test(enabled = false)
     public void testCursorQueryParam() {
 
-        List<String> Cursors = getListOfAnyAttribute("cursor");
-        Cursors.forEach(Cursor -> {
+        List<String> cursors = getListOfAnyAttribute("cursor");
+
+        cursors.forEach(cursor -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("cursor", Cursor).
+                    queryParam("cursor", cursor).
                     get(Configuration.ROOT_URI + "/events").
                     then().
+                    assertThat().
                     statusCode(200).
-                    body("cursor", everyItem(equalTo(Cursor))).
+                    body("cursor", everyItem(equalTo(cursor))).
                     body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
@@ -475,7 +494,7 @@ public class GetEventsTest {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-                header("API-Version", "v2").
+                header("API-Version", "2").
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 statusCode(200).
@@ -486,18 +505,16 @@ public class GetEventsTest {
 
     private List getListOfAnyAttribute(String attribute) {
         String json = given().
-
                 auth().
                 oauth2(Configuration.accessToken).
                 get(Configuration.ROOT_URI + "/events").
                 body().asString();
 
-        return JsonPath.from(json).getList(attribute).stream().distinct().collect(Collectors.toList());
+        return JsonPath.from(json).getList(attribute).stream().filter(Objects::nonNull).distinct().collect(Collectors.toList());
     }
 
     private List getListOfAnyAttribute(String attribute, String queryParam, String queryParamValue) {
         String json = given().
-
                 auth().
                 oauth2(Configuration.accessToken).
                 queryParam(queryParam, queryParamValue).
@@ -509,6 +526,6 @@ public class GetEventsTest {
                         using(jsonSchemaFactory)).
                 extract().body().asString();
 
-        return JsonPath.from(json).getList(attribute).stream().distinct().collect(Collectors.toList());
+        return JsonPath.from(json).getList(attribute).stream().filter(Objects::nonNull).distinct().collect(Collectors.toList());
     }
 }

@@ -118,7 +118,7 @@
         },
         "modeOfTransport": {
           "id": "#/transportCall/properties/modeOfTransport",
-          "type": ["null","string"]
+          "enum":  ["VESSEL", "RAIL", "TRUCK", "BARGE"]
         },
         "vessel": {
           "id": "#/properties/transportCall/properties/vessel",

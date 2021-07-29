@@ -35,7 +35,7 @@
     },
     "references": {
       "description": "References provided by the shipper or freight forwarder at the time of booking or at the time of providing shipping instruction.",
-      "type": "object",
+      "type": "array",
       "default": "",
       "required": [
         "referenceType",
@@ -55,7 +55,7 @@
       }
     },
     "documentReferences": {
-      "type": "object",
+      "type": "array",
       "title": "The documentReferences schema",
       "default": "",
       "properties": {
@@ -80,13 +80,13 @@
         },
         "carrierServiceCode": {
           "id": "#/transportCall/properties/carrierServiceCode",
-          "type": "string",
+          "type": ["null","string"],
           "default": "",
           "maxLength": 5
         },
         "carrierVoyageNumber": {
           "id": "#/transportCall/properties/carrierVoyageNumber",
-          "type": "string",
+          "type": ["null","string"],
           "default": "",
           "maxLength": 50
         },
@@ -112,13 +112,13 @@
         },
         "otherFacility": {
           "id": "#/transportCall/properties/otherFacility",
-          "type": "string",
+          "type":  ["null","string"],
           "default": "",
           "maxLength": 6
         },
         "modeOfTransport": {
           "id": "#/transportCall/properties/modeOfTransport",
-          "enum":  [ "VESSEL", "RAIL", "TRUCK", "BARGE" ]
+          "type": ["null","string"]
         },
         "vessel": {
           "id": "#/properties/transportCall/properties/vessel",
@@ -172,7 +172,7 @@
       }
     }
   },
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "title": "The Transport Event schema",
@@ -287,7 +287,7 @@
         },
         "reason": {
           "id": "#/properties/reason",
-          "type": "string",
+          "type": ["null","string"],
           "description": "This field can be used to explain why a specific event has been sent.",
           "default": ""
         },
@@ -297,7 +297,7 @@
         },
         "shipmentID": {
           "id": "#/properties/shipmentID",
-          "type": "string",
+          "type": ["null","string"],
           "default": ""
         },
         "references": {
@@ -369,7 +369,7 @@
         },
         "seals": {
           "description": "addresses the seal-related information associated with the shipment equipment. A seal is put on a shipment equipment once it is loaded. This seal is meant to stay on until the shipment equipment reaches its final destination.",
-          "type": "object",
+          "type": "array",
           "default": "",
           "required": [
             "sealNumber",

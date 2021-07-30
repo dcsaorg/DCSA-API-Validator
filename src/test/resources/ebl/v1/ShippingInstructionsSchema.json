@@ -65,7 +65,7 @@
             "title": "The descriptionOfGoods schema"
           },
           "packageCode": {
-            "id": "",
+            "id": "#/items/anyOf/0/properties/packageCode",
             "type": "string",
             "title": "The unique identifier for the package type"
           },

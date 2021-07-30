@@ -28,6 +28,7 @@
           "invoicePayableAt",
           "dateOfIssue",
           "equipmentReference",
+          "isShipperOwned",
           "ISOEquipmentCode",
           "paymentTerm",
           "shipmentEquipmentQuantity"
@@ -197,6 +198,11 @@
             "id": "#/items/anyOf/0/properties/equipmentReference",
             "type": "string",
             "title": "The equipmentReference schema"
+          },
+          "isShipperOwned": {
+            "id": "#/items/anyOf/0/properties/isShipperOwned",
+            "type": "boolean",
+            "title": "Indicates whether the container is shipper owned (SOC)."
           },
           "ISOEquipmentCode": {
             "id": "#/items/anyOf/0/properties/ISOEquipmentCode",

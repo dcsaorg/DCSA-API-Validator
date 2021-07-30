@@ -32,10 +32,11 @@
       "equipmentReference": "BMOU2149612"
     }
   ],
-  "shipmentEquipments": [
+  "utilizedTransportEquipments": [
     {
       "equipment": {
-        "equipmentReference": "BMOU2149612"
+        "equipmentReference": "BMOU2149612",
+        "isShipperOwned": true
       },
       "cargoGrossWeight": 12000,
       "cargoGrossWeightUnit": "KGM",
@@ -56,8 +57,8 @@
           "street": "Strawinskylaan",
           "streetNumber": "4117",
           "floor": "4th Floor",
-          "postalCode": "1077",
-          "cityName": "ZX Amsterdam",
+          "postCode": "1077",
+          "city": "ZX Amsterdam",
           "stateRegion": "N/A",
           "country": "Netherlands"
         },

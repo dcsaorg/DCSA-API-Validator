@@ -28,7 +28,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: dcsaorg/DCSA-TNT
-        ref: master
+        ref: events-request-validation
         submodules: recursive
         path: DCSA-TNT
         token: ${{ secrets.DCSA_PACKAGES_PAT }}

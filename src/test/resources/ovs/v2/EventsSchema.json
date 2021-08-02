@@ -10,16 +10,16 @@
       "default": ""
     },
     "eventType": {
-      "enum":  ["SHIPMENT","EQUIPMENT","TRANSPORT"],
-      "title": "The eventType schema",
+      "enum":  ["OPERATIONS","TRANSPORT"],
+      "title": "The eventType schema"
     },
     "eventCreatedDateTime": {
-      "type": "date-time",
+      "type": "string",
       "title": "The eventCreatedDateTime schema",
       "default": ""
     },
     "eventDateTime": {
-      "type": "date-time",
+      "type": "string",
       "title": "The eventDateTime schema",
       "default": ""
     },
@@ -35,8 +35,8 @@
     },
     "references": {
       "description": "References provided by the shipper or freight forwarder at the time of booking or at the time of providing shipping instruction.",
-      "type": "object",
-      "default": "",
+      "type": "array",
+      "default": [],
       "required": [
         "referenceType",
         "referenceValue"
@@ -55,9 +55,9 @@
       }
     },
     "documentReferences": {
-      "type": "object",
+      "type": "array",
       "title": "The documentReferences schema",
-      "default": "",
+      "default": [],
       "properties": {
         "documentReferenceType": {
           "description": "Describes where the documentReferenceValue is pointing to",
@@ -80,25 +80,25 @@
         },
         "carrierServiceCode": {
           "id": "#/transportCall/properties/carrierServiceCode",
-          "type": "string",
+          "type": ["string","null"],
           "default": "",
           "maxLength": 5
         },
         "carrierVoyageNumber": {
           "id": "#/transportCall/properties/carrierVoyageNumber",
-          "type": "string",
+          "type": ["string","null"],
           "default": "",
           "maxLength": 50
         },
         "UNLocationCode": {
           "id": "#/transportCall/properties/UNLocationCode",
-          "type": "string",
+          "type": ["string","null"],
           "default": "",
           "maxLength": 5
         },
         "facilityCode": {
           "id": "#/transportCall/properties/facilityCode",
-          "type": "string",
+          "type": ["string","null"],
           "default": "",
           "maxLength": 6
         },
@@ -112,7 +112,7 @@
         },
         "otherFacility": {
           "id": "#/transportCall/properties/otherFacility",
-          "type": "string",
+          "type": ["string","null"],
           "default": "",
           "maxLength": 6
         },
@@ -217,8 +217,8 @@
     },
     "location": {
       "description": "Location of the facility. Can often be omitted when it is just repeating the contents of the UNLocationCode field.",
-      "type": "object",
-      "default": {},
+      "type": ["array","null"],
+      "default": [],
       "properties": {
         "locationName": {
           "default": "",
@@ -246,7 +246,7 @@
   },
   "items": {
     "id": "#/items",
-    "oneOf": [
+    "anyOf": [
       {
         "type": "object",
         "title": "The Operations Event schema",
@@ -282,8 +282,8 @@
           },
           "publisher": {
             "description": "refers to a company or a legal entity.",
-            "type": "object",
-            "default": "",
+            "type": ["array","null"],
+            "default": [],
             "properties": {
               "partyName": {
                 "description": "Identifies a seal affixed to the container.",
@@ -330,8 +330,8 @@
           },
           "eventLocation": {
             "description": "The location where the event takes place.",
-            "type": "object",
-            "default": "",
+            "type": "array",
+            "default": [],
             "properties": {
               "locationName": {
                 "default": "",
@@ -358,8 +358,7 @@
           },
           "portCallServiceTypeCode": {
             "enum":  [ "PILO", "MOOR", "CRGO", "TOWG", "BUNK", "WSDP" ]
-          }
-        },
+         },
         "facilityTypeCode": {
           "id": "#/properties/facilityTypeCode",
           "type": "string",
@@ -368,13 +367,13 @@
         },
         "delayReasonCode": {
           "id": "#/properties/delayReasonCode",
-          "type": "string",
+          "type": ["string","null"],
           "default": "",
           "maxLength": 3
         },
         "remark": {
           "id": "#/properties/remark",
-          "type": "string",
+          "type": ["string","null"],
           "default": "",
           "maxLength": 500
         },
@@ -383,8 +382,8 @@
         },
         "vesselPosition": {
           "description": "The position of the vessel at the time when the message was sent",
-          "type": "object",
-          "default": {},
+          "type": ["array","null"],
+          "default": [],
           "properties": {
             "latitude": {
               "default": "",
@@ -397,6 +396,7 @@
             }
           }
         }
+      }
       },
       {
         "type": "object",

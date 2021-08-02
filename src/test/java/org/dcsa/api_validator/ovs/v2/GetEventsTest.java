@@ -98,7 +98,7 @@ public class GetEventsTest {
                     then().
                     assertThat().
                     statusCode(200).
-                    body("transportEventTypeCode", is(transportEventTypeCode)).
+                    body("transportEventTypeCode", everyItem(equalTo(transportEventTypeCode))).
                     body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
         }
 
@@ -107,7 +107,7 @@ public class GetEventsTest {
     public void testTransportEventTypeCodeQueryParamFalseFormat() {
 
         List<String> transportEventTypeCodes = Arrays.asList("","2z","ABCS");
-
+        // Testing if ENUM is respected
         for (String transportEventTypeCode : transportEventTypeCodes) {
             given().
                     auth().
@@ -132,10 +132,9 @@ public class GetEventsTest {
                     queryParam("transportCallID", id).
                     get(Configuration.ROOT_URI + "/events").
                     then().
-                    body("transportCallID", is(id)).
                     assertThat().
                     statusCode(200).
-                    body("vesselIMONumber", everyItem(equalTo(id))).
+                    body("transportCallID", everyItem(equalTo(id))).
                     body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
         }
 
@@ -234,7 +233,7 @@ public class GetEventsTest {
     public void testCarrierServiceCodeQueryParamFalseFormat() {
 
         List<String> carrierServiceCodes = Arrays.asList("2weqqqqqqwz","ABCtrytytrySwqe");
-
+        // maxLength -> 5 // Testing if rule is respected
         for (String carrierServiceCode : carrierServiceCodes) {
             given().
                     auth().
@@ -250,8 +249,8 @@ public class GetEventsTest {
     @Test
     public void testOperationsEventTypeCodeQueryParam() {
 
-        List<String> operationsEventTypeCodes = getListOfAnyAttribute("transportEventTypeCode");
-
+        List<String> operationsEventTypeCodes = getListOfAnyAttribute("operationsEventTypeCode");
+        // ENUM is
         for (String operationsEventTypeCode : operationsEventTypeCodes) {
             given().
                     auth().
@@ -261,7 +260,7 @@ public class GetEventsTest {
                     then().
                     assertThat().
                     statusCode(200).
-                    body("operationsEventTypeCodes", is(operationsEventTypeCode)).
+                    body("operationsEventTypeCode", everyItem(equalTo(operationsEventTypeCode))).
                     assertThat().body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
         }
 
@@ -269,7 +268,7 @@ public class GetEventsTest {
 
     @Test
     public void testOperationsEventTypeCodeQueryParamFalseFormat() {
-
+        // Checking if ENUM is respected
         List<String> operationsEventTypeCodes = Arrays.asList("","2z","ABCS");
 
         for (String operationsEventTypeCode : operationsEventTypeCodes) {
@@ -320,7 +319,7 @@ public class GetEventsTest {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-                queryParam("eventCreatedDateTime:gt", "=2019-04-01T14:12:56+01:00").
+                queryParam("eventCreatedDateTime:gt", "2019-04-01T14:12:56+01:00").
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
@@ -501,6 +500,7 @@ public class GetEventsTest {
                 body("size()", greaterThanOrEqualTo(0)).
                 body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
                         using(jsonSchemaFactory));
+
     }
 
     private List getListOfAnyAttribute(String attribute) {

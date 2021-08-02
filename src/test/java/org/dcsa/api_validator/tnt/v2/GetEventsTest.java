@@ -22,9 +22,7 @@ import static org.hamcrest.Matchers.*;
  * Tests related to the GET /events endpoint
  */
 
-// -- TODO: 1. ADD error response body for all 400-BadRequests tests
-// -- TODO: 2. ENABLE ALL TESTS
-// -- TODO: 3. Refactor as done in OVS/V2/Events using getListOfAnyAttribute function.
+// -- TODO: 1. Refactor as done in OVS/V2/Events using getListOfAnyAttribute function.
 
 
 public class GetEventsTest {
@@ -118,11 +116,7 @@ public class GetEventsTest {
     }
 
     // Test equipmentReferences, response should be 400 as formatting is wrong.
-    @Test(enabled = false)
-    /*
-     * Test disabled as the maxlength is not respected. Should return 400 according to API specification.
-     * TODO: 1. Respect the MaxLength and enable test.
-     */
+    @Test
     public void testEquipmentReferenceQueryFalseFormat() {
             given().
                 auth().
@@ -157,12 +151,7 @@ public class GetEventsTest {
     }
 
     // Test shipmentEventTypeCode, response should be 400 as formatting is wrong.
-    @Test(enabled = false)
-    /*
-     * Test disabled as ENUM is not respected. listed in specification.
-     * Should return 400 according to API specification.
-     * TODO: 1. Respect the ENUM and enable test.
-     * */
+    @Test
     public void testShipmentEventTypeCodeQueryFalseFormat() {
         given().
                 auth().
@@ -196,12 +185,7 @@ public class GetEventsTest {
     }
 
     // Test carrierBookingReference, response should be 400 as formatting is wrong.
-    @Test(enabled = false)
-    /*
-    * Test disabled as code does not respect the 35 max length listed in specification.
-    * Should return 400 according to API specification.
-     * TODO: 1. Respect the MaxLength and enable test.
-    * */
+    @Test
     public void testCarrierBookingReferenceQueryFalseFormat() {
         given().
                 auth().
@@ -275,18 +259,13 @@ public class GetEventsTest {
     }
 
     // Test TransportDocumentReference, response should be 400 as formatting is wrong.
-    @Test(enabled = false)
-    /*
-     * Test disabled as code does not respect the 20 max length listed in specification.
-     * Should return 400 according to API specification.
-     * TODO: 1. Respect the MaxLength and enable test.
-     * */
+    @Test
     public void testTransportDocumentReferenceQueryFalseFormat() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
                 // Specification -> maxLength: 20
-                        queryParam("carrierBookingReference", "ABC709951ABC709951ABC709951ABC709951564").
+                        queryParam("transportDocumentReference", "ABC709951ABC709951ABC709951ABC709951564").
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
@@ -294,9 +273,7 @@ public class GetEventsTest {
     }
 
     //Finds all transportDocumentTypeCode, then uses them each of them as a query parameter, and verifies the response
-    @Test(enabled = false)
-    // // MAJOR: RETURNS 500-response, should return 200.
-    // TODO: LOOK INTO THIS!
+    @Test
     public void testTransportDocumentTypeCodeQueryParam() {
 
         List<String> transportDocumentTypeCodes = getListOfAnyAttribute("transportDocumentTypeCode");
@@ -316,8 +293,7 @@ public class GetEventsTest {
     }
 
     // Test TransportDocumentReference, response should be 400 as formatting is wrong.
-    @Test(enabled = false)
-    // MAJOR: RETURNS 500-response, should return 400.
+    @Test
     public void testTransportDocumentTypeCodeFalseFormat() {
         given().
                 auth().
@@ -351,12 +327,7 @@ public class GetEventsTest {
     }
 
     // Test TransportDocumentReference, response should be 400 as formatting is wrong.
-    @Test(enabled = false)
-    /*
-     * Test disabled as code does not respect the 20 max length listed in specification.
-     * Should return 400 according to API specification.
-     * TODO: 1. Respect the MaxLength and enable test.
-     * */
+    @Test
     public void testTransportEventTypeCodeFalseFormat() {
         given().
                 auth().
@@ -390,6 +361,24 @@ public class GetEventsTest {
         });
     }
 
+    // Test TransportCallID, response should be 400 as formatting is wrong.
+    @Test
+    public void testTransportCallIDFalseFormat() {
+
+    given()
+        .auth()
+        .oauth2(Configuration.accessToken)
+        .
+        // Specification -> maxLength: 100
+        queryParam(
+            "transportCallID",
+            "IGAcb79ijzjpLT4eicqw70C5X2lN591BhprgTwAkMeaRehoZ6OVcvMYGl0Hyb35jR2tWrWafyUBo89dIXRd1MVJkYkdqleU6XbBxY")
+        .get(Configuration.ROOT_URI + "/events")
+        .then()
+        .assertThat()
+        .statusCode(400);
+    }
+
     // Finds all VesselIMONumber, and then uses them each of them as a query parameter, and verifies the response
     @Test
     public void testVesselIMONumberQueryParam() {
@@ -411,12 +400,7 @@ public class GetEventsTest {
     }
 
     // Test VesselIMONumber, response should be 400 as formatting is wrong.
-    @Test(enabled = false)
-    /*
-     * Test disabled as code does not respect the 7 max length listed in specification.
-     * Should return 400 according to API specification.
-     * TODO: 1. Respect the MaxLength and enable test.
-     * */
+    @Test
     public void testVesselIMONumberFalseFormat() {
         given().
                 auth().
@@ -456,7 +440,7 @@ public class GetEventsTest {
                 auth().
                 oauth2(Configuration.accessToken).
                 // Specification -> maxLength: 50
-                        queryParam("carrierVoyageNumber", "").
+                        queryParam("carrierVoyageNumber", "pZwVm6KNaM6VWTty7yqNEQvB5pf8ElUCzdlu2kWWy4QCMpOnXU3").
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
@@ -484,11 +468,7 @@ public class GetEventsTest {
     }
 
     // Test CarrierServiceCode, response should be 400 as formatting is wrong.
-    @Test(enabled = false)
-    /*
-    * Test disabled as the maxlength is not respected. Should return 400 according to API specification.
-    * TODO: 1. Respect the MaxLength and enable test.
-     */
+    @Test
     public void testCarrierServiceCodeFalseFormat() {
         given().
                 auth().
@@ -523,11 +503,7 @@ public class GetEventsTest {
     }
 
     // Test equipmentEventTypeCode, response should be 400 as formatting is wrong.
-    @Test(enabled = false)
-    /*
-     * Test disabled as the ENUM is not respected. Should return 400 according to API specification.
-     * TODO: 1. Respect ENUM and enable test.
-     */
+    @Test
     public void testEquipmentEventTypeCodeFalseFormat() {
         given().
                 auth().
@@ -627,7 +603,6 @@ public class GetEventsTest {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-                // Specification -> maxLength: 5
                         queryParam("eventCreatedDateTime", "asaa").
                 get(Configuration.ROOT_URI + "/events").
                 then().
@@ -656,11 +631,7 @@ public class GetEventsTest {
     }
 
     // Test limit, response should be 400 as formatting is wrong.
-    @Test(enabled = false)
-    /*
-     * Test disabled as the MINIMUM is not respected. Should return 400 according to API specification.
-     * TODO: 1. Respect MINIMUM and enable test.
-     */
+    @Test
     public void testlimitFalseFormat() {
         given().
                 auth().

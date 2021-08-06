@@ -282,7 +282,7 @@
           },
           "publisher": {
             "description": "refers to a company or a legal entity.",
-            "type": ["array","null"],
+            "type": ["array","null","object"],
             "default": [],
             "properties": {
               "partyName": {
@@ -330,7 +330,7 @@
           },
           "eventLocation": {
             "description": "The location where the event takes place.",
-            "type": "array",
+            "type": ["object","array","null"],
             "default": [],
             "properties": {
               "locationName": {

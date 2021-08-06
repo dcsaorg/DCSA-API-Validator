@@ -21,7 +21,7 @@ public class PostTimestampsTest {
     public static final String VALID_TIMESTAMP = loadFileAsString("ovs/v2/ovsTimeStamps/TimeStampsSample.json");
 
     // Testing with all fields provided in VALID_TIMESTAMP variable
-    @Test(enabled = false)
+    @Test
     public void testTimestampRequiredParameters() {
         given().
                 auth().
@@ -37,7 +37,7 @@ public class PostTimestampsTest {
 
     // Testing with no fields / Empty body
     // Should fail as nothing is provided
-    @Test(enabled = false)
+    @Test
     public void testTransportCallsNoMandatoryParameters() {
         given().
                 auth().
@@ -86,7 +86,7 @@ public class PostTimestampsTest {
 
     // Test // Testing with mandatory fields + FacilitySMDGCode field
     // Should fail because specification -> maxLength:6
-    @Test(enabled = false)
+    @Test
     public void testFacilitySMDGCodeFieldFalseFormat() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -109,7 +109,7 @@ public class PostTimestampsTest {
     }
 
     // Testing with mandatory fields + EventLocation field
-    @Test(enabled = false)
+    @Test
     public void testEventLocationField() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -132,7 +132,7 @@ public class PostTimestampsTest {
 
     // Testing with mandatory fields + EventLocation field
     // fails as eventLocation is an object.
-    @Test(enabled = false)
+    @Test
     public void testEventLocationFalseFormat() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -156,7 +156,7 @@ public class PostTimestampsTest {
     }
 
     // Testing with mandatory fields + VesselPosition field
-    @Test(enabled = false)
+    @Test
     public void testVesselPositionField() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -179,7 +179,7 @@ public class PostTimestampsTest {
 
     // Testing with mandatory fields + vesselPosition field
     // fails as vesselPosition is an object & (latitude & longitude are required parameters).
-    @Test(enabled = false)
+    @Test
     public void testVesselPositionFalseFormat() {
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
         map.remove("facilitySMDGCode");
@@ -213,7 +213,7 @@ public class PostTimestampsTest {
     }
 
     // Testing with mandatory fields + ModeOfTransport field
-    @Test(enabled = false)
+    @Test
     public void testModeOfTransportField() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -236,7 +236,7 @@ public class PostTimestampsTest {
 
     // Testing with mandatory fields + ModeOfTransport field
     // fails as ModeOfTransport is an ENUM.
-    @Test(enabled = false)
+    @Test
     public void testModeOfTransportFieldFalseFormat() {
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
         map.remove("facilitySMDGCode");
@@ -270,7 +270,7 @@ public class PostTimestampsTest {
     }
 
     // Testing with mandatory fields + PortCallServiceTypeCode field
-    @Test(enabled = false)
+    @Test
     public void testPortCallServiceTypeCodeField() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -293,7 +293,7 @@ public class PostTimestampsTest {
     // Testing with mandatory fields + PortCallServiceTypeCode field
     // fails as portCallServiceTypeCode is an ENUM.
     // Test modeOfTransport,
-    @Test(enabled = false)
+    @Test
     public void testPortCallServiceTypeCodeFalseFormat() {
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
         map.remove("facilitySMDGCode");
@@ -328,7 +328,7 @@ public class PostTimestampsTest {
 
     // Testing with mandatory fields - Except PublisherField field
     // Should fail as PublisherField is mandatory
-    @Test(enabled = false)
+    @Test
     public void testMandatoryPublisherFieldFalseFormat() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -383,7 +383,7 @@ public class PostTimestampsTest {
 
     // Testing with mandatory fields - Except publisherRole field
     // Should fail as publisherRole is mandatory
-    @Test(enabled = false)
+    @Test
     public void testMandatoryPublisherRoleFieldFalseFormat() {
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
 
@@ -413,7 +413,7 @@ public class PostTimestampsTest {
 
     // Testing with mandatory fields - Except vesselIMONumber field
     // Should fail as vesselIMONumber is mandatory
-    @Test(enabled = false)
+    @Test
     public void testMandatoryVesselIMONumberFieldFalseFormat() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -456,7 +456,7 @@ public class PostTimestampsTest {
 
     // Testing with mandatory fields - Except UNLocationCode field
     // Should fail as UNLocationCode is mandatory
-    @Test(enabled = false)
+    @Test
     public void testMandatoryUNLocationCodeFieldFalseFormat() {
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
 
@@ -498,7 +498,7 @@ public class PostTimestampsTest {
 
     // Testing with mandatory fields - Except FacilityTypeCode field
     // Should fail as FacilityTypeCode is mandatory
-    @Test(enabled = false)
+    @Test
     public void testMandatoryFacilityTypeCodeFieldFalseFormat() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -541,7 +541,7 @@ public class PostTimestampsTest {
 
     // Testing with mandatory fields - Except EventClassifierCode field
     // Should fail as EventClassifierCode is mandatory
-    @Test(enabled = false)
+    @Test
     public void testMandatoryEventClassifierCodeFieldFalseFormat() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -572,7 +572,7 @@ public class PostTimestampsTest {
 
     // Testing with mandatory fields - Except OperationsEventTypeCode field
     // Should fail as OperationsEventTypeCode is mandatory
-    @Test(enabled = false)
+    @Test
     public void testMandatoryOperationsEventTypeCodeFieldFalseFormat() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -603,7 +603,7 @@ public class PostTimestampsTest {
 
     // Testing with mandatory fields - Except EventDateTime field
     // Should fail as EventDateTime is mandatory
-    @Test(enabled = false)
+    @Test
     public void testMandatoryEventDateTimeFieldFalseFormat() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);

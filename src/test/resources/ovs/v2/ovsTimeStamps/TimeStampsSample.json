@@ -25,8 +25,8 @@
   "operationsEventTypeCode": "STRT",
   "eventLocation": {
     "locationName": "Eiffel Tower",
-    "latitude": "48.85855005644273",
-    "longitude": "2.294492036190964",
+    "latitude": "48.858550",
+    "longitude": "2.29449203",
     "UNLocationCode": "USNYC",
     "address": {
       "name": "Henrik",
@@ -40,8 +40,8 @@
     }
   },
   "vesselPosition": {
-    "latitude": "48.85855005644273",
-    "longitude": "2.294492036190964"
+    "latitude": "48.858550",
+    "longitude": "2.29449203"
   },
   "modeOfTransport": "VESSEL",
   "portCallServiceTypeCode": "BUNK",

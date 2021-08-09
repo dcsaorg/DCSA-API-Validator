@@ -2,7 +2,7 @@ package org.dcsa.api_validator.ovs.v2;
 
 import com.github.fge.jsonschema.cfg.ValidationConfiguration;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
-import io.restassured.path.json.JsonPath;
+import com.jayway.jsonpath.DocumentContext;
 import org.apache.http.HttpStatus;
 import org.dcsa.api_validator.conf.Configuration;
 import org.testng.Assert;
@@ -10,9 +10,7 @@ import org.testng.annotations.Test;
 
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.github.fge.jsonschema.SchemaVersion.DRAFTV4;
@@ -88,6 +86,7 @@ public class GetEventsTest {
     public void testTransportEventTypeCodeQueryParam() {
 
         List<String> transportEventTypeCodes = getListOfAnyAttribute("transportEventTypeCode");
+        assert(!transportEventTypeCodes.isEmpty());
 
         for (String transportEventTypeCode : transportEventTypeCodes) {
             given().
@@ -101,8 +100,8 @@ public class GetEventsTest {
                     body("transportEventTypeCode", everyItem(equalTo(transportEventTypeCode))).
                     body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
         }
-
     }
+
     @Test
     public void testTransportEventTypeCodeQueryParamFalseFormat() {
 
@@ -124,6 +123,7 @@ public class GetEventsTest {
     public void testTransportCallIdsQueryParam() {
 
         List<String> ids = getListOfAnyAttribute("transportCallID");
+        assert(!ids.isEmpty());
 
         for (String id : ids) {
             given().
@@ -134,7 +134,7 @@ public class GetEventsTest {
                     then().
                     assertThat().
                     statusCode(200).
-                    body("transportCallID", everyItem(equalTo(id))).
+                    body("it.transportCallID", everyItem(equalTo(id))).
                     body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
         }
 
@@ -144,6 +144,7 @@ public class GetEventsTest {
     public void testVesselIMONumberQueryParam() {
 
         List<String> vesselIMONumbers = getListOfAnyAttribute("vesselIMONumber");
+        assert(!vesselIMONumbers.isEmpty());
 
         for (String vesselIMONumber : vesselIMONumbers) {
             given().
@@ -152,7 +153,7 @@ public class GetEventsTest {
                     queryParam("vesselIMONumber", vesselIMONumber).
                     get(Configuration.ROOT_URI + "/events").
                     then().
-                    body("vesselIMONumber", everyItem(equalTo(vesselIMONumber))).
+                    body("it.vesselIMONumber", everyItem(equalTo(vesselIMONumber))).
                     body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
         }
     }
@@ -178,6 +179,7 @@ public class GetEventsTest {
     public void testCarrierVoyageNumberQueryParam() {
 
         List<String> carrierVoyageNumbers = getListOfAnyAttribute("carrierVoyageNumber");
+        assert(!carrierVoyageNumbers.isEmpty());
 
         for (String carrierVoyageNumber : carrierVoyageNumbers) {
             given().
@@ -216,7 +218,7 @@ public class GetEventsTest {
     public void testCarrierServiceCodeQueryParam() {
 
         List<String> carrierServiceCodes = getListOfAnyAttribute("carrierServiceCode");
-
+        assert(!carrierServiceCodes.isEmpty());
         for (String carrierServiceCode : carrierServiceCodes) {
             given().
                     auth().
@@ -250,7 +252,8 @@ public class GetEventsTest {
     public void testOperationsEventTypeCodeQueryParam() {
 
         List<String> operationsEventTypeCodes = getListOfAnyAttribute("operationsEventTypeCode");
-        // ENUM is
+        assert(!operationsEventTypeCodes.isEmpty());
+
         for (String operationsEventTypeCode : operationsEventTypeCodes) {
             given().
                     auth().
@@ -286,8 +289,8 @@ public class GetEventsTest {
     @Test
     public void testEventCreatedDateTimeQueryParam() {
 
-        List<String> eventCreatedDateTimes = getListOfAnyAttribute("EventCreatedDateTime");
-
+        List<String> eventCreatedDateTimes = getListOfAnyAttribute("eventCreatedDateTime");
+        assert(!eventCreatedDateTimes.isEmpty());
         eventCreatedDateTimes.forEach(eventCreatedDateTime -> {
             given().
                     auth().
@@ -381,6 +384,7 @@ public class GetEventsTest {
     public void testSortAscEventCreatedDateTimeQueryParam() {
 
         List<String> eventCreatedDateTimesSorted = getListOfAnyAttribute("eventCreatedDateTime","sort","eventCreatedDateTime:ASC");
+        assert(!eventCreatedDateTimesSorted.isEmpty());
         int n = eventCreatedDateTimesSorted.size();
 
         for (int i = 1; i < n; i++) {
@@ -395,6 +399,7 @@ public class GetEventsTest {
     public void testSortDescEventCreatedDateTimeQueryParam() {
 
         List<String> eventCreatedDateTimesSorted = getListOfAnyAttribute("eventCreatedDateTime","sort","eventCreatedDateTime:DESC");
+        assert(!eventCreatedDateTimesSorted.isEmpty());
         int n = eventCreatedDateTimesSorted.size();
 
         for (int i = 1; i < n; i++) {
@@ -409,6 +414,7 @@ public class GetEventsTest {
     public void testSortAscEventDateTimeQueryParam() {
 
         List<String> eventCreatedDateTimesSorted = getListOfAnyAttribute("eventDateTime","sort","eventDateTime:ASC");
+        assert(!eventCreatedDateTimesSorted.isEmpty());
         int n = eventCreatedDateTimesSorted.size();
 
         for (int i = 1; i < n; i++) {
@@ -423,6 +429,7 @@ public class GetEventsTest {
     public void testSortDescEventDateTimeQueryParam() {
 
         List<String> eventCreatedDateTimesSorted = getListOfAnyAttribute("eventDateTime","sort","eventDateTime:DESC");
+        assert(!eventCreatedDateTimesSorted.isEmpty());
         int n = eventCreatedDateTimesSorted.size();
 
         for (int i = 1; i < n; i++) {
@@ -435,9 +442,9 @@ public class GetEventsTest {
     @Test
     public void testLimitQueryParam() {
 
-        List<String> limits = getListOfAnyAttribute("limit");
+        List<Integer> limits =  Arrays.asList(1,2, 5, 6);
 
-       limits.forEach(limit -> {
+        limits.forEach(limit -> {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
@@ -446,7 +453,7 @@ public class GetEventsTest {
                     then().
                     assertThat().
                     statusCode(200).
-                    body("limit", everyItem(equalTo(limit))).
+                    body("size()", equalTo(limit)).
                     body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
                    using(jsonSchemaFactory));
         });
@@ -468,6 +475,8 @@ public class GetEventsTest {
 
     // Finds all cursors, and then uses them each of them as a query parameter, and verifies the response
     @Test
+    // REDUDANT TEST
+    // TODO: 1. Test for cursor parameter .
     public void testCursorQueryParam() {
 
         List<String> cursors = getListOfAnyAttribute("cursor");
@@ -510,7 +519,11 @@ public class GetEventsTest {
                 get(Configuration.ROOT_URI + "/events").
                 body().asString();
 
-        return JsonPath.from(json).getList(attribute).stream().filter(Objects::nonNull).distinct().collect(Collectors.toList());
+        com.jayway.jsonpath.Configuration cf = com.jayway.jsonpath.Configuration.builder().options(com.jayway.jsonpath.Option.ALWAYS_RETURN_LIST).build();
+        DocumentContext ctx = com.jayway.jsonpath.JsonPath.using(cf).parse(json);
+        List<String> attributes = ctx.read("$.." + attribute);
+
+        return attributes.stream().filter(Objects::nonNull).distinct().collect(Collectors.toList());
     }
 
     private List getListOfAnyAttribute(String attribute, String queryParam, String queryParamValue) {
@@ -526,6 +539,10 @@ public class GetEventsTest {
                         using(jsonSchemaFactory)).
                 extract().body().asString();
 
-        return JsonPath.from(json).getList(attribute).stream().filter(Objects::nonNull).distinct().collect(Collectors.toList());
+        com.jayway.jsonpath.Configuration cf = com.jayway.jsonpath.Configuration.builder().options(com.jayway.jsonpath.Option.ALWAYS_RETURN_LIST).build();
+        DocumentContext ctx = com.jayway.jsonpath.JsonPath.using(cf).parse(json);
+        List<String> attributes = ctx.read("$.." + attribute);
+
+        return attributes.stream().filter(Objects::nonNull).distinct().collect(Collectors.toList());
     }
 }

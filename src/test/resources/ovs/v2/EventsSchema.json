@@ -282,7 +282,7 @@
           },
           "publisher": {
             "description": "refers to a company or a legal entity.",
-            "type": ["array","null","object"],
+            "type": ["object","null"],
             "default": [],
             "properties": {
               "partyName": {
@@ -326,11 +326,11 @@
           },
           "publisherRole": {
             "id": "#/properties/publisherRole",
-            "enum":  [ "CA", "AG", "VSL", "ATH", "PLT", "TR" ]
+            "enum":  [ "CA", "AG", "VSL", "ATH", "PLT", "TR", null ]
           },
           "eventLocation": {
             "description": "The location where the event takes place.",
-            "type": ["object","array","null"],
+            "type": ["object","null"],
             "default": [],
             "properties": {
               "locationName": {
@@ -408,7 +408,7 @@
           "eventClassifierCode",
           "eventDateTime",
           "transportEventTypeCode",
-          "transportCallID"
+          "transportCall"
         ],
         "properties": {
           "eventID": {

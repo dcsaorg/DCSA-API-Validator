@@ -104,7 +104,7 @@
         },
         "facilityCodeListProvider": {
           "id": "#/transportCall/properties/facilityCodeListProvider",
-          "enum":  ["BIC", "SMDG"]
+          "enum":  ["BIC", "SMDG", null]
         },
         "facilityTypeCodeTRN": {
           "id": "#/transportCall/properties/facilityTypeCodeTRN",
@@ -176,7 +176,7 @@
     },
     "address": {
       "description": "An object for storing address related information",
-      "type": "object",
+      "type": ["object","null"],
       "default": "",
       "properties": {
         "addressName": {

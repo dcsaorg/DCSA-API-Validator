@@ -17,7 +17,7 @@
     "nmftaCode": "MMCU"
   },
   "publisherRole": "DDS",
-  "vesselIMONumber": "1801323",
+  "vesselIMONumber": "9321483",
   "UNLocationCode": "USNYC",
   "facilitySMDGCode": "APMT",
   "facilityTypeCode": "BRTH",
@@ -40,8 +40,8 @@
     }
   },
   "vesselPosition": {
-    "latitude": "48.858550",
-    "longitude": "2.29449203"
+    "latitude": "48.8585502",
+    "longitude": "2.294492031"
   },
   "modeOfTransport": "VESSEL",
   "portCallServiceTypeCode": "BUNK",

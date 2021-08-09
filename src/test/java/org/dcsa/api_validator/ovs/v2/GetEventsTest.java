@@ -21,8 +21,6 @@ import static org.hamcrest.Matchers.*;
 /*
  * Tests related to the GET /events endpoint
  */
-// TODO: 1. Add reasons and Errors to the 400 bad request tests.
-// TODO: 2. ENABLE ALL TESTS
 
 public class GetEventsTest {
 
@@ -355,7 +353,7 @@ public class GetEventsTest {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-                queryParam("eventCreatedDateTime:eq", "2021-07-08T10:44:42.08724+02:00").
+                queryParam("eventCreatedDateTime:eq", "2021-08-09T15:11:45.281524+02:00").
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().

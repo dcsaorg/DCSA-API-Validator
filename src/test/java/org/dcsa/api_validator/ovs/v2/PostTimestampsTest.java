@@ -13,9 +13,6 @@ import static org.dcsa.api_validator.TestUtil.jsonToMap;
  * Tests related to the POST /Timestamps endpoint
  */
 
-// TODO: 1. Add reasons and Errors to the 400 bad request tests.
-// TODO: 2. ENABLE ALL TESTS
-
 public class PostTimestampsTest {
 
     public static final String VALID_TIMESTAMP = loadFileAsString("ovs/v2/ovsTimeStamps/TimeStampsSample.json");

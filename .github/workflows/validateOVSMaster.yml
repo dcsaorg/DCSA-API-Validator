@@ -1,4 +1,4 @@
-name: Run testsuite on OVS aligning_to_updated_IM
+name: Run testsuite on OVS master
 
 on: [push]
 

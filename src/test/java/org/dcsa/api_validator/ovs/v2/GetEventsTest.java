@@ -173,7 +173,7 @@ public class GetEventsTest {
         }
     }
 
-    @Test
+    @Test(enabled = false)
     public void testCarrierVoyageNumberQueryParam() {
 
         List<String> carrierVoyageNumbers = getListOfAnyAttribute("carrierVoyageNumber");
@@ -212,7 +212,7 @@ public class GetEventsTest {
         }
     }
 
-    @Test
+    @Test(enabled = false)
     public void testCarrierServiceCodeQueryParam() {
 
         List<String> carrierServiceCodes = getListOfAnyAttribute("carrierServiceCode");

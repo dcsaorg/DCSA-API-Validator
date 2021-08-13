@@ -353,7 +353,7 @@ public class GetEventsTest {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-                queryParam("eventCreatedDateTime:eq", "2021-01-09T14:12:56+01").
+                queryParam("eventCreatedDateTime:eq", "2021-01-09T14:12:56+01:00").
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().

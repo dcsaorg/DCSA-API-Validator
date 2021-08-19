@@ -188,7 +188,7 @@ public class GetEventsTest {
                     then().
                     assertThat().
                     statusCode(200).
-                    body("carrierVoyageNumber", everyItem(equalTo(carrierVoyageNumber))).
+                    body("it.carrierVoyageNumber", everyItem(equalTo(carrierVoyageNumber))).
                     body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
         }
     }
@@ -224,7 +224,7 @@ public class GetEventsTest {
                     queryParam("carrierServiceCode", carrierServiceCode).
                     get(Configuration.ROOT_URI + "/events").
                     then().
-                    body("carrierServiceCode", everyItem(equalTo(carrierServiceCode))).
+                    body("it.carrierServiceCode", everyItem(equalTo(carrierServiceCode))).
                     body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
         }
     }

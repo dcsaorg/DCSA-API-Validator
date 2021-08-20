@@ -118,16 +118,17 @@ public class GetEventsTest {
     }
 
     @Test
-    public void testTransportCallIdsQueryParam() {
+    public void testTransportCallIdsQueryParamForTransportEvents() {
 
-        List<String> ids = getListOfAnyAttribute("transportCallID");
+        List<String> ids = getListOfAnyAttribute("transportCallID", "eventType","TRANSPORT");
         assert(!ids.isEmpty());
 
         for (String id : ids) {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("transportCallID", id).
+                    queryParams("transportCallID", id,
+                                "eventType", "TRANSPORT").
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     assertThat().

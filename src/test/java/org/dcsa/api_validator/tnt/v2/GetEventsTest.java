@@ -342,7 +342,7 @@ public class GetEventsTest {
 
     // Finds all TransportCallID, and then uses them each of them as a query parameter, and verifies the response
     @Test
-    public void testTransportCallIDQueryParam() {
+    public void testTransportCallIDQueryParamForEquipmentTransportEvents() {
 
         List<String> transportCallIDs = getListOfAnyAttribute("transportCallID","eventType","EQUIPMENT,TRANSPORT");
 
@@ -350,7 +350,8 @@ public class GetEventsTest {
             given().
                     auth().
                     oauth2(Configuration.accessToken).
-                    queryParam("transportCallID", transportCallID).
+                    queryParams("transportCallID", transportCallID,
+                                "eventType", "EQUIPMENT,TRANSPORT").
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     statusCode(200).

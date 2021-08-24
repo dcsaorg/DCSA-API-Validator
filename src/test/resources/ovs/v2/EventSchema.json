@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema",
-  "type": "array",
+  "type": "object",
   "title": "The root schema",
-  "default": [],
+  "description": "The root schema comprises the entire JSON document.",
   "definitions": {
     "eventID": {
       "type": "string",
@@ -10,7 +10,7 @@
       "default": ""
     },
     "eventType": {
-      "enum":  ["SHIPMENT","EQUIPMENT","TRANSPORT"],
+      "enum":  ["OPERATIONS","TRANSPORT"],
       "title": "The eventType schema"
     },
     "eventCreatedDateTime": {
@@ -36,7 +36,7 @@
     "references": {
       "description": "References provided by the shipper or freight forwarder at the time of booking or at the time of providing shipping instruction.",
       "type": "array",
-      "default": "",
+      "default": [],
       "required": [
         "referenceType",
         "referenceValue"
@@ -57,7 +57,7 @@
     "documentReferences": {
       "type": "array",
       "title": "The documentReferences schema",
-      "default": "",
+      "default": [],
       "properties": {
         "documentReferenceType": {
           "description": "Describes where the documentReferenceValue is pointing to",
@@ -80,25 +80,25 @@
         },
         "carrierServiceCode": {
           "id": "#/transportCall/properties/carrierServiceCode",
-          "type": ["null","string"],
+          "type": ["string","null"],
           "default": "",
           "maxLength": 5
         },
         "carrierVoyageNumber": {
           "id": "#/transportCall/properties/carrierVoyageNumber",
-          "type": ["null","string"],
+          "type": ["string","null"],
           "default": "",
           "maxLength": 50
         },
         "UNLocationCode": {
           "id": "#/transportCall/properties/UNLocationCode",
-          "type": "string",
+          "type": ["string","null"],
           "default": "",
           "maxLength": 5
         },
         "facilityCode": {
           "id": "#/transportCall/properties/facilityCode",
-          "type": "string",
+          "type": ["string","null"],
           "default": "",
           "maxLength": 6
         },
@@ -112,19 +112,22 @@
         },
         "otherFacility": {
           "id": "#/transportCall/properties/otherFacility",
-          "type": ["null","string"],
+          "type": ["string","null"],
           "default": "",
           "maxLength": 6
         },
         "modeOfTransport": {
           "id": "#/transportCall/properties/modeOfTransport",
-          "enum":  ["VESSEL", "RAIL", "TRUCK", "BARGE"]
+          "enum":  [ "VESSEL", "RAIL", "TRUCK", "BARGE" ]
+        },
+        "location": {
+          "$ref": "#/definitions/location"
         },
         "vessel": {
           "id": "#/properties/transportCall/properties/vessel",
           "type": "object",
           "title": "The vessel schema",
-          "default": "",
+          "default": {},
           "required": ["vesselIMONumber"],
           "properties": {
             "vesselIMONumber": {
@@ -170,12 +173,230 @@
           }
         }
       }
+    },
+    "address": {
+      "description": "An object for storing address related information",
+      "type": "object",
+      "default": "",
+      "properties": {
+        "addressName": {
+          "default": "",
+          "type": "string",
+          "maxLength": 100
+        },
+        "streetName": {
+          "default": "",
+          "type": "string",
+          "maxLength": 100
+        },
+        "streetNumber": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "floor": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "postCode": {
+          "type": "string",
+          "maxLength": 10
+        },
+        "city": {
+          "type": "string",
+          "maxLength": 65
+        },
+        "stateRegion": {
+          "type": "string",
+          "maxLength": 65
+        },
+        "country": {
+          "type": "string",
+          "maxLength": 75
+        }
+      }
+    },
+    "location": {
+      "description": "Location of the facility. Can often be omitted when it is just repeating the contents of the UNLocationCode field.",
+      "type": ["array","null"],
+      "default": [],
+      "properties": {
+        "locationName": {
+          "default": "",
+          "type": "string",
+          "maxLength": 100
+        },
+        "latitude": {
+          "default": "",
+          "type": "string",
+          "maxLength": 10
+        },
+        "longitude": {
+          "type": "string",
+          "maxLength": 11
+        },
+        "UNLocationCode": {
+          "type": "string",
+          "maxLength": 5
+        },
+        "address": {
+          "$ref": "#/definitions/address"
+        }
+      }
     }
   },
-  "items": {
-    "id": "#/items",
-    "anyOf": [
-      {
+  "anyOf": [
+    {
+      "type": "object",
+      "title": "The Operations Event schema",
+      "description": "The operations event entity is a specialization of the event entity to support specification of data that only applies to an operations event.",
+      "default": {},
+      "required": [
+        "eventCreatedDateTime",
+        "eventType",
+        "eventClassifierCode",
+        "eventDateTime",
+        "operationsEventTypeCode",
+        "portCallServiceTypeCode"
+      ],
+      "properties": {
+        "eventID": {
+          "$ref": "#/definitions/eventID"
+        },
+        "eventCreatedDateTime": {
+          "$ref": "#/definitions/eventCreatedDateTime"
+        },
+        "eventType": {
+          "$ref": "#/definitions/eventType"
+        },
+        "eventClassifierCode": {
+          "$ref": "#/definitions/eventClassifierCode"
+        },
+        "eventDateTime": {
+          "$ref": "#/definitions/eventDateTime"
+        },
+        "operationsEventTypeCode": {
+          "id": "#/properties/operationsEventTypeCode",
+          "enum": [ "STRT", "CMPL", "ARRI", "DEPA" ]
+        },
+        "publisher": {
+          "description": "refers to a company or a legal entity.",
+          "type": ["object","null"],
+          "default": "",
+          "properties": {
+            "partyName": {
+              "description": "Identifies a seal affixed to the container.",
+              "default": "",
+              "type": "string",
+              "maxLength": 100
+            },
+            "taxReference1": {
+              "default": "",
+              "type": "string",
+              "maxLength": 20
+            },
+            "taxReference2": {
+              "description": "Identifies a seal affixed to the container.",
+              "default": "",
+              "type": "string",
+              "maxLength": 20
+            },
+            "publicKey": {
+              "description": "Identifies a seal affixed to the container.",
+              "default": "",
+              "type": "string",
+              "maxLength": 500
+            },
+            "publicKey": {
+              "description": "Identifies a seal affixed to the container.",
+              "default": "",
+              "type": "string",
+              "maxLength": 5000
+            },
+            "address": {
+              "$ref": "#/definitions/address"
+            },
+            "nmftaCode": {
+              "default": "",
+              "type": "string",
+              "maxLength": 4
+            }
+          }
+        },
+        "publisherRole": {
+          "id": "#/properties/publisherRole",
+          "enum":  [ "CA", "AG", "VSL", "ATH", "PLT", "TR", null ]
+        },
+        "eventLocation": {
+          "description": "The location where the event takes place.",
+          "type": ["object","null"],
+          "default": "",
+          "properties": {
+            "locationName": {
+              "default": "",
+              "type": "string",
+              "maxLength": 100
+            },
+            "latitude": {
+              "default": "",
+              "type": "string",
+              "maxLength": 10
+            },
+            "longitude": {
+              "type": "string",
+              "maxLength": 11
+            },
+            "UNLocationCode": {
+              "type": "string",
+              "maxLength": 5
+            },
+            "address": {
+              "$ref": "#/definitions/address"
+            }
+          }
+        },
+        "portCallServiceTypeCode": {
+            "enum":  [ "PILO", "MOOR", "CRGO", "TOWG", "BUNK", "WSDP" ]
+        },
+        "facilityTypeCode": {
+          "id": "#/properties/facilityTypeCode",
+          "type": "string",
+          "default": "",
+          "maxLength": 4
+        },
+        "delayReasonCode": {
+          "id": "#/properties/delayReasonCode",
+          "type": "string",
+          "default": "",
+          "maxLength": 3
+        },
+        "remark": {
+          "id": "#/properties/remark",
+          "type": "string",
+          "default": "",
+          "maxLength": 500
+        },
+        "transportCall": {
+          "$ref": "#/definitions/transportCall"
+        },
+        "vesselPosition": {
+          "description": "The position of the vessel at the time when the message was sent",
+          "type": "object",
+          "default": {},
+          "properties": {
+            "latitude": {
+              "default": "",
+              "type": "string",
+              "maxLength": 10
+            },
+            "longitude": {
+              "type": "string",
+              "maxLength": 11
+            }
+          }
+        }
+      }
+    },
+    {
         "type": "object",
         "title": "The Transport Event schema",
         "default": {},
@@ -214,10 +435,15 @@
             "default": "",
             "maxLength": 3
           },
+          "vesselScheduleChangeRemark": {
+            "id": "#/properties/vesselScheduleChangeRemark",
+            "type": "string",
+            "default": "",
+            "maxLength": 250
+          },
           "changeRemark": {
             "id": "#/properties/changeRemark",
             "type": "string",
-            "title": "The changeRemark schema",
             "default": "",
             "maxLength": 250
           },
@@ -238,168 +464,6 @@
             "enum":  [ "ARRI", "DEPA" ]
           }
         }
-      },
-      {
-        "type": "object",
-        "title": "The Shipment Event schema",
-        "description": "The shipment event entity is a specialization of the event entity to support specification of data that only applies to a shipment event.",
-        "default": {},
-        "required": [
-          "eventCreatedDateTime",
-          "eventType",
-          "eventClassifierCode",
-          "eventDateTime",
-          "shipmentEventTypeCode",
-          "documentID",
-          "documentTypeCode"
-        ],
-        "properties": {
-          "eventID": {
-            "$ref": "#/definitions/eventID"
-          },
-          "eventCreatedDateTime": {
-            "$ref": "#/definitions/eventCreatedDateTime"
-          },
-          "eventType": {
-            "$ref": "#/definitions/eventType"
-          },
-          "eventClassifierCode": {
-            "$ref": "#/definitions/eventClassifierCode"
-          },
-          "eventDateTime": {
-            "$ref": "#/definitions/eventDateTime"
-          },
-          "shipmentEventTypeCode":{
-            "id": "#/properties/shipmentEventTypeCode",
-            "enum": ["RECE","DRFT","PENA","PENU","REJE","APPR","ISSU","SURR","SUBM","VOID","CONF"]
-          },
-          "documentID": {
-            "id": "#/properties/documentID",
-            "type": "string"
-          },
-          "documentTypeCode": {
-            "id": "#/properties/documentTypeCode",
-            "enum": ["BKG","SHI","SRM","TRD","ARN"]
-          },
-          "shipmentInformationTypeCode": {
-            "id": "#/properties/shipmentInformationTypeCode",
-            "type": "string",
-            "title": "The shipmentInformationTypeCode schema",
-            "default": ""
-          },
-          "reason": {
-            "id": "#/properties/reason",
-            "type": ["null","string"],
-            "description": "This field can be used to explain why a specific event has been sent.",
-            "default": ""
-          },
-          "eventTypeCode": {
-            "id": "#/properties/eventTypeCode",
-            "enum": ["RECE","DRFT","PENA","PENU","REJE","APPR","ISSU","SURR","SUBM","VOID","CONF"]
-          },
-          "shipmentID": {
-            "id": "#/properties/shipmentID",
-            "type": ["null","string"],
-            "default": ""
-          },
-          "references": {
-            "$ref": "#/definitions/references"
-          }
-        }
-      },
-      {
-        "type": "object",
-        "title": "The Equipment Event schema",
-        "default": {},
-        "required": [
-          "eventCreatedDateTime",
-          "eventType",
-          "eventClassifierCode",
-          "eventDateTime",
-          "equipmentEventTypeCode",
-          "emptyIndicatorCode",
-          "transportCall"
-        ],
-        "properties": {
-          "eventID": {
-            "$ref": "#/definitions/eventID"
-          },
-          "eventCreatedDateTime": {
-            "$ref": "#/definitions/eventCreatedDateTime"
-          },
-          "eventType": {
-            "$ref": "#/definitions/eventType"
-          },
-          "eventClassifierCode": {
-            "$ref": "#/definitions/eventClassifierCode"
-          },
-          "eventDateTime": {
-            "$ref": "#/definitions/eventDateTime"
-          },
-          "equipmentEventTypeCode": {
-            "id": "#/properties/equipmentEventTypeCode",
-            "enum": [ "LOAD", "DISC", "GTIN", "GTOT", "STUF", "STRP" ]
-          },
-          "equipmentReference": {
-            "id": "#/properties/equipmentReference",
-            "type": "string",
-            "title": "The equipmentReference schema",
-            "default": "",
-            "maxLength": 15
-          },
-          "ISOEquipmentCode": {
-            "id": "#/properties/ISOEquipmentCode",
-            "type": "string",
-            "default": "",
-            "maxLength": 4
-          },
-          "emptyIndicatorCode": {
-            "id": "#/properties/emptyIndicatorCode",
-            "enum": [ "EMPTY", "LADEN" ]
-          },
-          "transportCallID": {
-            "$ref": "#/definitions/transportCallID"
-          },
-          "transportCall": {
-            "$ref": "#/definitions/transportCall"
-          },
-          "documentReferences": {
-            "$ref": "#/definitions/documentReferences"
-          },
-          "references": {
-            "$ref": "#/definitions/references"
-          },
-          "seals": {
-            "description": "addresses the seal-related information associated with the shipment equipment. A seal is put on a shipment equipment once it is loaded. This seal is meant to stay on until the shipment equipment reaches its final destination.",
-            "type": "array",
-            "default": "",
-            "required": [
-              "sealNumber",
-              "sealType"
-            ],
-            "properties": {
-              "sealNumber": {
-                "description": "Identifies a seal affixed to the container.",
-                "default": "",
-                "type": "string",
-                "maxLength": 15
-              },
-              "sealSource": {
-                "description": "The source of the seal, namely who has affixed the seal. This attribute links to the Seal Source ID defined in the Seal Source reference data entity.",
-                "enum": [ "CAR", "SHI", "PHY", "VET", "CUS" ]
-              },
-              "sealType": {
-                "description": "The type of seal. This attribute links to the Seal Type ID defined in the Seal Type reference data entity.",
-                "enum": [ "KLP", "BLT", "WIR" ]
-              }
-            }
-          },
-          "eventTypeCode": {
-            "id": "#/properties/eventTypeCode",
-            "enum":  [ "LOAD", "DISC", "GTIN", "GTOT", "STUF", "STRP" ]
-          }
-        }
       }
-    ]
-  }
+  ]
 }

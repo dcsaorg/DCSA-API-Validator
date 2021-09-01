@@ -380,7 +380,7 @@
         },
         "vesselPosition": {
           "description": "The position of the vessel at the time when the message was sent",
-          "type": "object",
+          "type": ["object", "null"],
           "default": {},
           "properties": {
             "latitude": {

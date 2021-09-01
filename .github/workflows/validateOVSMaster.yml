@@ -19,7 +19,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: dcsaorg/DCSA-OVS
-        ref: master
+        ref: bump-dependencies
         submodules: recursive
         path: DCSA-OVS
         token: ${{ secrets.DCSA_PACKAGES_PAT }}

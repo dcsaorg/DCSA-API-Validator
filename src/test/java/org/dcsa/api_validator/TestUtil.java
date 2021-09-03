@@ -32,7 +32,7 @@ public class TestUtil {
             while (dataInputStream.read(buffer) >= 1) {
                 stringBuilder.append(buffer);
             }
-            return stringBuilder.toString();
+            return stringBuilder.toString().trim();
         });
     }
 

@@ -93,19 +93,20 @@ public class EventSubscriptionsTest {
             .auth()
             .oauth2(Configuration.accessToken)
             .contentType("application/json")
-            .get(Configuration.ROOT_URI + "/event-subscriptions");
+            .body(VALID_EVENT_SUBSCRIPTION)
+            .post(Configuration.ROOT_URI + "/event-subscriptions");
 
-    String randomSubscriptionID = response.jsonPath().get("[0].subscriptionID");
+    String createdEventSubscriptionID = response.jsonPath().get("subscriptionID");
 
     given()
         .auth()
         .oauth2(Configuration.accessToken)
         .contentType("application/json")
-        .get(Configuration.ROOT_URI + "/event-subscriptions/" + randomSubscriptionID)
+        .get(Configuration.ROOT_URI + "/event-subscriptions/" + createdEventSubscriptionID)
         .then()
         .assertThat()
         .statusCode(200)
-        .body("subscriptionID", Matchers.equalTo(randomSubscriptionID));
+        .body("subscriptionID", Matchers.equalTo(createdEventSubscriptionID));
   }
 
   @Test
@@ -115,15 +116,16 @@ public class EventSubscriptionsTest {
             .auth()
             .oauth2(Configuration.accessToken)
             .contentType("application/json")
-            .get(Configuration.ROOT_URI + "/event-subscriptions");
+            .body(VALID_EVENT_SUBSCRIPTION)
+            .post(Configuration.ROOT_URI + "/event-subscriptions");
 
-    String randomSubscriptionID = response.jsonPath().get("[0].subscriptionID");
+    String createdEventSubscriptionID = response.jsonPath().get("subscriptionID");
 
     given()
         .auth()
         .oauth2(Configuration.accessToken)
         .contentType("application/json")
-        .delete(Configuration.ROOT_URI + "/event-subscriptions/" + randomSubscriptionID)
+        .delete(Configuration.ROOT_URI + "/event-subscriptions/" + createdEventSubscriptionID)
         .then()
         .assertThat()
         .statusCode(204);
@@ -137,11 +139,12 @@ public class EventSubscriptionsTest {
             .auth()
             .oauth2(Configuration.accessToken)
             .contentType("application/json")
-            .get(Configuration.ROOT_URI + "/event-subscriptions");
+            .body(VALID_EVENT_SUBSCRIPTION)
+            .post(Configuration.ROOT_URI + "/event-subscriptions");
 
-    String randomSubscriptionID = response.jsonPath().get("[0].subscriptionID");
+    String createdEventSubscriptionID = response.jsonPath().get("subscriptionID");
 
-    JsonNode node = objectMapper.valueToTree(response.jsonPath().get("[0]"));
+    JsonNode node = objectMapper.valueToTree(response.jsonPath().get());
     ((ObjectNode) node)
         .put(
             "secret",
@@ -152,7 +155,7 @@ public class EventSubscriptionsTest {
         .oauth2(Configuration.accessToken)
         .contentType("application/json")
         .body(objectMapper.writeValueAsString(node))
-        .put(Configuration.ROOT_URI + "/event-subscriptions/" + randomSubscriptionID)
+        .put(Configuration.ROOT_URI + "/event-subscriptions/" + createdEventSubscriptionID)
         .then()
         .assertThat()
         .statusCode(400)
@@ -167,11 +170,12 @@ public class EventSubscriptionsTest {
             .auth()
             .oauth2(Configuration.accessToken)
             .contentType("application/json")
-            .get(Configuration.ROOT_URI + "/event-subscriptions");
+            .body(VALID_EVENT_SUBSCRIPTION)
+            .post(Configuration.ROOT_URI + "/event-subscriptions");
 
-    String randomSubscriptionID = response.jsonPath().get("[0].subscriptionID");
+    String createdEventSubscriptionID = response.jsonPath().get("subscriptionID");
 
-    JsonNode node = objectMapper.valueToTree(response.jsonPath().get("[0]"));
+    JsonNode node = objectMapper.valueToTree(response.jsonPath().get());
     ((ObjectNode) node).put("subscriptionID", "190b766e-3d8a-43b2-962d-4df0b3284098");
 
     given()
@@ -179,7 +183,7 @@ public class EventSubscriptionsTest {
         .oauth2(Configuration.accessToken)
         .contentType("application/json")
         .body(objectMapper.writeValueAsString(node))
-        .put(Configuration.ROOT_URI + "/event-subscriptions/" + randomSubscriptionID)
+        .put(Configuration.ROOT_URI + "/event-subscriptions/" + createdEventSubscriptionID)
         .then()
         .assertThat()
         .statusCode(400)
@@ -196,11 +200,12 @@ public class EventSubscriptionsTest {
             .auth()
             .oauth2(Configuration.accessToken)
             .contentType("application/json")
-            .get(Configuration.ROOT_URI + "/event-subscriptions");
+            .body(VALID_EVENT_SUBSCRIPTION)
+            .post(Configuration.ROOT_URI + "/event-subscriptions");
 
-    String randomSubscriptionID = response.jsonPath().get("[0].subscriptionID");
+    String createdEventSubscriptionID = response.jsonPath().get("subscriptionID");
 
-    JsonNode node = objectMapper.valueToTree(response.jsonPath().get("[0]"));
+    JsonNode node = objectMapper.valueToTree(response.jsonPath().get());
     ((ObjectNode) node)
         .put("callbackUrl", "http://127.0.0.1:9092/v2/notification-endpoints/receive/" + uuid);
 
@@ -209,7 +214,7 @@ public class EventSubscriptionsTest {
         .oauth2(Configuration.accessToken)
         .contentType("application/json")
         .body(objectMapper.writeValueAsString(node))
-        .put(Configuration.ROOT_URI + "/event-subscriptions/" + randomSubscriptionID)
+        .put(Configuration.ROOT_URI + "/event-subscriptions/" + createdEventSubscriptionID)
         .then()
         .assertThat()
         .statusCode(200)
@@ -226,9 +231,10 @@ public class EventSubscriptionsTest {
             .auth()
             .oauth2(Configuration.accessToken)
             .contentType("application/json")
-            .get(Configuration.ROOT_URI + "/event-subscriptions");
+            .body(VALID_EVENT_SUBSCRIPTION)
+            .post(Configuration.ROOT_URI + "/event-subscriptions");
 
-    String randomSubscriptionID = response.jsonPath().get("[0].subscriptionID");
+    String createdEventSubscriptionID = response.jsonPath().get("subscriptionID");
 
     given()
         .auth()
@@ -236,7 +242,11 @@ public class EventSubscriptionsTest {
         .contentType("application/json")
         .body(
             "{\"secret\": \"MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDM2NTc4NjIzODk3NDY5MDgyNzM0OTg3MTIzNzg2NA==\"}")
-        .put(Configuration.ROOT_URI + "/event-subscriptions/" + randomSubscriptionID + "/secret")
+        .put(
+            Configuration.ROOT_URI
+                + "/event-subscriptions/"
+                + createdEventSubscriptionID
+                + "/secret")
         .then()
         .assertThat()
         .statusCode(204);

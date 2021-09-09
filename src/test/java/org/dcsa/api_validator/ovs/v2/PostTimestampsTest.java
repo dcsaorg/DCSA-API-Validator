@@ -60,7 +60,7 @@ public class PostTimestampsTest {
 
 
     // Testing with mandatory fields + FacilitySMDGCode field
-    @Test(enabled = false)
+    @Test
     public void testFacilitySMDGCodeField() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -106,7 +106,7 @@ public class PostTimestampsTest {
     }
 
     // Testing with mandatory fields + EventLocation field
-    @Test(enabled = false)
+    @Test
     public void testEventLocationField() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -153,7 +153,7 @@ public class PostTimestampsTest {
     }
 
     // Testing with mandatory fields + VesselPosition field
-    @Test(enabled = false)
+    @Test
     public void testVesselPositionField() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -210,7 +210,7 @@ public class PostTimestampsTest {
     }
 
     // Testing with mandatory fields + ModeOfTransport field
-    @Test(enabled = false)
+    @Test
     public void testModeOfTransportField() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
@@ -267,7 +267,7 @@ public class PostTimestampsTest {
     }
 
     // Testing with mandatory fields + PortCallServiceTypeCode field
-    @Test(enabled = false)
+    @Test
     public void testPortCallServiceTypeCodeField() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);

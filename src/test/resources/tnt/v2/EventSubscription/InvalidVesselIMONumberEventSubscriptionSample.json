@@ -1,0 +1,5 @@
+{
+  "callbackUrl": "http://127.0.0.1:9092/v2/notification-endpoints/receive/37eb1b03-db67-4b57-abb8-d38c3faed703",
+  "vesselIMONumber": "93214832",
+  "secret": "OG1wOWFaRW1HTTF1Y2NuaUN0RlAtaU9JMjM5N25vMWtWd25rS2Vkc2ktZms0c01zaTJQOElZRVNQN29MYUkzcg=="
+}

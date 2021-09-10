@@ -317,7 +317,7 @@
             },
             "nmftaCode": {
               "default": "",
-              "type": "string",
+              "type": ["string", "null"],
               "maxLength": 4
             }
           }

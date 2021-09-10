@@ -1,4 +1,4 @@
-package org.dcsa.api_validator.ovs.v2;
+package org.dcsa.api_validator.tnt.v2;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -20,14 +20,14 @@ Test for /event-subscriptions
  */
 public class EventSubscriptionsTest {
   public static final String VALID_EVENT_SUBSCRIPTION =
-      loadFileAsString("ovs/v2/EventSubscription/ValidEventSubscriptionSample.json");
+      loadFileAsString("tnt/v2/EventSubscription/ValidEventSubscriptionSample.json");
 
   final ObjectMapper objectMapper = new ObjectMapper();
 
   @Test
   public void testToCreateEventSubscriptionWithInvalidEventType() {
     final String INVALID_EVENT_SUBSCRIPTION =
-        loadFileAsString("ovs/v2/EventSubscription/InvalidEventTypeEventSubscriptionSample.json");
+        loadFileAsString("tnt/v2/EventSubscription/InvalidEventTypeEventSubscriptionSample.json");
 
     given()
         .auth()
@@ -45,7 +45,7 @@ public class EventSubscriptionsTest {
   public void testToCreateEventSubscriptionWithInvalidVesselIMONumber() {
     final String INVALID_EVENT_SUBSCRIPTION =
         loadFileAsString(
-            "ovs/v2/EventSubscription/InvalidVesselIMONumberEventSubscriptionSample.json");
+            "tnt/v2/EventSubscription/InvalidVesselIMONumberEventSubscriptionSample.json");
 
     given()
         .auth()

@@ -320,7 +320,7 @@
               },
               "nmftaCode": {
                 "default": "",
-                "type": "string",
+                "type": ["string", "null"],
                 "maxLength": 4
               }
             }
@@ -383,7 +383,7 @@
         },
         "vesselPosition": {
           "description": "The position of the vessel at the time when the message was sent",
-          "type": ["array","null"],
+          "type": ["object","null"],
           "default": [],
           "properties": {
             "latitude": {

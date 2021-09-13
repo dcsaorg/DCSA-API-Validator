@@ -154,7 +154,7 @@
             "vesselCallSignNumber": {
               "id": "#/transportCall/properties/vessel/properties/vesselCallSignNumber",
               "description": "A unique alphanumeric identity that belongs to the vessel and is assigned by the International Telecommunication Union (ITU).",
-              "type": "string",
+              "type": ["string","null"],
               "default": "",
               "maxLength": 10
             },

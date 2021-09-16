@@ -19,7 +19,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: dcsaorg/DCSA-OVS
-        ref: DDT-292-create-transport-call-if-missing
+        ref: master
         submodules: recursive
         path: DCSA-OVS
         token: ${{ secrets.DCSA_PACKAGES_PAT }}

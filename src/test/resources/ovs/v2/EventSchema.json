@@ -24,7 +24,7 @@
       "default": ""
     },
     "eventClassifierCode": {
-      "enum":  ["ACT","PLN","EST"],
+      "enum":  ["ACT","PLN","EST", "REQ"],
       "title": "The eventClassifierCode schema"
     },
     "transportCallID": {
@@ -217,7 +217,7 @@
     },
     "location": {
       "description": "Location of the facility. Can often be omitted when it is just repeating the contents of the UNLocationCode field.",
-      "type": ["array","null"],
+      "type": ["object","null"],
       "default": [],
       "properties": {
         "locationName": {
@@ -255,8 +255,7 @@
         "eventType",
         "eventClassifierCode",
         "eventDateTime",
-        "operationsEventTypeCode",
-        "portCallServiceTypeCode"
+        "operationsEventTypeCode"
       ],
       "properties": {
         "eventID": {
@@ -355,7 +354,7 @@
           }
         },
         "portCallServiceTypeCode": {
-            "enum":  [ "PILO", "MOOR", "CRGO", "TOWG", "BUNK", "WSDP" ]
+            "enum": ["PILO", "MOOR", "CRGO", "TOWG", "BUNK", "WSDP", null]
         },
         "facilityTypeCode": {
           "id": "#/properties/facilityTypeCode",

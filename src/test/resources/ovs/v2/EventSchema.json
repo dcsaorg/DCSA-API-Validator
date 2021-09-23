@@ -140,14 +140,14 @@
             "vesselName": {
               "id": "#/transportCall/properties/vessel/properties/vesselName",
               "description": "The name of the Vessel given by the Vessel Operator and registered with IMO",
-              "type": "string",
+              "type": ["string", "null"],
               "default": "",
               "maxLength": 35
             },
             "vesselFlag": {
               "id": "#/transportCall/properties/vessel/properties/vesselFlag",
               "description": "The flag of the nation whose laws the vessel is registered under. This is the ISO 3166 two-letter country code",
-              "type": "string",
+              "type": ["string", "null"],
               "default": "",
               "maxLength": 2
             },
@@ -161,14 +161,14 @@
             "vesselOperatorCarrierCode": {
               "id": "#/transportCall/properties/vessel/properties/vesselOperatorCarrierCode",
               "description": "The carrier who is in charge of the vessel operation based on either the SMDG or SCAC code lists",
-              "type": "string",
+              "type": ["string", "null"],
               "default": "",
               "maxLength": 10
             },
             "vesselOperatorCarrierCodeListProvider": {
               "id": "#/transportCall/properties/vessel/properties/vesselOperatorCarrierCodeListProvider",
               "description": "The carrier who is in charge of the vessel operation based on either the SMDG or SCAC code lists",
-              "enum":  [ "SMDG", "NMFTA" ]
+              "enum": ["SMDG", "NMFTA", null]
             }
           }
         }

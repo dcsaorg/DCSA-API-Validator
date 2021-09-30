@@ -182,36 +182,36 @@
       "properties": {
         "addressName": {
           "default": "",
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 100
         },
         "streetName": {
           "default": "",
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 100
         },
         "streetNumber": {
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 50
         },
         "floor": {
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 50
         },
         "postCode": {
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 10
         },
         "city": {
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 65
         },
         "stateRegion": {
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 65
         },
         "country": {
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 75
         }
       }
@@ -223,21 +223,28 @@
       "properties": {
         "locationName": {
           "default": "",
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 100
         },
         "latitude": {
           "default": "",
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 10
         },
         "longitude": {
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 11
         },
         "UNLocationCode": {
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 5
+        },
+        "facilityCode": {
+          "type": ["string", "null"],
+          "maxLength": 6
+        },
+        "facilityCodeListProvider": {
+          "enum": ["BIC", "SMDG", null]
         },
         "address": {
           "$ref": "#/definitions/address"
@@ -288,31 +295,24 @@
               "partyName": {
                 "description": "Identifies a seal affixed to the container.",
                 "default": "",
-                "type": "string",
+                "type": ["string", "null"],
                 "maxLength": 100
               },
               "taxReference1": {
                 "default": "",
-                "type": "string",
+                "type": ["string", "null"],
                 "maxLength": 20
               },
               "taxReference2": {
                 "description": "Identifies a seal affixed to the container.",
                 "default": "",
-                "type": "string",
+                "type": ["string", "null"],
                 "maxLength": 20
               },
               "publicKey": {
-                "description": "Identifies a seal affixed to the container.",
                 "default": "",
-                "type": "string",
+                "type": ["string", "null"],
                 "maxLength": 500
-              },
-              "publicKey": {
-                "description": "Identifies a seal affixed to the container.",
-                "default": "",
-                "type": "string",
-                "maxLength": 5000
               },
               "address": {
                 "$ref": "#/definitions/address"
@@ -330,31 +330,7 @@
           },
           "eventLocation": {
             "description": "The location where the event takes place.",
-            "type": ["object","null"],
-            "default": [],
-            "properties": {
-              "locationName": {
-                "default": "",
-                "type": "string",
-                "maxLength": 100
-              },
-              "latitude": {
-                "default": "",
-                "type": "string",
-                "maxLength": 10
-              },
-              "longitude": {
-                "type": "string",
-                "maxLength": 11
-              },
-              "UNLocationCode": {
-                "type": "string",
-                "maxLength": 5
-              },
-              "address": {
-                "$ref": "#/definitions/address"
-              }
-            }
+            "$ref": "#/definitions/location"
           },
           "portCallServiceTypeCode": {
             "enum": ["PILO", "MOOR", "CRGO", "TOWG", "BUNK", "WSDP", null]

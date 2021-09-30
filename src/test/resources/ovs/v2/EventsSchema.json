@@ -317,6 +317,29 @@
               "address": {
                 "$ref": "#/definitions/address"
               },
+              "identifyingCodes": {
+                "type": ["array", "null"],
+                "items": [
+                  {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "codeListResponsibleAgencyCode": {
+                            "enum": ["5", "6", "11", "20", "54", "182", "274", "296", "306", "399", "zzz"]
+                          },
+                          "partyCode": {
+                            "type": "string"
+                          },
+                          "codeListName": {
+                            "type": ["object", "null"]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
               "nmftaCode": {
                 "default": "",
                 "type": ["string", "null"],
@@ -326,14 +349,14 @@
           },
           "publisherRole": {
             "id": "#/properties/publisherRole",
-            "enum":  [ "CA", "AG", "VSL", "ATH", "PLT", "TR", null ]
+            "enum": ["CA", "AG", "VSL", "ATH", "PLT", "TR", "TWG", "LSH", "BUK", null]
           },
           "eventLocation": {
             "description": "The location where the event takes place.",
             "$ref": "#/definitions/location"
           },
           "portCallServiceTypeCode": {
-            "enum": ["PILO", "MOOR", "CRGO", "TOWG", "BUNK", "WSDP", null]
+            "enum": ["PILO", "MOOR", "CRGO", "TOWG", "BUNK", "WSDP", "LASH", "SAFE", "FAST", "GWAY", null]
          },
         "facilityTypeCode": {
           "id": "#/properties/facilityTypeCode",

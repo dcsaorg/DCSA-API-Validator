@@ -108,7 +108,7 @@ public class PostTimestampsTest {
     }
 
     // Testing with mandatory fields + EventLocation field (DDT-340)
-    @Test(enabled = false)
+    @Test
     public void testEventLocationField() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);

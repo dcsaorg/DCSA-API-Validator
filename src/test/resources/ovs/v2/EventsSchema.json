@@ -25,7 +25,7 @@
       "default": ""
     },
     "eventClassifierCode": {
-      "enum":  ["ACT","PLN","EST"],
+      "enum":  ["ACT","PLN","EST", "REQ"],
       "title": "The eventClassifierCode schema"
     },
     "transportCallID": {
@@ -141,35 +141,35 @@
             "vesselName": {
               "id": "#/transportCall/properties/vessel/properties/vesselName",
               "description": "The name of the Vessel given by the Vessel Operator and registered with IMO",
-              "type": "string",
+              "type": ["string", "null"],
               "default": "",
               "maxLength": 35
             },
             "vesselFlag": {
               "id": "#/transportCall/properties/vessel/properties/vesselFlag",
               "description": "The flag of the nation whose laws the vessel is registered under. This is the ISO 3166 two-letter country code",
-              "type": "string",
+              "type": ["string", "null"],
               "default": "",
               "maxLength": 2
             },
             "vesselCallSignNumber": {
               "id": "#/transportCall/properties/vessel/properties/vesselCallSignNumber",
               "description": "A unique alphanumeric identity that belongs to the vessel and is assigned by the International Telecommunication Union (ITU).",
-              "type": "string",
+              "type": ["string","null"],
               "default": "",
               "maxLength": 10
             },
             "vesselOperatorCarrierCode": {
               "id": "#/transportCall/properties/vessel/properties/vesselOperatorCarrierCode",
               "description": "The carrier who is in charge of the vessel operation based on either the SMDG or SCAC code lists",
-              "type": "string",
+              "type": ["string", "null"],
               "default": "",
               "maxLength": 10
             },
             "vesselOperatorCarrierCodeListProvider": {
               "id": "#/transportCall/properties/vessel/properties/vesselOperatorCarrierCodeListProvider",
               "description": "The carrier who is in charge of the vessel operation based on either the SMDG or SCAC code lists",
-              "enum":  [ "SMDG", "NMFTA" ]
+              "enum": ["SMDG", "NMFTA", null]
             }
           }
         }
@@ -182,62 +182,69 @@
       "properties": {
         "addressName": {
           "default": "",
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 100
         },
         "streetName": {
           "default": "",
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 100
         },
         "streetNumber": {
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 50
         },
         "floor": {
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 50
         },
         "postCode": {
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 10
         },
         "city": {
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 65
         },
         "stateRegion": {
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 65
         },
         "country": {
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 75
         }
       }
     },
     "location": {
       "description": "Location of the facility. Can often be omitted when it is just repeating the contents of the UNLocationCode field.",
-      "type": ["array","null"],
+      "type": ["object","null"],
       "default": [],
       "properties": {
         "locationName": {
           "default": "",
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 100
         },
         "latitude": {
           "default": "",
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 10
         },
         "longitude": {
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 11
         },
         "UNLocationCode": {
-          "type": "string",
+          "type": ["string", "null"],
           "maxLength": 5
+        },
+        "facilityCode": {
+          "type": ["string", "null"],
+          "maxLength": 6
+        },
+        "facilityCodeListProvider": {
+          "enum": ["BIC", "SMDG", null]
         },
         "address": {
           "$ref": "#/definitions/address"
@@ -258,8 +265,7 @@
           "eventType",
           "eventClassifierCode",
           "eventDateTime",
-          "operationsEventTypeCode",
-          "portCallServiceTypeCode"
+          "operationsEventTypeCode"
         ],
         "properties": {
           "eventID": {
@@ -289,76 +295,68 @@
               "partyName": {
                 "description": "Identifies a seal affixed to the container.",
                 "default": "",
-                "type": "string",
+                "type": ["string", "null"],
                 "maxLength": 100
               },
               "taxReference1": {
                 "default": "",
-                "type": "string",
+                "type": ["string", "null"],
                 "maxLength": 20
               },
               "taxReference2": {
                 "description": "Identifies a seal affixed to the container.",
                 "default": "",
-                "type": "string",
+                "type": ["string", "null"],
                 "maxLength": 20
               },
               "publicKey": {
-                "description": "Identifies a seal affixed to the container.",
                 "default": "",
-                "type": "string",
+                "type": ["string", "null"],
                 "maxLength": 500
-              },
-              "publicKey": {
-                "description": "Identifies a seal affixed to the container.",
-                "default": "",
-                "type": "string",
-                "maxLength": 5000
               },
               "address": {
                 "$ref": "#/definitions/address"
               },
+              "identifyingCodes": {
+                "type": ["array", "null"],
+                "items": [
+                  {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "codeListResponsibleAgencyCode": {
+                            "enum": ["5", "6", "11", "20", "54", "182", "274", "296", "306", "399", "zzz"]
+                          },
+                          "partyCode": {
+                            "type": "string"
+                          },
+                          "codeListName": {
+                            "type": ["object", "null"]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
               "nmftaCode": {
                 "default": "",
-                "type": "string",
+                "type": ["string", "null"],
                 "maxLength": 4
               }
             }
           },
           "publisherRole": {
             "id": "#/properties/publisherRole",
-            "enum":  [ "CA", "AG", "VSL", "ATH", "PLT", "TR", null ]
+            "enum": ["CA", "AG", "VSL", "ATH", "PLT", "TR", "TWG", "LSH", "BUK", null]
           },
           "eventLocation": {
             "description": "The location where the event takes place.",
-            "type": ["object","null"],
-            "default": [],
-            "properties": {
-              "locationName": {
-                "default": "",
-                "type": "string",
-                "maxLength": 100
-              },
-              "latitude": {
-                "default": "",
-                "type": "string",
-                "maxLength": 10
-              },
-              "longitude": {
-                "type": "string",
-                "maxLength": 11
-              },
-              "UNLocationCode": {
-                "type": "string",
-                "maxLength": 5
-              },
-              "address": {
-                "$ref": "#/definitions/address"
-              }
-            }
+            "$ref": "#/definitions/location"
           },
           "portCallServiceTypeCode": {
-            "enum":  [ "PILO", "MOOR", "CRGO", "TOWG", "BUNK", "WSDP" ]
+            "enum": ["PILO", "MOOR", "CRGO", "TOWG", "BUNK", "WSDP", "LASH", "SAFE", "FAST", "GWAY", null]
          },
         "facilityTypeCode": {
           "id": "#/properties/facilityTypeCode",
@@ -383,7 +381,7 @@
         },
         "vesselPosition": {
           "description": "The position of the vessel at the time when the message was sent",
-          "type": ["array","null"],
+          "type": ["object","null"],
           "default": [],
           "properties": {
             "latitude": {

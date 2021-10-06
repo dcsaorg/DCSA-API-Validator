@@ -3,6 +3,8 @@ package org.dcsa.api_validator.ovs.v2;
 import org.dcsa.api_validator.conf.Configuration;
 import org.testng.annotations.Test;
 
+import javax.print.attribute.HashAttributeSet;
+import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
@@ -105,7 +107,7 @@ public class PostTimestampsTest {
                 statusCode(400);
     }
 
-    // Testing with mandatory fields + EventLocation field
+    // Testing with mandatory fields + EventLocation field (DDT-340)
     @Test
     public void testEventLocationField() {
 
@@ -133,7 +135,6 @@ public class PostTimestampsTest {
     public void testEventLocationFalseFormat() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
-        map.remove("facilitySMDGCode");
         map.remove("vesselPosition");
         map.remove("modeOfTransport");
         map.remove("portCallServiceTypeCode");
@@ -157,7 +158,6 @@ public class PostTimestampsTest {
     public void testVesselPositionField() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
-        map.remove("facilitySMDGCode");
         map.remove("modeOfTransport");
         map.remove("eventLocation");
         map.remove("portCallServiceTypeCode");
@@ -178,8 +178,7 @@ public class PostTimestampsTest {
     // fails as vesselPosition is an object & (latitude & longitude are required parameters).
     @Test
     public void testVesselPositionFalseFormat() {
-        Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
-        map.remove("facilitySMDGCode");
+        Map<String, Object> map = (Map<String, Object>) jsonToMap(VALID_TIMESTAMP);
         map.remove("modeOfTransport");
         map.remove("eventLocation");
         map.remove("portCallServiceTypeCode");
@@ -196,7 +195,8 @@ public class PostTimestampsTest {
                 assertThat().
                 statusCode(400);
 
-        map.put("vesselPosition", "{}"); // Empty (fails - vesselPosition includes mandatory parameters)
+        // Empty (fails - vesselPosition includes mandatory parameters)
+        map.put("vesselPosition", new HashMap<>());
 
         given().
                 auth().
@@ -214,7 +214,6 @@ public class PostTimestampsTest {
     public void testModeOfTransportField() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
-        map.remove("facilitySMDGCode");
         map.remove("vesselPosition");
         map.remove("eventLocation");
         map.remove("portCallServiceTypeCode");
@@ -271,7 +270,6 @@ public class PostTimestampsTest {
     public void testPortCallServiceTypeCodeField() {
 
         Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
-        map.remove("facilitySMDGCode");
         map.remove("vesselPosition");
         map.remove("eventLocation");
         map.remove("modeOfTransport");

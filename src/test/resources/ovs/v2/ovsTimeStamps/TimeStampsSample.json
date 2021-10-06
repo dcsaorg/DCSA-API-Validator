@@ -14,20 +14,26 @@
       "stateRegion": "N/A",
       "country": "Denmark"
     },
-    "nmftaCode": "MMCU"
+    "identifyingCodes": [
+      {
+        "codeListResponsibleAgencyCode": "306",
+        "partyCode": "MSK"
+      }
+    ],
+    "nmftaCode" : "CSK"
   },
-  "publisherRole": "CA",
+  "publisherRole": "TR",
   "vesselIMONumber": "9321483",
-  "UNLocationCode": "USNYC",
-  "facilitySMDGCode": "APMT",
+  "UNLocationCode": "SGSIN",
+  "facilitySMDGCode": "PSABT",
   "facilityTypeCode": "BRTH",
-  "eventClassifierCode": "EST",
+  "eventClassifierCode": "ACT",
   "operationsEventTypeCode": "STRT",
   "eventLocation": {
     "locationName": "Eiffel Tower",
-    "latitude": "48.858550",
-    "longitude": "2.29449203",
-    "UNLocationCode": "USNYC",
+    "latitude": "48.8585500",
+    "longitude": "2.294492036",
+    "UNLocationCode": "SGSIN",
     "address": {
       "name": "Henrik",
       "street": "Kronprincessegade",
@@ -40,10 +46,15 @@
     }
   },
   "vesselPosition": {
-    "latitude": "48.8585502",
-    "longitude": "2.294492031"
+    "latitude": "48.8585500",
+    "longitude": "2.294492036"
   },
   "modeOfTransport": "VESSEL",
   "portCallServiceTypeCode": "BUNK",
-  "eventDateTime": "2019-11-12T07:41:00+08:30"
+  "eventDateTime": "2019-11-12T07:41:00+08:30",
+  "carrierVoyageNumber": "2103S",
+  "carrierServiceCode": "FE1",
+  "transportCallSequenceNumber": 2,
+  "remark": "Port closed due to strike",
+  "delayReasonCode": "WEA"
 }

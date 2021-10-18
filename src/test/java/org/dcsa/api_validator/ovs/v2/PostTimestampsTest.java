@@ -64,8 +64,7 @@ public class PostTimestampsTest {
     // Testing with mandatory fields + FacilitySMDGCode field
     @Test
     public void testFacilitySMDGCodeField() {
-
-        Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
         map.remove("eventLocation");
         map.remove("vesselPosition");
         map.remove("modeOfTransport");
@@ -87,8 +86,7 @@ public class PostTimestampsTest {
     // Should fail because specification -> maxLength:6
     @Test
     public void testFacilitySMDGCodeFieldFalseFormat() {
-
-        Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
         map.remove("eventLocation");
         map.remove("vesselPosition");
         map.remove("modeOfTransport");
@@ -110,8 +108,7 @@ public class PostTimestampsTest {
     // Testing with mandatory fields + EventLocation field (DDT-340)
     @Test
     public void testEventLocationField() {
-
-        Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
         map.remove("facilitySMDGCode");
         map.remove("vesselPosition");
         map.remove("modeOfTransport");
@@ -133,8 +130,7 @@ public class PostTimestampsTest {
     // fails as eventLocation is an object.
     @Test
     public void testEventLocationFalseFormat() {
-
-        Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
         map.remove("vesselPosition");
         map.remove("modeOfTransport");
         map.remove("portCallServiceTypeCode");
@@ -156,8 +152,7 @@ public class PostTimestampsTest {
     // Testing with mandatory fields + VesselPosition field
     @Test
     public void testVesselPositionField() {
-
-        Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
         map.remove("modeOfTransport");
         map.remove("eventLocation");
         map.remove("portCallServiceTypeCode");
@@ -178,7 +173,7 @@ public class PostTimestampsTest {
     // fails as vesselPosition is an object & (latitude & longitude are required parameters).
     @Test
     public void testVesselPositionFalseFormat() {
-        Map<String, Object> map = (Map<String, Object>) jsonToMap(VALID_TIMESTAMP);
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
         map.remove("modeOfTransport");
         map.remove("eventLocation");
         map.remove("portCallServiceTypeCode");
@@ -212,8 +207,7 @@ public class PostTimestampsTest {
     // Testing with mandatory fields + ModeOfTransport field
     @Test
     public void testModeOfTransportField() {
-
-        Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
         map.remove("vesselPosition");
         map.remove("eventLocation");
         map.remove("portCallServiceTypeCode");
@@ -234,7 +228,7 @@ public class PostTimestampsTest {
     // fails as ModeOfTransport is an ENUM.
     @Test
     public void testModeOfTransportFieldFalseFormat() {
-        Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
         map.remove("facilitySMDGCode");
         map.remove("modeOfTransport");
         map.remove("eventLocation");
@@ -268,8 +262,7 @@ public class PostTimestampsTest {
     // Testing with mandatory fields + PortCallServiceTypeCode field
     @Test
     public void testPortCallServiceTypeCodeField() {
-
-        Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
         map.remove("vesselPosition");
         map.remove("eventLocation");
         map.remove("modeOfTransport");
@@ -285,12 +278,13 @@ public class PostTimestampsTest {
                 assertThat().
                 statusCode(204);
     }
+
     // Testing with mandatory fields + PortCallServiceTypeCode field
     // fails as portCallServiceTypeCode is an ENUM.
     // Test modeOfTransport,
     @Test
     public void testPortCallServiceTypeCodeFalseFormat() {
-        Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
         map.remove("facilitySMDGCode");
         map.remove("modeOfTransport");
         map.remove("eventLocation");
@@ -326,7 +320,7 @@ public class PostTimestampsTest {
     @Test
     public void testMandatoryPublisherFieldFalseFormat() {
 
-        Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
 
         map.remove("publisher");
         given().
@@ -380,7 +374,7 @@ public class PostTimestampsTest {
     // Should fail as publisherRole is mandatory
     @Test
     public void testMandatoryPublisherRoleFieldFalseFormat() {
-        Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
 
         map.remove("publisherRole");
         given().
@@ -410,8 +404,7 @@ public class PostTimestampsTest {
     // Should fail as vesselIMONumber is mandatory
     @Test
     public void testMandatoryVesselIMONumberFieldFalseFormat() {
-
-        Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
 
         map.remove("vesselIMONumber");
         given().
@@ -453,7 +446,7 @@ public class PostTimestampsTest {
     // Should fail as UNLocationCode is mandatory
     @Test
     public void testMandatoryUNLocationCodeFieldFalseFormat() {
-        Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
 
         map.remove("UNLocationCode");
         given().
@@ -495,8 +488,7 @@ public class PostTimestampsTest {
     // Should fail as FacilityTypeCode is mandatory
     @Test
     public void testMandatoryFacilityTypeCodeFieldFalseFormat() {
-
-        Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
 
         map.remove("facilityTypeCode");
         given().
@@ -538,8 +530,7 @@ public class PostTimestampsTest {
     // Should fail as EventClassifierCode is mandatory
     @Test
     public void testMandatoryEventClassifierCodeFieldFalseFormat() {
-
-        Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
 
         map.remove("eventClassifierCode");
         given().
@@ -569,8 +560,7 @@ public class PostTimestampsTest {
     // Should fail as OperationsEventTypeCode is mandatory
     @Test
     public void testMandatoryOperationsEventTypeCodeFieldFalseFormat() {
-
-        Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
 
         map.remove("operationsEventTypeCode");
         given().
@@ -600,8 +590,7 @@ public class PostTimestampsTest {
     // Should fail as EventDateTime is mandatory
     @Test
     public void testMandatoryEventDateTimeFieldFalseFormat() {
-
-        Map<String, String> map = (Map<String, String>) jsonToMap(VALID_TIMESTAMP);
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
 
         map.remove("eventDateTime");
         given().

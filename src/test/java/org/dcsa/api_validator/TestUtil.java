@@ -57,10 +57,10 @@ public class TestUtil {
         }
     }
 
-    public static Map<?, ?> jsonToMap(String json){
+    public static Map<String, Object> jsonToMap(String json){
         ObjectMapper mapper = new ObjectMapper();
         try {
-            Map<String, String> map = mapper.readValue(json, Map.class);
+            Map<String, Object> map = mapper.readValue(json, Map.class);
             return map;
         } catch (IOException e) {
             e.printStackTrace();

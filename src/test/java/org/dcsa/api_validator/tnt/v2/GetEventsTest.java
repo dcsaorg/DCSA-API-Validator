@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.*;
  * Tests related to the GET /events endpoint
  */
 
-// -- TODO: 1. Refactor as done in OVS/V2/Events using getListOfAnyAttribute function.
+// -- TODO: 1. Refactor as done in JIT/V2/Events using getListOfAnyAttribute function.
 
 
 public class GetEventsTest {

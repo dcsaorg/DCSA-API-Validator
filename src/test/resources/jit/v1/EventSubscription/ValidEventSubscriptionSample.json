@@ -1,7 +1,8 @@
 {
-  "callbackUrl": "http://127.0.0.1:9092/v2/notification-endpoints/receive/37eb1b03-db67-4b57-abb8-d38c3faed703",
+  "callbackUrl": "http://127.0.0.1:9092/v1/notification-endpoints/receive/37eb1b03-db67-4b57-abb8-d38c3faed703",
   "eventType": [
-    "SHIPMENT"
+    "TRANSPORT",
+    "OPERATIONS"
   ],
   "transportEventTypeCode": [
     "ARRI",

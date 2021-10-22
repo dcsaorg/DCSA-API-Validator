@@ -1,9 +1,8 @@
-package org.dcsa.api_validator.ovs.v2;
+package org.dcsa.api_validator.jit.v1;
 
 import org.dcsa.api_validator.conf.Configuration;
 import org.testng.annotations.Test;
 
-import javax.print.attribute.HashAttributeSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +16,7 @@ import static org.dcsa.api_validator.TestUtil.jsonToMap;
 
 public class PostTimestampsTest {
 
-    public static final String VALID_TIMESTAMP = loadFileAsString("ovs/v2/ovsTimeStamps/TimeStampsSample.json");
+    public static final String VALID_TIMESTAMP = loadFileAsString("jit/v1/jitTimeStamps/TimeStampsSample.json");
 
     // Testing with all fields provided in VALID_TIMESTAMP variable
     @Test

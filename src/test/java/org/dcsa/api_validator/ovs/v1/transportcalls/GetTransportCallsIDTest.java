@@ -5,7 +5,6 @@ import com.github.fge.jsonschema.main.JsonSchemaFactory;
 import io.restassured.path.json.JsonPath;
 import org.apache.http.HttpStatus;
 import org.dcsa.api_validator.conf.Configuration;
-import org.testng.Reporter;
 import org.testng.annotations.Test;
 
 import java.util.List;

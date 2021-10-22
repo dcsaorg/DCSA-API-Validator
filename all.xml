@@ -4,5 +4,8 @@
     <suite-files>
         <suite-file path="TnTV1.xml" />
         <suite-file path="TnTV2.xml" />
+        <suite-file path="OVSV1.xml" />
+        <suite-file path="JITV1.xml" />
+        <suite-file path="EBLV1.xml" />
     </suite-files>
 </suite>

@@ -1,4 +1,4 @@
-package org.dcsa.api_validator.ovs.v2;
+package org.dcsa.api_validator.jit.v1;
 
 import com.github.fge.jsonschema.cfg.ValidationConfiguration;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
@@ -35,7 +35,7 @@ public class GetEventsTest {
                 then().
                 assertThat().
                 statusCode(200).
-                body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
+                body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").
                         using(jsonSchemaFactory));
     }
 
@@ -61,7 +61,7 @@ public class GetEventsTest {
                 assertThat().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
+                body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").
                         using(jsonSchemaFactory));
     }
 
@@ -76,7 +76,7 @@ public class GetEventsTest {
                 assertThat().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
+                body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").
                         using(jsonSchemaFactory));
     }
 
@@ -96,7 +96,7 @@ public class GetEventsTest {
                     assertThat().
                     statusCode(200).
                     body("transportEventTypeCode", everyItem(equalTo(transportEventTypeCode))).
-                    body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
+                    body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").using(jsonSchemaFactory));
         }
     }
 
@@ -133,7 +133,7 @@ public class GetEventsTest {
                     assertThat().
                     statusCode(200).
                     body("it.transportCallID", everyItem(equalTo(id))).
-                    body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
+                    body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").using(jsonSchemaFactory));
         }
 
     }
@@ -152,7 +152,7 @@ public class GetEventsTest {
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     body("it.vesselIMONumber", everyItem(equalTo(vesselIMONumber))).
-                    body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
+                    body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").using(jsonSchemaFactory));
         }
     }
 
@@ -189,7 +189,7 @@ public class GetEventsTest {
                     assertThat().
                     statusCode(200).
                     body("it.carrierVoyageNumber", everyItem(equalTo(carrierVoyageNumber))).
-                    body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
+                    body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").using(jsonSchemaFactory));
         }
     }
 
@@ -225,7 +225,7 @@ public class GetEventsTest {
                     get(Configuration.ROOT_URI + "/events").
                     then().
                     body("it.carrierServiceCode", everyItem(equalTo(carrierServiceCode))).
-                    body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
+                    body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").using(jsonSchemaFactory));
         }
     }
 
@@ -262,7 +262,7 @@ public class GetEventsTest {
                     assertThat().
                     statusCode(200).
                     body("operationsEventTypeCode", everyItem(equalTo(operationsEventTypeCode))).
-                    assertThat().body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
+                    assertThat().body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").using(jsonSchemaFactory));
         }
 
     }
@@ -299,7 +299,7 @@ public class GetEventsTest {
                     assertThat().
                     statusCode(200).
                     body("eventCreatedDateTime", everyItem(equalTo(eventCreatedDateTime))).
-                    body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").using(jsonSchemaFactory));
+                    body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").using(jsonSchemaFactory));
         });
     }
 
@@ -315,7 +315,7 @@ public class GetEventsTest {
                 assertThat().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
+                body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").
                         using(jsonSchemaFactory));
         given().
                 auth().
@@ -326,7 +326,7 @@ public class GetEventsTest {
                 assertThat().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
+                body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").
                         using(jsonSchemaFactory));
         given().
                 auth().
@@ -337,7 +337,7 @@ public class GetEventsTest {
                 assertThat().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
+                body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").
                         using(jsonSchemaFactory));
         given().
                 auth().
@@ -348,7 +348,7 @@ public class GetEventsTest {
                 assertThat().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
+                body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").
                         using(jsonSchemaFactory));
         given().
                 auth().
@@ -359,7 +359,7 @@ public class GetEventsTest {
                 assertThat().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
+                body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").
                         using(jsonSchemaFactory));
     }
 
@@ -452,7 +452,7 @@ public class GetEventsTest {
                     assertThat().
                     statusCode(200).
                     body("size()", equalTo(limit)).
-                    body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
+                    body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").
                    using(jsonSchemaFactory));
         });
     }
@@ -489,7 +489,7 @@ public class GetEventsTest {
                     assertThat().
                     statusCode(200).
                     body("cursor", everyItem(equalTo(cursor))).
-                    body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
+                    body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").
                             using(jsonSchemaFactory));
         });
     }
@@ -500,12 +500,12 @@ public class GetEventsTest {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-                header("API-Version", "2").
+                header("API-Version", "1").
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
+                body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").
                         using(jsonSchemaFactory));
 
     }
@@ -533,7 +533,7 @@ public class GetEventsTest {
                 then().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("ovs/v2/EventsSchema.json").
+                body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").
                         using(jsonSchemaFactory)).
                 extract().body().asString();
 

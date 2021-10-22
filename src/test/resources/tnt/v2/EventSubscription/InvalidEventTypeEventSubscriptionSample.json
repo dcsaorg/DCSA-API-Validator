@@ -1,5 +1,5 @@
 {
-  "callbackUrl": "http://127.0.0.1:9092/v2/notification-endpoints/receive/456eacf9-8cda-412b-b801-4a41be7a6c35",
+  "callbackUrl": "http://127.0.0.1:9092/v1/notification-endpoints/receive/456eacf9-8cda-412b-b801-4a41be7a6c35",
   "eventType": [
     "OPERATIONS"
   ],

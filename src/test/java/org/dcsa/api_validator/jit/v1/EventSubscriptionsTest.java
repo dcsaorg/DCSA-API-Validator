@@ -1,4 +1,4 @@
-package org.dcsa.api_validator.ovs.v2;
+package org.dcsa.api_validator.jit.v1;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -20,14 +20,14 @@ Test for /event-subscriptions
  */
 public class EventSubscriptionsTest {
   public static final String VALID_EVENT_SUBSCRIPTION =
-      loadFileAsString("ovs/v2/EventSubscription/ValidEventSubscriptionSample.json");
+      loadFileAsString("jit/v1/EventSubscription/ValidEventSubscriptionSample.json");
 
   final ObjectMapper objectMapper = new ObjectMapper();
 
   @Test
   public void testToCreateEventSubscriptionWithInvalidEventType() {
     final String INVALID_EVENT_SUBSCRIPTION =
-        loadFileAsString("ovs/v2/EventSubscription/InvalidEventTypeEventSubscriptionSample.json");
+        loadFileAsString("jit/v1/EventSubscription/InvalidEventTypeEventSubscriptionSample.json");
 
     given()
         .auth()
@@ -45,7 +45,7 @@ public class EventSubscriptionsTest {
   public void testToCreateEventSubscriptionWithInvalidVesselIMONumber() {
     final String INVALID_EVENT_SUBSCRIPTION =
         loadFileAsString(
-            "ovs/v2/EventSubscription/InvalidVesselIMONumberEventSubscriptionSample.json");
+            "jit/v1/EventSubscription/InvalidVesselIMONumberEventSubscriptionSample.json");
 
     given()
         .auth()
@@ -207,7 +207,7 @@ public class EventSubscriptionsTest {
 
     JsonNode node = objectMapper.valueToTree(response.jsonPath().get());
     ((ObjectNode) node)
-        .put("callbackUrl", "http://127.0.0.1:9092/v2/notification-endpoints/receive/" + uuid);
+        .put("callbackUrl", "http://127.0.0.1:9092/v1/notification-endpoints/receive/" + uuid);
 
     given()
         .auth()

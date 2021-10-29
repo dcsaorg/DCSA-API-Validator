@@ -7,8 +7,7 @@
   "definitions": {
     "eventID": {
       "type": "string",
-      "title": "The eventID schema",
-      "default": ""
+      "title": "The eventID schema"
     },
     "eventType": {
       "enum":  ["OPERATIONS","TRANSPORT"],
@@ -16,22 +15,19 @@
     },
     "eventCreatedDateTime": {
       "type": "string",
-      "title": "The eventCreatedDateTime schema",
-      "default": ""
+      "title": "The eventCreatedDateTime schema"
     },
     "eventDateTime": {
       "type": "string",
-      "title": "The eventDateTime schema",
-      "default": ""
+      "title": "The eventDateTime schema"
     },
     "eventClassifierCode": {
-      "enum":  ["ACT","PLN","EST", "REQ"],
+      "enum":  ["ACT", "PLN", "EST", "REQ"],
       "title": "The eventClassifierCode schema"
     },
     "transportCallID": {
       "type": "string",
       "title": "The transportCallID schema",
-      "default": "",
       "maxLength": 100
     },
     "references": {
@@ -49,7 +45,6 @@
         },
         "referenceValue": {
           "id": "#/properties/references/referenceValue",
-          "default": "",
           "type": "string",
           "maxLength": 100
         }
@@ -73,7 +68,6 @@
     "transportCall": {
       "type": "object",
       "title": "The transportCall schema",
-      "default": "",
       "required": ["transportCallID", "modeOfTransport"],
       "properties": {
         "transportCallID": {
@@ -82,25 +76,21 @@
         "carrierServiceCode": {
           "id": "#/transportCall/properties/carrierServiceCode",
           "type": ["string","null"],
-          "default": "",
           "maxLength": 5
         },
         "carrierVoyageNumber": {
           "id": "#/transportCall/properties/carrierVoyageNumber",
           "type": ["string","null"],
-          "default": "",
           "maxLength": 50
         },
         "UNLocationCode": {
           "id": "#/transportCall/properties/UNLocationCode",
           "type": ["string","null"],
-          "default": "",
           "maxLength": 5
         },
         "facilityCode": {
           "id": "#/transportCall/properties/facilityCode",
           "type": ["string","null"],
-          "default": "",
           "maxLength": 6
         },
         "facilityCodeListProvider": {
@@ -114,7 +104,6 @@
         "otherFacility": {
           "id": "#/transportCall/properties/otherFacility",
           "type": ["string","null"],
-          "default": "",
           "maxLength": 6
         },
         "modeOfTransport": {
@@ -135,35 +124,30 @@
               "id": "#/transportCall/properties/vessel/properties/vesselIMONumber",
               "description": "The unique reference for a registered Vessel. The reference is the International Maritime Organisation (IMO) number, also sometimes known as the Lloyd's register code, which does not change during the lifetime of the vessel",
               "type": "string",
-              "default": "",
               "maxLength": 7
             },
             "vesselName": {
               "id": "#/transportCall/properties/vessel/properties/vesselName",
               "description": "The name of the Vessel given by the Vessel Operator and registered with IMO",
               "type": ["string", "null"],
-              "default": "",
               "maxLength": 35
             },
             "vesselFlag": {
               "id": "#/transportCall/properties/vessel/properties/vesselFlag",
               "description": "The flag of the nation whose laws the vessel is registered under. This is the ISO 3166 two-letter country code",
               "type": ["string", "null"],
-              "default": "",
               "maxLength": 2
             },
             "vesselCallSignNumber": {
               "id": "#/transportCall/properties/vessel/properties/vesselCallSignNumber",
               "description": "A unique alphanumeric identity that belongs to the vessel and is assigned by the International Telecommunication Union (ITU).",
               "type": ["string","null"],
-              "default": "",
               "maxLength": 10
             },
             "vesselOperatorCarrierCode": {
               "id": "#/transportCall/properties/vessel/properties/vesselOperatorCarrierCode",
               "description": "The carrier who is in charge of the vessel operation based on either the SMDG or SCAC code lists",
               "type": ["string", "null"],
-              "default": "",
               "maxLength": 10
             },
             "vesselOperatorCarrierCodeListProvider": {
@@ -178,15 +162,12 @@
     "address": {
       "description": "An object for storing address related information",
       "type": ["object","null"],
-      "default": "",
       "properties": {
         "addressName": {
-          "default": "",
           "type": ["string", "null"],
           "maxLength": 100
         },
         "streetName": {
-          "default": "",
           "type": ["string", "null"],
           "maxLength": 100
         },
@@ -222,7 +203,6 @@
       "default": [],
       "properties": {
         "locationName": {
-          "default": "",
           "type": ["string", "null"],
           "maxLength": 100
         },
@@ -325,14 +305,17 @@
                       {
                         "type": "object",
                         "properties": {
+                          "DCSAResponsibleAgencyCode": {
+                            "enum": ["ISO", "UNECE", "LLOYD", "BIC", "IMO", "SCAC", "ITIGG", "ITU", "SMDG", "EXIS", "FMC", "CBSA", "ZZZ", null]
+                          },
                           "codeListResponsibleAgencyCode": {
-                            "enum": ["5", "6", "11", "20", "54", "182", "274", "296", "306", "399", "zzz"]
+                            "enum": ["5", "6", "11", "20", "54", "182", "274", "296", "306", "399", "zzz", null]
                           },
                           "partyCode": {
                             "type": "string"
                           },
                           "codeListName": {
-                            "type": ["object", "null"]
+                            "type": ["string", "null"]
                           }
                         }
                       }
@@ -341,7 +324,6 @@
                 ]
               },
               "nmftaCode": {
-                "default": "",
                 "type": ["string", "null"],
                 "maxLength": 4
               }
@@ -349,7 +331,7 @@
           },
           "publisherRole": {
             "id": "#/properties/publisherRole",
-            "enum": ["CA", "AG", "VSL", "ATH", "PLT", "TR", "TWG", "LSH", "BUK", null]
+            "enum": ["CA", "AG", "VSL", "ATH", "PLT", "TR", "TWG", "LSH", "BUK"]
           },
           "eventLocation": {
             "description": "The location where the event takes place.",

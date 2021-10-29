@@ -355,25 +355,25 @@
             "description": "The location where the event takes place.",
             "$ref": "#/definitions/location"
           },
+          "portCallPhaseTypeCode": {
+            "enum": ["INBD", "ALGS", "SHIF", "OUTB", null]
+          },
           "portCallServiceTypeCode": {
             "enum": ["PILO", "MOOR", "CRGO", "TOWG", "BUNK", "WSDP", "LASH", "SAFE", "FAST", "GWAY", null]
          },
         "facilityTypeCode": {
           "id": "#/properties/facilityTypeCode",
-          "type": "string",
-          "default": "",
+          "type": ["string", "null"],
           "maxLength": 4
         },
         "delayReasonCode": {
           "id": "#/properties/delayReasonCode",
           "type": ["string","null"],
-          "default": "",
           "maxLength": 3
         },
         "remark": {
           "id": "#/properties/remark",
           "type": ["string","null"],
-          "default": "",
           "maxLength": 500
         },
         "transportCall": {

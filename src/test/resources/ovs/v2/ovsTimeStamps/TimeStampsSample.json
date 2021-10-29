@@ -22,13 +22,13 @@
     ],
     "nmftaCode" : "CSK"
   },
-  "publisherRole": "TR",
+  "publisherRole": "CA",
   "vesselIMONumber": "9321483",
   "UNLocationCode": "SGSIN",
   "facilitySMDGCode": "PSABT",
   "facilityTypeCode": "BRTH",
-  "eventClassifierCode": "ACT",
-  "operationsEventTypeCode": "STRT",
+  "eventClassifierCode": "EST",
+  "operationsEventTypeCode": "ARRI",
   "eventLocation": {
     "locationName": "Eiffel Tower",
     "latitude": "48.8585500",
@@ -50,7 +50,7 @@
     "longitude": "2.294492036"
   },
   "modeOfTransport": "VESSEL",
-  "portCallServiceTypeCode": "BUNK",
+  "portCallServiceTypeCode": null,
   "eventDateTime": "2019-11-12T07:41:00+08:30",
   "carrierVoyageNumber": "2103S",
   "carrierServiceCode": "FE1",

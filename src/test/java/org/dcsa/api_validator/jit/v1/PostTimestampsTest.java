@@ -1,6 +1,7 @@
 package org.dcsa.api_validator.jit.v1;
 
 import org.dcsa.api_validator.conf.Configuration;
+import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
@@ -312,6 +313,62 @@ public class PostTimestampsTest {
                 then().
                 assertThat().
                 statusCode(400);
+    }
+
+    // Testing with mandatory fields + OPTIONAL transportCallSequenceNumber field
+    @Test
+    public void testTransportCallSequenceNumberField() {
+
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
+        map.remove("facilitySMDGCode");
+        map.remove("modeOfTransport");
+        map.remove("eventLocation");
+        map.remove("modeOfTransport");
+        map.remove("portCallServiceTypeCode");
+
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                contentType("application/json").
+                header("testname","testPortCallTransportCallSequenceNumberField").
+                body(map).
+                post(Configuration.ROOT_URI + "/timestamps").
+                then().
+                assertThat().
+                statusCode(204);
+    }
+
+    // Testing with mandatory fields + transportCallSequenceNumber field
+    // Fails as we post a similar timestamp with only difference being the transportCallSequenceNumber set to 1
+    // Thus, the Ambiguous transport call error is returned.
+    @Test
+    public void testTransportCallSequenceNumberFieldFalseFormat() {
+        Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
+
+        // Post duplicate timestamp with different transportCallSequenceNumber
+        map.remove("transportCallSequenceNumber");
+        map.put("transportCallSequenceNumber",1);
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                contentType("application/json").
+                header("testname","testTransportCallSequenceNumberFieldFalseFormat").
+                body(map).
+                post(Configuration.ROOT_URI + "/timestamps");
+
+        // Show that error is returned when transportCallSequenceNumber is not given.
+        map.remove("transportCallSequenceNumber");
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                contentType("application/json").
+                header("testname","testTransportCallSequenceNumberFieldFalseFormat").
+                body(map).
+                post(Configuration.ROOT_URI + "/timestamps").
+                then().
+                assertThat().
+                statusCode(400)
+                .body("message", Matchers.containsString("Ambiguous transport call"));
     }
 
     // Testing with mandatory fields - Except PublisherField field

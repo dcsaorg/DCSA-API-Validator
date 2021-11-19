@@ -18,15 +18,15 @@ jobs:
     - name: Fetch backend
       uses: actions/checkout@v2
       with:
-        repository: dcsaorg/DCSA-OVS
+        repository: dcsaorg/DCSA-JIT
         ref: master
         submodules: recursive
-        path: DCSA-OVS
+        path: DCSA-JIT
         token: ${{ secrets.DCSA_PACKAGES_PAT }}
     - name: Build backend
-      run: cd DCSA-OVS && mvn package -DskipTests -X #Need to skip the tests as they depend on a running DB
+      run: cd DCSA-JIT && mvn package -DskipTests -X #Need to skip the tests as they depend on a running DB
     - name: Build and run the backend microservices
-      run: cd DCSA-OVS && docker-compose -f docker-compose.yml up -d -V
+      run: cd DCSA-JIT && docker-compose -f docker-compose.yml up -d -V
     - name: Checkout API validator
       uses: actions/checkout@v2
       with:
@@ -38,7 +38,7 @@ jobs:
     - run: echo "SELECT 1;" | docker exec -i -u postgres dcsa_db psql -d dcsa_openapi -f - 2>/dev/null || sleep 5
 
     - name: Load DCSA test data
-      run: cat DCSA-OVS/DCSA-Information-Model/datamodel/testdata.d/*.sql | docker exec -i -u postgres dcsa_db psql -d dcsa_openapi -f -
+      run: cat DCSA-JIT/DCSA-Information-Model/datamodel/testdata.d/*.sql | docker exec -i -u postgres dcsa_db psql -d dcsa_openapi -f -
 
     - name: Run the API validator on JITV1
       run: cd DCSA-API-Validator && mvn -Dtest.suite=JITV1.xml test

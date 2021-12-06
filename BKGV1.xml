@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite">
-    <test thread-count="5" name="BKGV1">
+    <test thread-count="5" name="bKGV1">
         <packages>
             <package name="org.dcsa.api_validator.bkg.v1"/>
             <package name="org.dcsa.api_validator.conf"/>

@@ -67,6 +67,7 @@ public class GetBookingRequestsTest {
                         then().
                         assertThat().
                         statusCode(200).
+                        body("size()", greaterThanOrEqualTo(0)).
                         body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestsSchema.json").using(jsonSchemaFactory)).
                         extract().body().as(List.class);
 
@@ -87,6 +88,7 @@ public class GetBookingRequestsTest {
                         then().
                         assertThat().
                         statusCode(200).
+                        body("size()", greaterThanOrEqualTo(0)).
                         body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestsSchema.json").using(jsonSchemaFactory)).
                         extract().body().as(List.class);
 
@@ -95,9 +97,24 @@ public class GetBookingRequestsTest {
 
     }
 
-    // Mandatory if (vessel/voyage or expected date of arrival is not provided)
-    // TODO: no expected_arrival_date exist anywhere (Sql or swaggerhub or code)  - Thus, cannot test for above condition.
+    // Mandatory if (vessel/voyage is not provided)
+    @Test
     public void testForExpectedDepartureTime() {
+        @SuppressWarnings("unchecked")
+        List<Map<?, ?>> responses =
+                (List<Map<?, ?>>) given().
+                        auth().
+                        oauth2(Configuration.accessToken).
+                        get(Configuration.ROOT_URI + "/booking-summaries").
+                        then().
+                        assertThat().
+                        statusCode(200).
+                        body("size()", greaterThanOrEqualTo(0)).
+                        body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestsSchema.json").using(jsonSchemaFactory)).
+                        extract().body().as(List.class);
+
+        responses.stream().filter(response -> response.get("vesselIMONumber") == null)
+                .map(response -> response.get("expectedDepartureDate")).forEach(Assert::assertNotNull);
     }
 
     // Test for documentStatus filtering - value: RECE

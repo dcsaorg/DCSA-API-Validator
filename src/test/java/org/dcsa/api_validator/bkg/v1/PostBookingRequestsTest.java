@@ -20,7 +20,7 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-public class GetBookingRequestsTest {
+public class PostBookingRequestsTest {
 
     JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.newBuilder().setValidationConfiguration(ValidationConfiguration.newBuilder().setDefaultVersion(DRAFTV4).freeze()).freeze();
 
@@ -29,7 +29,7 @@ public class GetBookingRequestsTest {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/booking-summaries").
+                get(Configuration.ROOT_URI + "/bookings").
                 then().
                 assertThat().
                 statusCode(200).

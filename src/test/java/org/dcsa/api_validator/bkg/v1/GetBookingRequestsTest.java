@@ -21,6 +21,10 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
+/*
+ * Tests related to the GET /booking-summaries endpoint
+ */
+
 public class GetBookingRequestsTest {
 
     JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.newBuilder().setValidationConfiguration(ValidationConfiguration.newBuilder().setDefaultVersion(DRAFTV4).freeze()).freeze();
@@ -35,7 +39,7 @@ public class GetBookingRequestsTest {
                 assertThat().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestsSchema.json").
+                body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").
                         using(jsonSchemaFactory));
     }
 
@@ -51,7 +55,7 @@ public class GetBookingRequestsTest {
                 assertThat().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestsSchema.json").using(jsonSchemaFactory));
+                body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory));
 
     }
 
@@ -68,7 +72,7 @@ public class GetBookingRequestsTest {
                         assertThat().
                         statusCode(200).
                         body("size()", greaterThanOrEqualTo(0)).
-                        body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestsSchema.json").using(jsonSchemaFactory)).
+                        body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory)).
                         extract().body().as(List.class);
 
         responses.stream().filter(response -> getBool(response, "isExportDeclarationRequired"))
@@ -89,7 +93,7 @@ public class GetBookingRequestsTest {
                         assertThat().
                         statusCode(200).
                         body("size()", greaterThanOrEqualTo(0)).
-                        body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestsSchema.json").using(jsonSchemaFactory)).
+                        body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory)).
                         extract().body().as(List.class);
 
         responses.stream().filter(response -> getBool(response, "isImportLicenseRequired"))
@@ -110,7 +114,7 @@ public class GetBookingRequestsTest {
                         assertThat().
                         statusCode(200).
                         body("size()", greaterThanOrEqualTo(0)).
-                        body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestsSchema.json").using(jsonSchemaFactory)).
+                        body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory)).
                         extract().body().as(List.class);
 
         responses.stream().filter(response -> response.get("vesselIMONumber") == null)
@@ -205,7 +209,7 @@ public class GetBookingRequestsTest {
                     assertThat().
                     statusCode(200).
                     body("size()", equalTo(limit)).
-                    body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestsSchema.json").using(jsonSchemaFactory));
+                    body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory));
         });
     }
 
@@ -217,7 +221,7 @@ public class GetBookingRequestsTest {
                 oauth2(Configuration.accessToken).
                 // Specification -> minimum: 1
                         queryParam("limit", "0").
-                get(Configuration.ROOT_URI + "/events").
+                get(Configuration.ROOT_URI + "/booking-summaries").
                 then().
                 assertThat().
                 statusCode(400);
@@ -233,7 +237,7 @@ public class GetBookingRequestsTest {
                 then().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestsSchema.json").using(jsonSchemaFactory));
+                body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory));
     }
 
     private boolean getBool(Map response, String s) {
@@ -252,7 +256,7 @@ public class GetBookingRequestsTest {
                 then().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestsSchema.json").using(jsonSchemaFactory)).
+                body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory)).
                         extract().body().asString();
 
         return JsonPath.from(json).getList(attribute).stream().collect(Collectors.toList());

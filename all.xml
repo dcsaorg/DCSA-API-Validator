@@ -7,5 +7,6 @@
         <suite-file path="OVSV1.xml" />
         <suite-file path="JITV1.xml" />
         <suite-file path="EBLV1.xml" />
+        <suite-file path="BKGV1.xml" />
     </suite-files>
 </suite>

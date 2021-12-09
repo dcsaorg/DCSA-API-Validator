@@ -393,23 +393,73 @@
                   "type": "object",
                   "title": "The first anyOf schema",
                   "required": [
-                    "referenceType",
-                    "referenceValue"
+                    "requestedEquipmentSizeType",
+                    "requestedEquipmentUnits",
+                    "isShipperOwned"
                   ],
                   "properties": {
-                    "valueAddedServiceCode": {
-                      "id": "#/items/anyOf/0/properties/requestedEquipments/items/anyOf/0/properties/referenceType",
-                      "description": "The reference type codes defined by DCSA.",
+                    "requestedEquipmentSizeType": {
+                      "id": "#/items/anyOf/0/properties/requestedEquipments/items/anyOf/0/properties/requestedEquipmentSizeType",
+                      "description": "Unique code for the different equipment size/type used for transporting commodities. The code is a concatenation of ISO Equipment Size Code and ISO Equipment Type Code A and follows the ISO 6346 standard.",
                       "type": "string",
-                      "title": "The referenceType schema",
-                      "enum": [ "FF", "SI", "PO", "CR", "AAO", "ECR", "CSI", "BPR", "BID"]
+                      "title": "The requestedEquipmentSizeType schema",
+                      "maxLength": 4
                     },
-                    "referenceValue": {
-                      "id": "#/items/anyOf/0/properties/requestedEquipments/items/anyOf/0/properties/referenceValue",
-                      "description": "The actual value of the reference.",
+                    "requestedEquipmentUnits": {
+                      "id": "#/items/anyOf/0/properties/requestedEquipments/items/anyOf/0/properties/requestedEquipmentUnits",
+                      "description": "Number of requested equipment units.",
+                      "type": "number",
+                      "title": "The requestedEquipmentUnits schema"
+                    },
+                    "isShipperOwned": {
+                      "id": "#/items/anyOf/0/properties/requestedEquipments/items/anyOf/0/properties/isShipperOwned",
+                      "description": "Indicates whether the container is shipper owned (SOC).",
+                      "type": "boolean",
+                      "title": "The isShipperOwned schema"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "documentParties": {
+            "id": "#/items/anyOf/0/properties/documentParties",
+            "type": "array",
+            "title": "The references schema",
+            "additionalItems": false,
+            "items": {
+              "id": "#/items/anyOf/0/properties/documentParties/items",
+              "anyOf": [
+                {
+                  "id": "#/items/anyOf/0/properties/documentParties/items/anyOf/0",
+                  "type": "object",
+                  "title": "The first anyOf schema",
+                  "required": [
+                    "party",
+                    "partyFunction",
+                    "isToBeNotified"
+                  ],
+                  "properties": {
+                    "partyFunction": {
+                      "id": "#/items/anyOf/0/properties/documentParties/items/anyOf/0/properties/requestedEquipmentSizeType",
+                      "description": "Unique code for the different equipment size/type used for transporting commodities. The code is a concatenation of ISO Equipment Size Code and ISO Equipment Type Code A and follows the ISO 6346 standard.",
                       "type": "string",
-                      "title": "The referenceValue schema",
-                      "maxLength": 100
+                      "title": "The requestedEquipmentSizeType schema",
+                      "enum": [ "OS", "CN", "COW", "COX", "MS", "N1", "N2", "NI", "DDR","DDS", "HE", "SCO", "BA"]
+                    },
+                    "displayedAddress": {
+                      "id": "#/items/anyOf/0/properties/documentParties/items/anyOf/0/properties/requestedEquipmentUnits",
+                      "description": "Number of requested equipment units.",
+                      "type": "number",
+                      "title": "The requestedEquipmentUnits schema",
+                      "maxLength": 250
+                    },
+                    "isToBeNotified": {
+                      "id": "#/items/anyOf/0/properties/documentParties/items/anyOf/0/properties/isToBeNotified",
+                      "description": "Indicates whether the container is shipper owned (SOC).",
+                      "type": "boolean",
+                      "title": "The isToBeNotified schema"
                     }
                   },
                   "additionalProperties": false

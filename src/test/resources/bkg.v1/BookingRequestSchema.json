@@ -38,7 +38,7 @@
           "documentStatus": {
             "description": "The status of the document in the process.",
             "id": "#/properties/documentStatus",
-            "enum": ["RECE", "DRFT", "PENA", "PENU", "PENC", "REJE", "APPR", "ISSU", "SURR", "SUBM", "VOID", "CANC"]
+            "enum": ["RECE", "PENU", "PENC", "CONF", "REJE", "CANC", "DECL"]
           },
           "bookingRequestDateTime": {
             "description": "The date and time of the booking request.",
@@ -187,6 +187,72 @@
             "id": "#/properties/onCarriageToModeOfTransport",
             "enum":  ["VESSEL", "RAIL", "TRUCK", "BARGE",null ]
           },
+          "invoicePayableAt": {
+            "id": "#/items/anyOf/0/properties/invoicePayableAt",
+            "type": "array",
+            "title": "The locations schema",
+            "additionalItems": false,
+            "items": {
+              "id": "#/items/anyOf/0/properties/invoicePayableAt/items",
+              "anyOf": [
+                {
+                  "id": "#/items/anyOf/0/properties/invoicePayableAt/items/anyOf/0",
+                  "type": "object",
+                  "title": "The first anyOf schema",
+                  "required": [
+                    "locationID",
+                    "locationTypeCode"
+                  ],
+                  "properties": {
+                    "locationID": {
+                      "id": "#/items/anyOf/0/properties/invoicePayableAt/items/anyOf/0/properties/locationID",
+                      "type": "string",
+                      "title": "The locationID schema"
+                    },
+                    "locationTypeCode": {
+                      "id": "#/items/anyOf/0/properties/invoicePayableAt/items/anyOf/0/properties/locationTypeCode",
+                      "type": "string",
+                      "title": "The locationTypeCode schema"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "placeOfIssue": {
+            "id": "#/items/anyOf/0/properties/placeOfIssue",
+            "type": "object",
+            "title": "The locations schema",
+            "additionalItems": false,
+            "items": {
+              "id": "#/items/anyOf/0/properties/placeOfIssue/items",
+              "anyOf": [
+                {
+                  "id": "#/items/anyOf/0/properties/placeOfIssue/items/anyOf/0",
+                  "type": "object",
+                  "title": "The first anyOf schema",
+                  "required": [
+                    "locationID",
+                    "locationTypeCode"
+                  ],
+                  "properties": {
+                    "locationID": {
+                      "id": "#/items/anyOf/0/properties/placeOfIssue/items/anyOf/0/properties/locationID",
+                      "type": "string",
+                      "title": "The locationID schema"
+                    },
+                    "locationTypeCode": {
+                      "id": "#/items/anyOf/0/properties/placeOfIssue/items/anyOf/0/properties/locationTypeCode",
+                      "type": "string",
+                      "title": "The locationTypeCode schema"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
           "commodities": {
             "id": "#/items/anyOf/0/properties/commodities",
             "type": "array",
@@ -206,21 +272,21 @@
                   ],
                   "properties": {
                     "commodityType": {
-                      "id": "#/items/anyOf/0/properties/parties/items/anyOf/0/properties/commodityType",
+                      "id": "#/items/anyOf/0/properties/commodities/items/anyOf/0/properties/commodityType",
                       "description": "High-level description of goods to be shipped which allow the carrier to confirm acceptance and commercial terms. To be replaced by \"description of goods\" upon submission of shipping instruction",
                       "type": "string",
                       "title": "The commodityType schema",
                       "maxLength": 550
                     },
                     "HSCode": {
-                      "id": "#/items/anyOf/0/properties/parties/items/anyOf/0/properties/HSCode",
+                      "id": "#/items/anyOf/0/properties/commodities/items/anyOf/0/properties/HSCode",
                       "description": "Used by customs to classify the product being shipped.",
                       "type": [ "string", "null" ],
                       "title": "The HSCode schema",
                       "maxLength": 10
                     },
                     "cargoGrossWeight": {
-                      "id": "#/items/anyOf/0/properties/parties/items/anyOf/0/properties/cargoGrossWeight",
+                      "id": "#/items/anyOf/0/properties/commodities/items/anyOf/0/properties/cargoGrossWeight",
                       "description": "The grand total weight of the cargo and weight per container(s) including packaging items being carried, which can be expressed in imperial or metric terms, as provided by the shipper. Excludes the tare weight of the container(s).",
                       "type": [ "number", "null" ],
                       "title": "The cargoGrossWeight schema"
@@ -231,16 +297,119 @@
                       "enum":  ["KGM", "LBR" ]
                     },
                     "exportLicenseIssueDate": {
-                      "id": "#/items/anyOf/0/properties/parties/items/anyOf/0/properties/exportLicenseIssueDate",
+                      "id": "#/items/anyOf/0/properties/commodities/items/anyOf/0/properties/exportLicenseIssueDate",
                       "description": "Issue date of the export license applicable to the booking. Mandatory to provide in booking request for specific commodities",
                       "type": [ "string", "null" ],
                       "title": "The exportLicenseIssueDate schema"
                     },
                     "exportLicenseExpiryDate": {
-                      "id": "#/items/anyOf/0/properties/parties/items/anyOf/0/properties/exportLicenseExpiryDate",
+                      "id": "#/items/anyOf/0/properties/commodities/items/anyOf/0/properties/exportLicenseExpiryDate",
                       "description": "Expiry date of the export license applicable to the booking. Mandatory to provide in booking request for specific commodities.",
                       "type": [ "string", "null" ],
                       "title": "The exportLicenseExpiryDate schema"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "valueAddedServiceRequests": {
+            "id": "#/items/anyOf/0/properties/valueAddedServiceRequests",
+            "type": "array",
+            "title": "The valueAddedServiceRequests schema",
+            "additionalItems": false,
+            "items": {
+              "id": "#/items/anyOf/0/properties/valueAddedServiceRequests/items",
+              "anyOf": [
+                {
+                  "id": "#/items/anyOf/0/properties/valueAddedServiceRequests/items/anyOf/0",
+                  "type": "object",
+                  "title": "The first anyOf schema",
+                  "required": [
+                    "valueAddedServiceCode"
+                  ],
+                  "properties": {
+                    "valueAddedServiceCode": {
+                      "id": "#/items/anyOf/0/properties/valueAddedServiceRequests/items/anyOf/0/properties/commodityType",
+                      "description": "Code of the value added service.",
+                      "type": "string",
+                      "title": "The valueAddedServiceRequests schema",
+                      "enum": [ "SCON", "CINS", "SIOT", "CDECL", "SGUAR", "UPPY"]
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "references": {
+            "id": "#/items/anyOf/0/properties/references",
+            "type": "array",
+            "title": "The references schema",
+            "additionalItems": false,
+            "items": {
+              "id": "#/items/anyOf/0/properties/references/items",
+              "anyOf": [
+                {
+                  "id": "#/items/anyOf/0/properties/references/items/anyOf/0",
+                  "type": "object",
+                  "title": "The first anyOf schema",
+                  "required": [
+                    "referenceType",
+                    "referenceValue"
+                  ],
+                  "properties": {
+                    "valueAddedServiceCode": {
+                      "id": "#/items/anyOf/0/properties/references/items/anyOf/0/properties/referenceType",
+                      "description": "The reference type codes defined by DCSA.",
+                      "type": "string",
+                      "title": "The referenceType schema",
+                      "enum": [ "FF", "SI", "PO", "CR", "AAO", "ECR", "CSI", "BPR", "BID"]
+                    },
+                    "referenceValue": {
+                      "id": "#/items/anyOf/0/properties/references/items/anyOf/0/properties/referenceValue",
+                      "description": "The actual value of the reference.",
+                      "type": "string",
+                      "title": "The referenceValue schema",
+                      "maxLength": 100
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "requestedEquipments": {
+            "id": "#/items/anyOf/0/properties/requestedEquipments",
+            "type": "array",
+            "title": "The references schema",
+            "additionalItems": false,
+            "items": {
+              "id": "#/items/anyOf/0/properties/requestedEquipments/items",
+              "anyOf": [
+                {
+                  "id": "#/items/anyOf/0/properties/requestedEquipments/items/anyOf/0",
+                  "type": "object",
+                  "title": "The first anyOf schema",
+                  "required": [
+                    "referenceType",
+                    "referenceValue"
+                  ],
+                  "properties": {
+                    "valueAddedServiceCode": {
+                      "id": "#/items/anyOf/0/properties/requestedEquipments/items/anyOf/0/properties/referenceType",
+                      "description": "The reference type codes defined by DCSA.",
+                      "type": "string",
+                      "title": "The referenceType schema",
+                      "enum": [ "FF", "SI", "PO", "CR", "AAO", "ECR", "CSI", "BPR", "BID"]
+                    },
+                    "referenceValue": {
+                      "id": "#/items/anyOf/0/properties/requestedEquipments/items/anyOf/0/properties/referenceValue",
+                      "description": "The actual value of the reference.",
+                      "type": "string",
+                      "title": "The referenceValue schema",
+                      "maxLength": 100
                     }
                   },
                   "additionalProperties": false

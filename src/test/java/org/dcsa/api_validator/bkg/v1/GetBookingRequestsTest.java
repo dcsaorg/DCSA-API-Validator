@@ -235,7 +235,7 @@ public class GetBookingRequestsTest {
                 header("API-Version", "2").
                 get(Configuration.ROOT_URI + "/booking-summaries").
                 then().
-                statusCode(200).
+                statusCode(400).
                 body("size()", greaterThanOrEqualTo(0)).
                 body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory));
     }

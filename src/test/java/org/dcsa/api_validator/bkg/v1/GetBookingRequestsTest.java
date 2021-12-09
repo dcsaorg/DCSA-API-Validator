@@ -20,6 +20,10 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
+/*
+ * Tests related to the GET /booking-summaries endpoint
+ */
+
 public class GetBookingRequestsTest {
 
     JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.newBuilder().setValidationConfiguration(ValidationConfiguration.newBuilder().setDefaultVersion(DRAFTV4).freeze()).freeze();
@@ -216,7 +220,7 @@ public class GetBookingRequestsTest {
                 oauth2(Configuration.accessToken).
                 // Specification -> minimum: 1
                         queryParam("limit", "0").
-                get(Configuration.ROOT_URI + "/events").
+                get(Configuration.ROOT_URI + "/booking-summaries").
                 then().
                 assertThat().
                 statusCode(400);

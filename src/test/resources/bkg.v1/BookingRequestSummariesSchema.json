@@ -39,7 +39,7 @@
           "documentStatus": {
             "description": "The status of the document in the process.",
             "id": "#/properties/documentStatus",
-          "enum": ["RECE", "DRFT", "PENA", "PENU", "PENC", "REJE", "APPR", "ISSU", "SURR", "SUBM", "VOID", "CANC"]
+          "enum": ["RECE", "PENU", "PENC", "CONF", "REJE", "CANC", "DECL"]
         },
         "bookingRequestDateTime": {
           "description": "The date and time of the booking request.",

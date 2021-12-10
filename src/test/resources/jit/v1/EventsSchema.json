@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema",
   "type": "array",
-  "minItems": 1,
+  "minItems": 0,
   "title": "The root schema",
   "description": "The root schema comprises the entire JSON document.",
   "definitions": {
@@ -10,7 +10,7 @@
       "title": "The eventID schema"
     },
     "eventType": {
-      "enum":  ["OPERATIONS","TRANSPORT"],
+      "enum":  ["OPERATIONS"],
       "title": "The eventType schema"
     },
     "eventCreatedDateTime": {
@@ -378,75 +378,6 @@
           }
         }
       }
-      },
-      {
-        "type": "object",
-        "title": "The Transport Event schema",
-        "default": {},
-        "required": [
-          "eventCreatedDateTime",
-          "eventType",
-          "eventClassifierCode",
-          "eventDateTime",
-          "transportEventTypeCode",
-          "transportCall"
-        ],
-        "properties": {
-          "eventID": {
-            "$ref": "#/definitions/eventID"
-          },
-          "eventType": {
-            "$ref": "#/definitions/eventType"
-          },
-          "eventClassifierCode": {
-            "$ref": "#/definitions/eventClassifierCode"
-          },
-          "eventCreatedDateTime": {
-            "$ref": "#/definitions/eventCreatedDateTime"
-          },
-          "eventDateTime": {
-            "$ref": "#/definitions/eventDateTime"
-          },
-          "transportEventTypeCode": {
-            "id": "#/properties/transportEventTypeCode",
-            "enum":  [ "ARRI", "DEPA" ]
-          },
-          "delayReasonCode": {
-            "id": "#/properties/delayReasonCode",
-            "type": "string",
-            "title": "The delayReasonCode schema",
-            "default": "",
-            "maxLength": 3
-          },
-          "vesselScheduleChangeRemark": {
-            "id": "#/properties/vesselScheduleChangeRemark",
-            "type": "string",
-            "default": "",
-            "maxLength": 250
-          },
-          "changeRemark": {
-            "id": "#/properties/changeRemark",
-            "type": "string",
-            "default": "",
-            "maxLength": 250
-          },
-          "transportCallID": {
-            "$ref": "#/definitions/transportCallID"
-          },
-          "transportCall": {
-            "$ref": "#/definitions/transportCall"
-          },
-          "documentReferences": {
-            "$ref": "#/definitions/documentReferences"
-          },
-          "references": {
-            "$ref": "#/definitions/references"
-          },
-          "eventTypeCode": {
-            "id": "#/properties/eventTypeCode",
-            "enum":  [ "ARRI", "DEPA" ]
-          }
-        }
       }
     ]
   }

@@ -51,18 +51,15 @@ public class GetEventsTest {
     }
 
     @Test
-    public void testTransportEventsQueryParam() {
+    public void testShipmentEventsQueryParam() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-                queryParam("eventType", "TRANSPORT").
+                queryParam("eventType", "SHIPMENT").
                 get(Configuration.ROOT_URI + "/events").
                 then().
                 assertThat().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").
-                        using(jsonSchemaFactory));
+                statusCode(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -78,43 +75,6 @@ public class GetEventsTest {
                 body("size()", greaterThanOrEqualTo(0)).
                 body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").
                         using(jsonSchemaFactory));
-    }
-
-    @Test
-    public void testTransportEventTypeCodeQueryParam() {
-
-        List<String> transportEventTypeCodes = getListOfAnyAttribute("transportEventTypeCode");
-        assert(!transportEventTypeCodes.isEmpty());
-
-        for (String transportEventTypeCode : transportEventTypeCodes) {
-            given().
-                    auth().
-                    oauth2(Configuration.accessToken).
-                    queryParam("transportEventTypeCode", transportEventTypeCode).
-                    get(Configuration.ROOT_URI + "/events").
-                    then().
-                    assertThat().
-                    statusCode(200).
-                    body("transportEventTypeCode", everyItem(equalTo(transportEventTypeCode))).
-                    body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").using(jsonSchemaFactory));
-        }
-    }
-
-    @Test
-    public void testTransportEventTypeCodeQueryParamFalseFormat() {
-
-        List<String> transportEventTypeCodes = Arrays.asList("","2z","ABCS");
-        // Testing if ENUM is respected
-        for (String transportEventTypeCode : transportEventTypeCodes) {
-            given().
-                    auth().
-                    oauth2(Configuration.accessToken).
-                    queryParam("transportEventTypeCode", transportEventTypeCode).
-                    get(Configuration.ROOT_URI + "/events").
-                    then().
-                    assertThat().
-                    statusCode(400);
-        }
     }
 
     @Test

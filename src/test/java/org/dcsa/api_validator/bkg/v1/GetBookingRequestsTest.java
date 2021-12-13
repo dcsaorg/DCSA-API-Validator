@@ -1,10 +1,11 @@
 package org.dcsa.api_validator.bkg.v1;
 
-import com.github.fge.jsonschema.cfg.ValidationConfiguration;
-import com.github.fge.jsonschema.main.JsonSchemaFactory;
 import io.restassured.path.json.JsonPath;
+import org.apache.http.HttpStatus;
 import org.dcsa.api_validator.conf.Configuration;
 
+import org.testng.ITestContext;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
@@ -15,11 +16,11 @@ import java.util.Map;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.github.fge.jsonschema.SchemaVersion.DRAFTV4;
 import static io.restassured.RestAssured.given;
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+
+import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.BKG_SUMMARIES_PATH;
+import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.BKG_OAS_VALIDATOR;
+import static org.hamcrest.Matchers.*;
 
 /*
  * Tests related to the GET /booking-summaries endpoint
@@ -27,111 +28,113 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 public class GetBookingRequestsTest {
 
-    JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.newBuilder().setValidationConfiguration(ValidationConfiguration.newBuilder().setDefaultVersion(DRAFTV4).freeze()).freeze();
 
-    @Test
-    public void testBookingRequests() {
-        given().
-                auth().
-                oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/booking-summaries").
-                then().
-                assertThat().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").
-                        using(jsonSchemaFactory));
+    private List<Map<?, ?>> response;
+
+    @BeforeClass
+    @SuppressWarnings("unchecked")
+    public void setUp() {
+        this.response =
+                (List<Map<?, ?>>)
+                        given()
+                                .auth()
+                                .oauth2(Configuration.accessToken)
+                                .when()
+                                .filter(BKG_OAS_VALIDATOR)
+                                .get(Configuration.ROOT_URI + BKG_SUMMARIES_PATH)
+                                .then()
+                                .assertThat()
+                                .body("size()", greaterThanOrEqualTo(0))
+                                .statusCode(HttpStatus.SC_OK).
+                                extract().body().as(List.class);
     }
 
-    // Dependent on carrierBookingRequestReference value being same in test data
-    @Test
-    public void testForCarrierBookingRequestReference() {
-        given().
-                auth().
-                oauth2(Configuration.accessToken).
-                queryParam("carrierBookingRequestReference", "CARRIER_BOOKING_REQUEST_REFERENCE_01").
-                get(Configuration.ROOT_URI + "/booking-summaries").
-                then().
-                assertThat().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory));
 
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testBookingSummariesRequests(ITestContext context) {
+        String BookingSummaries =
+                given()
+                        .auth()
+                        .oauth2(Configuration.accessToken)
+                        .filter(BKG_OAS_VALIDATOR)
+                        .when()
+                        .get(Configuration.ROOT_URI + BKG_SUMMARIES_PATH)
+                        .then()
+                        .assertThat()
+                        .statusCode(HttpStatus.SC_OK)
+                        .extract()
+                        .asString();
+
+        List<String> documentStatuses = JsonPath.from(BookingSummaries).getList("documentStatus");
+        List<String> carrierBookingReferenceList = JsonPath.from(BookingSummaries).getList("carrierBookingRequestReference");
+        context.setAttribute("carrierBookingRequestReferenceList", carrierBookingReferenceList);
+        context.setAttribute("documentStatusList", documentStatuses);
+
+    }
+
+    @Test(dependsOnMethods = {"testBookingSummariesRequests"}, alwaysRun = true)
+    public void testForCarrierBookingRequestReference(ITestContext context) {
+        @SuppressWarnings("unchecked")
+        List<String> carrierBookingRequestReferenceList = (List<String>) context.getAttribute("carrierBookingRequestReferenceList");
+        carrierBookingRequestReferenceList.forEach(
+                carrierBookingRequestReference -> {
+                    given()
+                            .auth()
+                            .oauth2(Configuration.accessToken)
+                            .filter(BKG_OAS_VALIDATOR)
+                            .queryParam("carrierBookingRequestReference", carrierBookingRequestReference)
+                            .when()
+                            .get(Configuration.ROOT_URI + BKG_SUMMARIES_PATH)
+                            .then()
+                            .body("[0]", hasEntry("carrierBookingRequestReference", carrierBookingRequestReference))
+                            .body("carrierBookingRequestReference", everyItem(equalTo(carrierBookingRequestReference)))
+                            .assertThat()
+                            .statusCode(HttpStatus.SC_OK);
+                });
     }
 
     // check for exportDeclarationReference if (isExportDeclarationRequired = true)
     @Test
     public void testForExportDeclarationReference() {
-        @SuppressWarnings("unchecked")
-        List<Map<?, ?>> responses =
-                (List<Map<?, ?>>) given().
-                        auth().
-                        oauth2(Configuration.accessToken).
-                        get(Configuration.ROOT_URI + "/booking-summaries").
-                        then().
-                        assertThat().
-                        statusCode(200).
-                        body("size()", greaterThanOrEqualTo(0)).
-                        body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory)).
-                        extract().body().as(List.class);
-
-        responses.stream().filter(response -> getBool(response, "isExportDeclarationRequired"))
-                .map(response -> response.get("exportDeclarationReference")).forEach(Assert::assertNotNull);
-
+        response.stream().filter(res -> getBool(res, "isExportDeclarationRequired"))
+                .map(res -> res.get("exportDeclarationReference")).forEach(Assert::assertNotNull);
     }
 
     // check for importLicenseReference if (isImportLicenseRequired = true)
     @Test
     public void testForImportLicenseReference() {
-        @SuppressWarnings("unchecked")
-        List<Map<?, ?>> responses =
-                (List<Map<?, ?>>) given().
-                        auth().
-                        oauth2(Configuration.accessToken).
-                        get(Configuration.ROOT_URI + "/booking-summaries").
-                        then().
-                        assertThat().
-                        statusCode(200).
-                        body("size()", greaterThanOrEqualTo(0)).
-                        body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory)).
-                        extract().body().as(List.class);
-
-        responses.stream().filter(response -> getBool(response, "isImportLicenseRequired"))
-                .map(response -> response.get("importLicenseReference")).forEach(Assert::assertNotNull);
-
+        response.stream().filter(res -> getBool(res, "isImportLicenseRequired"))
+                .map(res -> res.get("importLicenseReference")).forEach(Assert::assertNotNull);
     }
 
     // Mandatory if (vessel/voyage is not provided)
     @Test
     public void testForExpectedDepartureTime() {
-        @SuppressWarnings("unchecked")
-        List<Map<?, ?>> responses =
-                (List<Map<?, ?>>) given().
-                        auth().
-                        oauth2(Configuration.accessToken).
-                        get(Configuration.ROOT_URI + "/booking-summaries").
-                        then().
-                        assertThat().
-                        statusCode(200).
-                        body("size()", greaterThanOrEqualTo(0)).
-                        body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory)).
-                        extract().body().as(List.class);
-
-        responses.stream().filter(response -> response.get("vesselIMONumber") == null)
-                .map(response -> response.get("expectedDepartureDate")).forEach(Assert::assertNotNull);
+        response.stream().filter(res -> res.get("vesselIMONumber") == null)
+                .map(res -> res.get("expectedDepartureDate")).forEach(Assert::assertNotNull);
     }
 
-    // Test for documentStatus filtering - value: RECE
-    @Test
-    public void testDocumentStatusQueryParam() {
+    // Test for documentStatus filtering
+    @Test(dependsOnMethods = {"testBookingSummariesRequests"}, alwaysRun = true)
+    public void testDocumentStatusQueryParam(ITestContext context) {
+        @SuppressWarnings("unchecked")
+        List<String> documentStatuses = (List<String>) context.getAttribute("documentStatusList");
 
-        List<String> documentStatuses = getListOfAnyAttribute("documentStatus", "documentStatus", "RECE");
-        assert (!documentStatuses.isEmpty());
-        int n = documentStatuses.size();
-
-        for (int i = 0; i < n; i++) {
-            Assert.assertTrue(documentStatuses.get(i).equals("RECE"));
-        }
+        documentStatuses.forEach(documentStatus -> {
+            given()
+                    .auth()
+                    .oauth2(Configuration.accessToken)
+                    .filter(BKG_OAS_VALIDATOR)
+                    .queryParam("documentStatus", documentStatus)
+                    .when()
+                    .get(Configuration.ROOT_URI + BKG_SUMMARIES_PATH)
+                    .then()
+                    .body("[0]", hasEntry("documentStatus", documentStatus))
+                    .body("documentStatus", everyItem(equalTo(documentStatus)))
+                    .assertThat()
+                    .statusCode(HttpStatus.SC_OK);
+        });
     }
 
     // Test sorting:DESC (descending) and if order is respected. for submissionDateTime
@@ -200,28 +203,30 @@ public class GetBookingRequestsTest {
         List<Integer> limits = Arrays.asList(1, 2, 5, 6);
 
         limits.forEach(limit -> {
-            given().
-                    auth().
-                    oauth2(Configuration.accessToken).
-                    queryParam("limit", limit).
-                    get(Configuration.ROOT_URI + "/booking-summaries").
+            given()
+                    .auth()
+                    .oauth2(Configuration.accessToken)
+                    .filter(BKG_OAS_VALIDATOR)
+                    .queryParam("limit", limit).
+                    get(Configuration.ROOT_URI + BKG_SUMMARIES_PATH).
                     then().
                     assertThat().
                     statusCode(200).
-                    body("size()", equalTo(limit)).
-                    body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory));
+                    body("size()", equalTo(limit));
         });
     }
 
     // Test limit, fails as formatting is wrong.
     @Test
     public void testLimitFalseFormat() {
-        given().
-                auth().
-                oauth2(Configuration.accessToken).
+        given()
+                .auth()
+                .oauth2(Configuration.accessToken)
+                .when()
+                .filter(BKG_OAS_VALIDATOR)
+                .queryParam("limit", "0").
                 // Specification -> minimum: 1
-                        queryParam("limit", "0").
-                get(Configuration.ROOT_URI + "/booking-summaries").
+       get(Configuration.ROOT_URI + BKG_SUMMARIES_PATH).
                 then().
                 assertThat().
                 statusCode(400);
@@ -229,35 +234,39 @@ public class GetBookingRequestsTest {
 
     @Test
     public void testAPIVersionQueryParam() {
-        given().
-                auth().
-                oauth2(Configuration.accessToken).
-                header("API-Version", "2").
-                get(Configuration.ROOT_URI + "/booking-summaries").
+        given()
+                .auth()
+                .oauth2(Configuration.accessToken)
+                .filter(BKG_OAS_VALIDATOR)
+                .header("API-Version", "2").
+                get(Configuration.ROOT_URI + BKG_SUMMARIES_PATH).
                 then().
-                statusCode(400).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory));
+                statusCode(400);
     }
 
+    // Helper function: to avoid nulling for booleans when stream filtering
     private boolean getBool(Map response, String s) {
         Boolean b = (Boolean) response.get(s);
         Assert.assertNotNull(b, "expected boolean to present since, " + s + " is MANDATORY! \n");
         return b;
     }
 
+    // Helper: Used with sort options
     private List getListOfAnyAttribute(String attribute, String queryParam, String queryParamValue) {
-        String json = given().
 
-                auth().
-                oauth2(Configuration.accessToken).
-                queryParam(queryParam, queryParamValue).
-                get(Configuration.ROOT_URI + "/booking-summaries").
-                then().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory)).
-                        extract().body().asString();
+        String json =
+                given()
+                        .auth()
+                        .oauth2(Configuration.accessToken)
+                        .filter(BKG_OAS_VALIDATOR)
+                        .queryParam(queryParam, queryParamValue)
+                        .get(Configuration.ROOT_URI + BKG_SUMMARIES_PATH)
+                        .then()
+                        .assertThat()
+                        .statusCode(HttpStatus.SC_OK)
+                        .extract()
+                        .body()
+                        .asString();
 
         return JsonPath.from(json).getList(attribute).stream().collect(Collectors.toList());
     }

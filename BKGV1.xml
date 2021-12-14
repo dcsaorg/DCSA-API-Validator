@@ -4,6 +4,7 @@
     <test thread-count="5" name="bKGV1">
         <packages>
             <package name="org.dcsa.api_validator.bkg.v1"/>
+            <package name="org.dcsa.api_validator.bkg.v1.bookingrequests"/>
             <package name="org.dcsa.api_validator.bkg.v1.bookingconfirmations"/>
             <package name="org.dcsa.api_validator.conf"/>
         </packages>

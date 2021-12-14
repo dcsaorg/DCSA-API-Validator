@@ -1,0 +1,118 @@
+{
+  "receiptTypeAtOrigin": "CY",
+  "deliveryTypeAtDestination": "CY",
+  "cargoMovementTypeAtOrigin": "FCL",
+  "cargoMovementTypeAtDestination": "FCL",
+  "serviceContractReference": "string",
+  "paymentTermCode": "PRE",
+  "isPartialLoadAllowed": true,
+  "isExportDeclarationRequired": true,
+  "exportDeclarationReference": "ABC123123",
+  "isImportLicenseRequired": true,
+  "importLicenseReference": "ABC123123",
+  "submissionDateTime": "2019-11-12T07:41:00+08:30",
+  "isAMSACIFilingRequired": true,
+  "isDestinationFilingRequired": true,
+  "contractQuotationReference": "DKK",
+  "expectedDepartureDate": "2021-05-17",
+  "transportDocumentTypeCode": "SWB",
+  "transportDocumentReference": "string",
+  "bookingChannelReference": "ABC12313",
+  "incoTerms": "DAP",
+  "communicationChannel": "AO",
+  "isEquipmentSubstitutionAllowed": true,
+  "vesselName": "King of the Seas",
+  "vesselIMONumber": "9321483",
+  "carrierVoyageNumber": "2103S",
+  "preCarriageModeOfTransport": "VESSEL",
+  "invoicePayableAt": {
+    "locationName": "Eiffel Tower",
+    "UNLocationCode": "FRPAR"
+  },
+  "placeOfIssue": {
+    "locationName": "Eiffel Tower",
+    "latitude": "48.8585500",
+    "longitude": "2.294492036",
+    "UNLocationCode": "FRPAR"
+  },
+  "commodities": [
+    {
+      "commodityType": "Mobile phones",
+      "HSCode": "string",
+      "cargoGrossWeight": 12000,
+      "cargoGrossWeightUnit": "KGM",
+      "exportLicenseIssueDate": "2021-05-14",
+      "exportLicenseExpiryDate": "2021-05-21"
+    }
+  ],
+  "valueAddedServiceRequests": [
+    {
+      "valueAddedServiceCode": "SCON"
+    }
+  ],
+  "references": [
+    {
+      "referenceType": "FF",
+      "referenceValue": "string"
+    }
+  ],
+  "requestedEquipments": [
+    {
+      "requestedEquipmentSizetype": "22GP",
+      "requestedEquipmentUnits": 3,
+      "isShipperOwned": true
+    }
+  ],
+  "documentParties": [
+    {
+      "party": {
+        "partyName": "Asseco Denmark",
+        "taxReference1": "CVR-25645774",
+        "taxReference2": "CVR-25645774",
+        "publicKey": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFzaW",
+        "address": {
+          "name": "Henrik",
+          "street": "Kronprincessegade",
+          "streetNumber": "54",
+          "floor": "5. sal",
+          "postCode": "1306",
+          "city": "København",
+          "stateRegion": "N/A",
+          "country": "Denmark"
+        },
+        "partyContactDetails": [
+          {
+            "name": "Henrik",
+            "phone": "+45 33364660",
+            "email": "info@dcsa.org"
+          }
+        ],
+        "identifyingCodes": [
+          {
+            "DCSAResponsibleAgencyCode": "SMDG",
+            "partyCode": "MSK",
+            "codeListName": "LCL"
+          }
+        ]
+      },
+      "partyFunction": "DDS",
+      "displayedAddress": [
+        "Kronprincessegade 54"
+      ],
+      "isToBeNotified": true
+    }
+  ],
+  "shipmentLocations": [
+    {
+      "location": {
+        "locationName": "Eiffel Tower",
+        "latitude": "48.8585500",
+        "longitude": "2.294492036",
+        "UNLocationCode": "FRPAR"
+      },
+      "displayedName": "string",
+      "shipmentLocationTypeCode": "PRE",
+      "eventDateTime": "2021-11-03T10:23:00+01:00"
+    }
+  ]
+}

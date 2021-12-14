@@ -9,8 +9,8 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static org.dcsa.api_validator.bkg.v1.bookingconfirmations.BookingTestConfiguration.BKG_CONFIRMATION_SUMMARIES_PATH;
-import static org.dcsa.api_validator.bkg.v1.bookingconfirmations.BookingTestConfiguration.BKG_OAS_VALIDATOR;
+import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.BKG_CONFIRMATION_SUMMARIES_PATH;
+import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.BKG_OAS_VALIDATOR;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasEntry;
 

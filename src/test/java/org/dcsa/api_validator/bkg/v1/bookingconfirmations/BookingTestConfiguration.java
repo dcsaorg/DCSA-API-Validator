@@ -20,6 +20,6 @@ public class BookingTestConfiguration {
 					.build())
 			.build());
 
-	public static final String BKG_CONFIRMATION_SUMMARIES_PATH = "/confirmed-booking-summaries";
+	public static final String SHIPMENT_SUMMARIES_PATH = "/shipment-summaries";
 
 }

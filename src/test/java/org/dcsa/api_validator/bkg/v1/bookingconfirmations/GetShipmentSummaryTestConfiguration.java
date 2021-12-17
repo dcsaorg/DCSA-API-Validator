@@ -10,7 +10,6 @@ import org.testng.annotations.Test;
 import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
 import static org.dcsa.api_validator.bkg.v1.bookingconfirmations.BookingTestConfiguration.BKG_OAS_VALIDATOR;
@@ -139,5 +138,6 @@ public class GetShipmentSummaryTestConfiguration {
     List<String> documentStatusList = JsonPath.from(bookingConfirmationSummaries).getList("documentStatus");
     Assert.assertEquals(2, documentStatusList.size());
   }
+
 
 }

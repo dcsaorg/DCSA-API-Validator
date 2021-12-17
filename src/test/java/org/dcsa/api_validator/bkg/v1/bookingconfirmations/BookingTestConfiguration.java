@@ -23,4 +23,5 @@ public class BookingTestConfiguration {
 	public static final String SHIPMENT_SUMMARIES_PATH = "/shipment-summaries";
 	public static final String BOOKING_REQUEST_SUMMARIES_PATH = "/booking-summaries";
 
+
 }

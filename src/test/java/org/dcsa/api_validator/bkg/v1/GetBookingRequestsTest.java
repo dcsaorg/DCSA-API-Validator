@@ -16,8 +16,6 @@ import java.util.stream.Collectors;
 import static com.github.fge.jsonschema.SchemaVersion.DRAFTV4;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.dcsa.api_validator.bkg.v1.bookingconfirmations.BookingTestConfiguration.BKG_OAS_VALIDATOR;
-import static org.dcsa.api_validator.bkg.v1.bookingconfirmations.BookingTestConfiguration.BOOKING_REQUEST_SUMMARIES_PATH;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
@@ -188,7 +186,7 @@ public class GetBookingRequestsTest {
                     auth().
                     oauth2(Configuration.accessToken).
                     queryParam("limit", limit).
-                    get(Configuration.ROOT_URI + BOOKING_REQUEST_SUMMARIES_PATH).
+                    get(Configuration.ROOT_URI + "/booking-summaries").
                     then().
                     assertThat().
                     statusCode(200).

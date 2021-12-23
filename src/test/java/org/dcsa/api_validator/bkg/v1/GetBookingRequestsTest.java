@@ -4,20 +4,20 @@ import com.github.fge.jsonschema.cfg.ValidationConfiguration;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
 import io.restassured.path.json.JsonPath;
 import org.dcsa.api_validator.conf.Configuration;
-
-import org.testng.annotations.Test;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.github.fge.jsonschema.SchemaVersion.DRAFTV4;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.dcsa.api_validator.bkg.v1.bookingconfirmations.BookingTestConfiguration.BKG_OAS_VALIDATOR;
+import static org.dcsa.api_validator.bkg.v1.bookingconfirmations.BookingTestConfiguration.BOOKING_REQUEST_SUMMARIES_PATH;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
@@ -142,11 +142,7 @@ public class GetBookingRequestsTest {
         assert (!submissionDateTimesSorted.isEmpty());
         int n = submissionDateTimesSorted.size();
 
-        for (int i = 1; i < n; i++) {
-            OffsetDateTime dateTime1 = OffsetDateTime.parse(submissionDateTimesSorted.get(i - 1), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-            OffsetDateTime dateTime2 = OffsetDateTime.parse(submissionDateTimesSorted.get(i), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-            Assert.assertTrue(dateTime1.compareTo(dateTime2) <= 0);
-        }
+        Assert.assertTrue(OffsetDateTime.parse(submissionDateTimesSorted.get(0)).isBefore(OffsetDateTime.parse(submissionDateTimesSorted.get(n -1))));
     }
 
     // Test sorting:DESC (descending) and if order is respected. for submissionDateTime
@@ -157,41 +153,29 @@ public class GetBookingRequestsTest {
         assert (!submissionDateTimesSorted.isEmpty());
         int n = submissionDateTimesSorted.size();
 
-        for (int i = 1; i < n; i++) {
-            OffsetDateTime dateTime1 = OffsetDateTime.parse(submissionDateTimesSorted.get(i - 1), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-            OffsetDateTime dateTime2 = OffsetDateTime.parse(submissionDateTimesSorted.get(i), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-            Assert.assertTrue(dateTime1.compareTo(dateTime2) >= 0);
-        }
+        Assert.assertTrue(OffsetDateTime.parse(submissionDateTimesSorted.get(0)).isAfter(OffsetDateTime.parse(submissionDateTimesSorted.get(n -1))));
     }
 
     // Test sorting:ASC (descending) and if order is respected. for BookingRequestDateTime
     @Test
     public void testSortAscBookingRequestDateTimeQueryParam() {
 
-        List<String> bookingRequestDateTimesSorted = getListOfAnyAttribute("bookingRequestDateTime", "sort", "bookingRequestDateTime:ASC");
+        List<String> bookingRequestDateTimesSorted = getListOfAnyAttribute("bookingRequestCreatedDateTime", "sort", "bookingRequestCreatedDateTime:ASC");
         assert (!bookingRequestDateTimesSorted.isEmpty());
         int n = bookingRequestDateTimesSorted.size();
 
-        for (int i = 1; i < n; i++) {
-            OffsetDateTime dateTime1 = OffsetDateTime.parse(bookingRequestDateTimesSorted.get(i - 1), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-            OffsetDateTime dateTime2 = OffsetDateTime.parse(bookingRequestDateTimesSorted.get(i), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-            Assert.assertTrue(dateTime1.compareTo(dateTime2) <= 0);
-        }
+        Assert.assertTrue(OffsetDateTime.parse(bookingRequestDateTimesSorted.get(0)).isBefore(OffsetDateTime.parse(bookingRequestDateTimesSorted.get(n -1))));
     }
 
     // Test sorting:DESC (descending) and if order is respected. for BookingRequestDateTime
     @Test
     public void testSortDescBookingRequestDateTimeQueryParam() {
 
-        List<String> bookingRequestDateTimesSorted = getListOfAnyAttribute("bookingRequestDateTime", "sort", "bookingRequestDateTime:DESC");
+        List<String> bookingRequestDateTimesSorted = getListOfAnyAttribute("bookingRequestCreatedDateTime", "sort", "bookingRequestCreatedDateTime:DESC");
         assert (!bookingRequestDateTimesSorted.isEmpty());
         int n = bookingRequestDateTimesSorted.size();
 
-        for (int i = 1; i < n; i++) {
-            OffsetDateTime dateTime1 = OffsetDateTime.parse(bookingRequestDateTimesSorted.get(i - 1), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-            OffsetDateTime dateTime2 = OffsetDateTime.parse(bookingRequestDateTimesSorted.get(i), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-            Assert.assertTrue(dateTime1.compareTo(dateTime2) >= 0);
-        }
+        Assert.assertTrue(OffsetDateTime.parse(bookingRequestDateTimesSorted.get(0)).isAfter(OffsetDateTime.parse(bookingRequestDateTimesSorted.get(n -1))));
     }
 
     @Test
@@ -204,7 +188,7 @@ public class GetBookingRequestsTest {
                     auth().
                     oauth2(Configuration.accessToken).
                     queryParam("limit", limit).
-                    get(Configuration.ROOT_URI + "/booking-summaries").
+                    get(Configuration.ROOT_URI + BOOKING_REQUEST_SUMMARIES_PATH).
                     then().
                     assertThat().
                     statusCode(200).

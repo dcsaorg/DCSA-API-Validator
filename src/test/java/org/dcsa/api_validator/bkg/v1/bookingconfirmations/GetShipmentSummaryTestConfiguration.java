@@ -3,11 +3,14 @@ package org.dcsa.api_validator.bkg.v1.bookingconfirmations;
 import io.restassured.path.json.JsonPath;
 import org.apache.http.HttpStatus;
 import org.dcsa.api_validator.conf.Configuration;
+import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.Test;
 
+import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
 import static org.dcsa.api_validator.bkg.v1.bookingconfirmations.BookingTestConfiguration.BKG_OAS_VALIDATOR;
@@ -93,5 +96,48 @@ public class GetShipmentSummaryTestConfiguration {
       .statusCode(HttpStatus.SC_BAD_REQUEST);
   }
 
+  @Test
+  public void testGetBookingConfirmationSummariesWithSort() {
+    String bookingConfirmationSummaries =
+      given()
+        .auth()
+        .oauth2(Configuration.accessToken)
+        .filter(BKG_OAS_VALIDATOR)
+        .queryParam("sort", "confirmationDateTime:DESC")
+      .when()
+        .get(Configuration.ROOT_URI + SHIPMENT_SUMMARIES_PATH)
+      .then()
+        .assertThat()
+        .statusCode(HttpStatus.SC_OK)
+        .extract()
+        .asString();
+
+    List<String> confirmationDateTimeList = JsonPath.from(bookingConfirmationSummaries).getList("confirmationDateTime");
+    assert (!confirmationDateTimeList.isEmpty());
+    int n = confirmationDateTimeList.size();
+
+    Assert.assertTrue(OffsetDateTime.parse(confirmationDateTimeList.get(0)).isAfter(OffsetDateTime.parse(confirmationDateTimeList.get(n -1))));
+  }
+
+  @Test
+  public void testGetShipmentSummariesWithLimit() {
+    String bookingConfirmationSummaries =
+      given()
+        .auth()
+        .oauth2(Configuration.accessToken)
+        .filter(BKG_OAS_VALIDATOR)
+        .queryParam("limit", "2")
+      .when()
+        .get(Configuration.ROOT_URI + SHIPMENT_SUMMARIES_PATH)
+      .then()
+        .assertThat()
+        .header("API-Version", "1.0.0")
+        .statusCode(HttpStatus.SC_OK)
+        .extract()
+        .asString();
+
+    List<String> documentStatusList = JsonPath.from(bookingConfirmationSummaries).getList("documentStatus");
+    Assert.assertEquals(2, documentStatusList.size());
+  }
 
 }

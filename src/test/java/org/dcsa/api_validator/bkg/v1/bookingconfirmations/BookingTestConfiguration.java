@@ -17,7 +17,6 @@ public class BookingTestConfiguration {
                   LevelResolver.create()
                       .withLevel(
                           "validation.schema.additionalProperties", ValidationReport.Level.IGNORE)
-                      .withLevel("validation.response.header.missing", ValidationReport.Level.WARN)
                       .build())
               .build());
 

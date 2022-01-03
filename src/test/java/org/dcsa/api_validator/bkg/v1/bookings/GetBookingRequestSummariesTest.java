@@ -1,7 +1,5 @@
-package org.dcsa.api_validator.bkg.v1;
+package org.dcsa.api_validator.bkg.v1.bookings;
 
-import com.github.fge.jsonschema.cfg.ValidationConfiguration;
-import com.github.fge.jsonschema.main.JsonSchemaFactory;
 import io.restassured.path.json.JsonPath;
 import org.dcsa.api_validator.conf.Configuration;
 import org.testng.Assert;
@@ -13,9 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.github.fge.jsonschema.SchemaVersion.DRAFTV4;
 import static io.restassured.RestAssured.given;
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.BOOKING_SUMMARIES_PATH;
+import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.JSON_SCHEMA_VALIDATOR;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
@@ -23,22 +21,19 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
  * Tests related to the GET /booking-summaries endpoint
  */
 
-public class GetBookingRequestsTest {
-
-    JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.newBuilder().setValidationConfiguration(ValidationConfiguration.newBuilder().setDefaultVersion(DRAFTV4).freeze()).freeze();
+public class GetBookingRequestSummariesTest {
 
     @Test
     public void testBookingRequests() {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-                get(Configuration.ROOT_URI + "/booking-summaries").
+                get(Configuration.ROOT_URI + BOOKING_SUMMARIES_PATH).
                 then().
                 assertThat().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").
-                        using(jsonSchemaFactory));
+                body(JSON_SCHEMA_VALIDATOR);
     }
 
     // Dependent on carrierBookingRequestReference value being same in test data
@@ -48,12 +43,12 @@ public class GetBookingRequestsTest {
                 auth().
                 oauth2(Configuration.accessToken).
                 queryParam("carrierBookingRequestReference", "CARRIER_BOOKING_REQUEST_REFERENCE_01").
-                get(Configuration.ROOT_URI + "/booking-summaries").
+                get(Configuration.ROOT_URI + BOOKING_SUMMARIES_PATH).
                 then().
                 assertThat().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory));
+                body(JSON_SCHEMA_VALIDATOR);
 
     }
 
@@ -65,12 +60,12 @@ public class GetBookingRequestsTest {
                 (List<Map<?, ?>>) given().
                         auth().
                         oauth2(Configuration.accessToken).
-                        get(Configuration.ROOT_URI + "/booking-summaries").
+                        get(Configuration.ROOT_URI + BOOKING_SUMMARIES_PATH).
                         then().
                         assertThat().
                         statusCode(200).
                         body("size()", greaterThanOrEqualTo(0)).
-                        body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory)).
+                        body(JSON_SCHEMA_VALIDATOR).
                         extract().body().as(List.class);
 
         responses.stream().filter(response -> getBool(response, "isExportDeclarationRequired"))
@@ -86,12 +81,12 @@ public class GetBookingRequestsTest {
                 (List<Map<?, ?>>) given().
                         auth().
                         oauth2(Configuration.accessToken).
-                        get(Configuration.ROOT_URI + "/booking-summaries").
+                        get(Configuration.ROOT_URI + BOOKING_SUMMARIES_PATH).
                         then().
                         assertThat().
                         statusCode(200).
                         body("size()", greaterThanOrEqualTo(0)).
-                        body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory)).
+                        body(JSON_SCHEMA_VALIDATOR).
                         extract().body().as(List.class);
 
         responses.stream().filter(response -> getBool(response, "isImportLicenseRequired"))
@@ -107,12 +102,12 @@ public class GetBookingRequestsTest {
                 (List<Map<?, ?>>) given().
                         auth().
                         oauth2(Configuration.accessToken).
-                        get(Configuration.ROOT_URI + "/booking-summaries").
+                        get(Configuration.ROOT_URI + BOOKING_SUMMARIES_PATH).
                         then().
                         assertThat().
                         statusCode(200).
                         body("size()", greaterThanOrEqualTo(0)).
-                        body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory)).
+                        body(JSON_SCHEMA_VALIDATOR).
                         extract().body().as(List.class);
 
         responses.stream().filter(response -> response.get("vesselIMONumber") == null)
@@ -186,12 +181,12 @@ public class GetBookingRequestsTest {
                     auth().
                     oauth2(Configuration.accessToken).
                     queryParam("limit", limit).
-                    get(Configuration.ROOT_URI + "/booking-summaries").
+                    get(Configuration.ROOT_URI + BOOKING_SUMMARIES_PATH).
                     then().
                     assertThat().
                     statusCode(200).
                     body("size()", equalTo(limit)).
-                    body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory));
+                    body(JSON_SCHEMA_VALIDATOR);
         });
     }
 
@@ -203,7 +198,7 @@ public class GetBookingRequestsTest {
                 oauth2(Configuration.accessToken).
                 // Specification -> minimum: 1
                         queryParam("limit", "0").
-                get(Configuration.ROOT_URI + "/booking-summaries").
+                get(Configuration.ROOT_URI + BOOKING_SUMMARIES_PATH).
                 then().
                 assertThat().
                 statusCode(400);
@@ -215,11 +210,11 @@ public class GetBookingRequestsTest {
                 auth().
                 oauth2(Configuration.accessToken).
                 header("API-Version", "2").
-                get(Configuration.ROOT_URI + "/booking-summaries").
+                get(Configuration.ROOT_URI + BOOKING_SUMMARIES_PATH).
                 then().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory));
+                body(JSON_SCHEMA_VALIDATOR);
     }
 
     private boolean getBool(Map response, String s) {
@@ -234,11 +229,11 @@ public class GetBookingRequestsTest {
                 auth().
                 oauth2(Configuration.accessToken).
                 queryParam(queryParam, queryParamValue).
-                get(Configuration.ROOT_URI + "/booking-summaries").
+                get(Configuration.ROOT_URI + BOOKING_SUMMARIES_PATH).
                 then().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
-                body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory)).
+                body(JSON_SCHEMA_VALIDATOR).
                         extract().body().asString();
 
         return JsonPath.from(json).getList(attribute).stream().collect(Collectors.toList());

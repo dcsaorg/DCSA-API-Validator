@@ -1,4 +1,4 @@
-package org.dcsa.api_validator.bkg.v1.bookingconfirmations;
+package org.dcsa.api_validator.bkg.v1.shipments;
 
 import io.restassured.path.json.JsonPath;
 import org.apache.http.HttpStatus;
@@ -12,11 +12,11 @@ import java.util.Collections;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static org.dcsa.api_validator.bkg.v1.bookingconfirmations.BookingTestConfiguration.BKG_OAS_VALIDATOR;
-import static org.dcsa.api_validator.bkg.v1.bookingconfirmations.BookingTestConfiguration.SHIPMENT_SUMMARIES_PATH;
+import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.*;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
-public class GetShipmentSummaryTestConfiguration {
+public class GetShipmentSummaryTest {
 
   @Test
   public void testGetShipmentSummaries(ITestContext context) {
@@ -24,13 +24,14 @@ public class GetShipmentSummaryTestConfiguration {
         given()
             .auth()
             .oauth2(Configuration.accessToken)
-            .filter(BKG_OAS_VALIDATOR)
           .when()
             .get(Configuration.ROOT_URI + SHIPMENT_SUMMARIES_PATH)
           .then()
             .assertThat()
             .header("API-Version", "1.0.0")
+            .header("Current-Page", notNullValue())
             .statusCode(HttpStatus.SC_OK)
+            .body(JSON_SCHEMA_VALIDATOR)
             .extract()
             .asString();
 
@@ -44,11 +45,11 @@ public class GetShipmentSummaryTestConfiguration {
     given()
         .auth()
         .oauth2(Configuration.accessToken)
-        .filter(BKG_OAS_VALIDATOR)
         .queryParam("documentStatus", documentStatusList.get(0))
         .when()
         .get(Configuration.ROOT_URI + SHIPMENT_SUMMARIES_PATH)
         .then()
+        .body(JSON_SCHEMA_VALIDATOR)
         .body("size()", equalTo(Collections.frequency(documentStatusList, documentStatusList.get(0))))
         .assertThat()
         .statusCode(HttpStatus.SC_OK);
@@ -59,11 +60,11 @@ public class GetShipmentSummaryTestConfiguration {
     given()
       .auth()
       .oauth2(Configuration.accessToken)
-      .filter(BKG_OAS_VALIDATOR)
       .queryParam("documentStatus", "CONF")
     .when()
       .get(Configuration.ROOT_URI + SHIPMENT_SUMMARIES_PATH)
     .then()
+      .body(JSON_SCHEMA_VALIDATOR)
       .body("size()", equalTo(0))
       .assertThat()
       .statusCode(HttpStatus.SC_OK);
@@ -101,13 +102,13 @@ public class GetShipmentSummaryTestConfiguration {
       given()
         .auth()
         .oauth2(Configuration.accessToken)
-        .filter(BKG_OAS_VALIDATOR)
         .queryParam("sort", "shipmentCreatedDateTime:DESC")
       .when()
         .get(Configuration.ROOT_URI + SHIPMENT_SUMMARIES_PATH)
       .then()
         .assertThat()
         .statusCode(HttpStatus.SC_OK)
+        .body(JSON_SCHEMA_VALIDATOR)
         .extract()
         .asString();
 
@@ -124,14 +125,16 @@ public class GetShipmentSummaryTestConfiguration {
       given()
         .auth()
         .oauth2(Configuration.accessToken)
-        .filter(BKG_OAS_VALIDATOR)
         .queryParam("limit", "2")
       .when()
         .get(Configuration.ROOT_URI + SHIPMENT_SUMMARIES_PATH)
       .then()
         .assertThat()
         .header("API-Version", "1.0.0")
+        .header("Current-Page", notNullValue())
+        .header("Next-Page", notNullValue())
         .statusCode(HttpStatus.SC_OK)
+        .body(JSON_SCHEMA_VALIDATOR)
         .extract()
         .asString();
 

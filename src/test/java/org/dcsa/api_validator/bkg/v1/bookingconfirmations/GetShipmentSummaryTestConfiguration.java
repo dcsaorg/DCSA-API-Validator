@@ -102,7 +102,7 @@ public class GetShipmentSummaryTestConfiguration {
         .auth()
         .oauth2(Configuration.accessToken)
         .filter(BKG_OAS_VALIDATOR)
-        .queryParam("sort", "confirmationDateTime:DESC")
+        .queryParam("sort", "shipmentCreatedDateTime:DESC")
       .when()
         .get(Configuration.ROOT_URI + SHIPMENT_SUMMARIES_PATH)
       .then()
@@ -111,11 +111,11 @@ public class GetShipmentSummaryTestConfiguration {
         .extract()
         .asString();
 
-    List<String> confirmationDateTimeList = JsonPath.from(bookingConfirmationSummaries).getList("confirmationDateTime");
-    assert (!confirmationDateTimeList.isEmpty());
-    int n = confirmationDateTimeList.size();
+    List<String> shipmentCreatedDateTimeList = JsonPath.from(bookingConfirmationSummaries).getList("shipmentCreatedDateTime");
+    assert (!shipmentCreatedDateTimeList.isEmpty());
+    int n = shipmentCreatedDateTimeList.size();
 
-    Assert.assertTrue(OffsetDateTime.parse(confirmationDateTimeList.get(0)).isAfter(OffsetDateTime.parse(confirmationDateTimeList.get(n -1))));
+    Assert.assertTrue(OffsetDateTime.parse(shipmentCreatedDateTimeList.get(0)).isAfter(OffsetDateTime.parse(shipmentCreatedDateTimeList.get(n -1))));
   }
 
   @Test

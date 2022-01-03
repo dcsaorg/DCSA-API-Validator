@@ -186,9 +186,10 @@ public class GetBookingRequestsTest {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-                header("API-Version", "2").
                 get(Configuration.ROOT_URI + BOOKING_REQUEST_SUMMARIES_PATH).
                 then().
+                assertThat()
+                .header("API-Version", "1.0.0").
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
                 body(matchesJsonSchemaInClasspath("bkg.v1/BookingRequestSummariesSchema.json").using(jsonSchemaFactory));

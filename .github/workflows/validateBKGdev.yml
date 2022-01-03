@@ -32,12 +32,6 @@ jobs:
 
       - run: echo $DCSA_EVENT_CORE_PROJECT_VERSION
 
-      - name: Fetch backend
-        uses: actions/checkout@v2
-        with:
-          path: DCSA-BKG
-          submodules: recursive
-
       # Prepare BKG
       - name: Fetch backend
         uses: actions/checkout@v2
@@ -64,6 +58,13 @@ jobs:
 
       - name: Load DCSA BKG test data
         run: cat DCSA-BKG/DCSA-Information-Model/datamodel/testdata.d/*.sql | docker exec -i -u postgres dcsa_db psql -d dcsa_openapi -f -
+
+      - name: Checkout API validator
+        uses: actions/checkout@v2
+        with:
+          repository: dcsaorg/DCSA-API-Validator
+          token: ${{ secrets.REPO_ACCESS_PAT }}
+          path: DCSA-API-Validator
 
       # Run validator
       - name: Run the API validator on BKG

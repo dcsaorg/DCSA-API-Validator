@@ -1,0 +1,284 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "type": "array",
+  "minItems": 1,
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "items": {
+    "id": "#/items",
+    "anyOf": [
+      {
+        "type": "object",
+        "title": "The Booking Header Response schema",
+        "description": "Includes the information requested in a booking, service terms and types as well as the assigned booking reference by the carrier.",
+        "default": {},
+        "required": [
+          "carrierBookingRequestReference",
+          "documentStatus",
+          "bookingRequestCreatedDateTime",
+          "bookingRequestUpdatedDateTime",
+          "receiptTypeAtOrigin",
+          "deliveryTypeAtDestination",
+          "cargoMovementTypeAtOrigin",
+          "cargoMovementTypeAtDestination",
+          "serviceContractReference",
+          "isPartialLoadAllowed",
+          "isExportDeclarationRequired",
+          "submissionDateTime",
+          "communicationChannel",
+          "isEquipmentSubstitutionAllowed"
+        ],
+        "properties": {
+          "carrierBookingRequestReference": {
+            "description": "A reference to the booking during the booking request phase.",
+            "id": "#/properties/carrierBookingRequestReference",
+            "type": "string"
+          },
+          "documentStatus": {
+            "description": "The status of the document in the process.",
+            "id": "#/properties/documentStatus",
+            "enum": [
+              "RECE",
+              "PENU",
+              "PENC",
+              "CONF",
+              "REJE",
+              "CANC",
+              "DECL"
+            ]
+          },
+          "bookingRequestCreatedDateTime": {
+            "description": "The date and time of the booking request.",
+            "id": "#/properties/bookingRequestCreatedDateTime",
+            "type": "string"
+          },
+          "bookingRequestUpdatedDateTime": {
+            "description": "The date and time of the booking request.",
+            "id": "#/properties/bookingRequestCreatedDateTime",
+            "type": "string"
+          },
+          "receiptTypeAtOrigin": {
+            "description": "Indicates the type of service offered at Origin. Options are defined in the Receipt/Delivery entity.",
+            "id": "#/properties/receiptTypeAtOrigin",
+            "enum": [
+              "CY",
+              "SD",
+              "CFS"
+            ]
+          },
+          "deliveryTypeAtDestination": {
+            "description": "Indicates the type of service offered at Destination. Options are defined in the Receipt/Delivery entity.",
+            "id": "#/properties/deliveryTypeAtDestination",
+            "enum": [
+              "CY",
+              "SD",
+              "CFS"
+            ]
+          },
+          "cargoMovementTypeAtOrigin": {
+            "description": "Refers to the shipment term at the loading of the cargo out of the container. Options are defined in the Cargo Movement Type entity.",
+            "id": "#/properties/cargoMovementTypeAtOrigin",
+            "enum": [
+              "FCL",
+              "LCL",
+              "BB"
+            ]
+          },
+          "cargoMovementTypeAtDestination": {
+            "description": "Refers to the shipment term at the unloading of the cargo out of the container. Options are defined in the Cargo Movement Type entity.",
+            "id": "#/properties/cargoMovementTypeAtDestination",
+            "enum": [
+              "FCL",
+              "LCL",
+              "BB"
+            ]
+          },
+          "serviceContractReference": {
+            "description": "Reference number for agreement between shipper and carrier through which the shipper commits to provide a certain minimum quantity of cargo over a fixed period, and the carrier commits to a certain rate or rate schedule.",
+            "id": "#/properties/serviceContractReference",
+            "type": "string",
+            "maxLength": 30
+          },
+          "paymentTermCode": {
+            "description": "Indicates whether freight & charges are due for payment before the shipment is effected, practically before the transport document is released to shipper (Prepaid) or before the shipment is finalized meaning cargo released to consignee (Collect)",
+            "id": "#/properties/paymentTermCode",
+            "enum": [
+              "PRE",
+              "COL",
+              null
+            ]
+          },
+          "isPartialLoadAllowed": {
+            "id": "#/properties/isPartialLoadAllowed",
+            "type": "boolean"
+          },
+          "isExportDeclarationRequired": {
+            "id": "#/properties/isExportDeclarationRequired",
+            "type": "boolean"
+          },
+          "exportDeclarationReference": {
+            "description": "A government document permitting designated goods to be shipped out of the country. Reference number assigned by an issuing authority to an Export License. The export license must be valid at time of departure. Required if Export declaration required is ‘True’.",
+            "id": "#/properties/exportDeclarationReference",
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 35
+          },
+          "isImportLicenseRequired": {
+            "id": "#/properties/isImportLicenseRequired",
+            "type": "boolean"
+          },
+          "importLicenseReference": {
+            "description": "A certificate, issued by countries exercising import controls, that permits importation of the articles stated in the license. Reference number assigned by an issuing authority to an Import License. The import license number must be valid at time of arrival. Required if import license required is ‘True’.",
+            "id": "#/properties/importLicenseReference",
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 35
+          },
+          "submissionDateTime": {
+            "description": "Date and time of submitting the relevant document and attributes",
+            "id": "#/properties/submissionDateTime",
+            "type": "string"
+          },
+          "isAMSACIFilingRequired": {
+            "description": "Customs filing for US (AMS) or Canadian (ACI) customs",
+            "id": "#/properties/isAMSACIFilingRequired",
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "isDestinationFilingRequired": {
+            "description": "Indicates whether the shipper will perform the AMS/ACI filing directly or not. Mandatory if AMS/ACI filing is required",
+            "id": "#/properties/isDestinationFilingRequired",
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "contractQuotationReference": {
+            "description": "Information provided by the shipper to identify whether pricing for the shipment has been agreed via a contract or a quotation reference. Mandatory if service contract (owner) is not provided.",
+            "id": "#/properties/contractQuotationReference",
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 35
+          },
+          "expectedDepartureDate": {
+            "description": "The date when the shipment is expected to be loaded on board a vessel as provided by the shipper or its agent. If vessel/voyage or expected date of arrival is not provided, this is mandatory.",
+            "id": "#/properties/expectedDepartureDate",
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 35
+          },
+          "transportDocumentTypeCode": {
+            "description": "Specifies the type of the transport document",
+            "id": "#/properties/transportDocumentTypeCode",
+            "enum": [
+              "BOL ",
+              "SWB",
+              null
+            ]
+          },
+          "transportDocumentReference": {
+            "description": "A unique number allocated by the shipping line to the transport document and the main number used for the tracking of the status of the shipment",
+            "id": "#/properties/transportDocumentReference",
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 20
+          },
+          "bookingChannelReference": {
+            "description": "Identification number provided by the platform/channel used for booking request/confirmation, ex: Inttra booking reference, or GTNexus, other. Conditional on booking channel being used",
+            "id": "#/properties/bookingChannelReference",
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 20
+          },
+          "incoTerms": {
+            "description": "Transport obligations, costs and risks as agreed between buyer and seller.",
+            "id": "#/properties/incoTerms",
+            "enum": [
+              "FCA",
+              "FOB",
+              null
+            ]
+          },
+          "communicationChannel": {
+            "description": "Specifying which communication channel is to be used for this booking.",
+            "id": "#/properties/communicationChannel",
+            "enum": [
+              "EI",
+              "EM",
+              "AO",
+              null
+            ]
+          },
+          "isEquipmentSubstitutionAllowed": {
+            "description": "Indicates if an alternate equipment type can be provided by the carrier.",
+            "id": "#/properties/isEquipmentSubstitutionAllowed",
+            "type": "boolean"
+          },
+          "vesselName": {
+            "description": "The name of the Vessel given by the Vessel Operator and registered with IMO.",
+            "id": "#/properties/vesselName",
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 35
+          },
+          "vesselIMONumber": {
+            "description": "The unique reference for a registered Vessel. The reference is the International Maritime Organisation (IMO) number, also sometimes known as the Lloyd's register code, which does not change during the lifetime of the vessel.",
+            "id": "#/properties/vesselIMONumber",
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 7
+          },
+          "carrierVoyageNumber": {
+            "description": "The vessel operator-specific identifier of the Voyage.",
+            "id": "#/properties/carrierVoyageNumber",
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 50
+          },
+          "preCarriageFromModeOfTransport": {
+            "description": "The mode of transport performed by the shipper for preCarriage as defined by DCSA.",
+            "id": "#/properties/preCarriageFromModeOfTransport",
+            "enum": [
+              "VESSEL",
+              "RAIL",
+              "TRUCK",
+              "BARGE",
+              null
+            ]
+          },
+          "onCarriageToModeOfTransport": {
+            "description": "The mode of transport performed by the shipper for onCarriage as defined by DCSA.",
+            "id": "#/properties/onCarriageToModeOfTransport",
+            "enum": [
+              "VESSEL",
+              "RAIL",
+              "TRUCK",
+              "BARGE",
+              null
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

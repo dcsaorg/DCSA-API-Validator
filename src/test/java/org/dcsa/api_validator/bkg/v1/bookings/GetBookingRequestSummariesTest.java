@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
-import static org.dcsa.api_validator.bkg.v1.bookingconfirmations.BookingTestConfiguration.BOOKING_REQUEST_SUMMARIES_PATH;
 import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.BOOKING_SUMMARIES_PATH;
 import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.JSON_SCHEMA_VALIDATOR;
 import static org.hamcrest.Matchers.equalTo;
@@ -182,7 +181,7 @@ public class GetBookingRequestSummariesTest {
                     auth().
                     oauth2(Configuration.accessToken).
                     queryParam("limit", limit).
-                    get(Configuration.ROOT_URI + BOOKING_REQUEST_SUMMARIES_PATH).
+                    get(Configuration.ROOT_URI + BOOKING_SUMMARIES_PATH).
                     then().
                     assertThat().
                     statusCode(200).

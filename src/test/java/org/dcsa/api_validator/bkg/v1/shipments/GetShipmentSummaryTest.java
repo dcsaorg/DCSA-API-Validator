@@ -142,5 +142,4 @@ public class GetShipmentSummaryTest {
     Assert.assertEquals(2, documentStatusList.size());
   }
 
-
 }

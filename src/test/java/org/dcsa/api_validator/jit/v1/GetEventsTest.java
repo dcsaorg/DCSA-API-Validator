@@ -6,6 +6,7 @@ import com.jayway.jsonpath.DocumentContext;
 import org.apache.http.HttpStatus;
 import org.dcsa.api_validator.conf.Configuration;
 import org.testng.Assert;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.time.OffsetDateTime;
@@ -398,6 +399,7 @@ public class GetEventsTest {
     }
 
     @Test
+    @Ignore
     public void testLimitQueryParam() {
 
         List<Integer> limits =  Arrays.asList(1,2, 5, 6);

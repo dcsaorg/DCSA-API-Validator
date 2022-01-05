@@ -9,7 +9,7 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 
 public class BookingTestConfiguration {
 
-  public static final String SHIPMENT_PATH = "/shipments/{carrierBookingReference}";
+  public static final String SHIPMENT_CARRIERBOOKINGREFERENCE_PATH = "/shipments/{carrierBookingReference}";
   public static final String SHIPMENT_SUMMARIES_PATH = "/shipment-summaries";
   public static final String BOOKING_SUMMARIES_PATH = "/booking-summaries";
   public static final String BOOKING_CARRIERBOOKINGREQUESTREFERENCE_PATH = "/bookings/{carrierBookingRequestReference}";

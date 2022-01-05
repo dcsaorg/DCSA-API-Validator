@@ -10,7 +10,7 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.*;
-import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.SHIPMENT_PATH;
+import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.SHIPMENT_CARRIERBOOKINGREFERENCE_PATH;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.JSON_SCHEMA_VALIDATOR;
@@ -52,7 +52,7 @@ public class testGetShipmentByCarrierBookingReference {
                                 .oauth2(Configuration.accessToken)
                                 .when()
                                 .pathParam("carrierBookingReference", carrierBookingReference)
-                                .get(Configuration.ROOT_URI + SHIPMENT_PATH)
+                                .get(Configuration.ROOT_URI + SHIPMENT_CARRIERBOOKINGREFERENCE_PATH)
                                 .then()
                                 .assertThat()
                                 .body("size()", greaterThanOrEqualTo(0))
@@ -71,7 +71,7 @@ public class testGetShipmentByCarrierBookingReference {
                 .pathParam(
                         "carrierBookingReference",
                         "12345678912345678901235678945651205451686156465154515564845156754845678465544567845648456548151554234")
-                .get(Configuration.ROOT_URI + SHIPMENT_PATH)
+                .get(Configuration.ROOT_URI + SHIPMENT_CARRIERBOOKINGREFERENCE_PATH)
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_BAD_REQUEST);
@@ -84,7 +84,7 @@ public class testGetShipmentByCarrierBookingReference {
                 .oauth2(Configuration.accessToken)
                 .when()
                 .pathParam("carrierBookingReference", "IdoNotExist")
-                .get(Configuration.ROOT_URI + SHIPMENT_PATH)
+                .get(Configuration.ROOT_URI + SHIPMENT_CARRIERBOOKINGREFERENCE_PATH)
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_NOT_FOUND);

@@ -11,7 +11,7 @@ public class BookingTestConfiguration {
 
   public static final String SHIPMENT_SUMMARIES_PATH = "/shipment-summaries";
   public static final String BOOKING_SUMMARIES_PATH = "/booking-summaries";
-  public static final String BOOKING_PATH = "/bookings/{carrierBookingRequestReference}";
+  public static final String BOOKING_CARRIERBOOKINGREQUESTREFERENCE_PATH = "/bookings/{carrierBookingRequestReference}";
 
   public static final Matcher<?> JSON_SCHEMA_VALIDATOR =
       matchesJsonSchemaInClasspath("bkg/v1/schemas/all.json")

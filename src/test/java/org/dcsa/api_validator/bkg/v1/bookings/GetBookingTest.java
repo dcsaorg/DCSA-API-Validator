@@ -10,7 +10,7 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.*;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.*;
 
 public class GetBookingTest {
 
@@ -49,6 +49,7 @@ public class GetBookingTest {
                 .then()
                 .assertThat()
                 .header("API-Version", "1.0.0")
+                .body("carrierBookingRequestReference", equalTo(carrierBookingRequestReference))
                 .statusCode(HttpStatus.SC_OK)
                 .body(JSON_SCHEMA_VALIDATOR));
   }

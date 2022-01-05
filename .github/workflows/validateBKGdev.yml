@@ -1,6 +1,6 @@
 name: Run testsuite on BKG DEV-branch
 
-on: [push]
+on: [ push ]
 
 jobs:
   build:
@@ -32,12 +32,6 @@ jobs:
 
       - run: echo $DCSA_EVENT_CORE_PROJECT_VERSION
 
-      - name: Fetch backend
-        uses: actions/checkout@v2
-        with:
-          path: DCSA-BKG
-          submodules: recursive
-
       # Prepare BKG
       - name: Fetch backend
         uses: actions/checkout@v2
@@ -53,11 +47,15 @@ jobs:
       - name: Build and run the backend microservices
         run: cd DCSA-BKG && docker-compose -f docker-compose.yml up -d -V
 
-
-
-
       # Fetch Validator before loading the test data.  This gives the database initialization some time
       # to finish
+
+      - name: Checkout API validator
+        uses: actions/checkout@v2
+        with:
+          repository: dcsaorg/DCSA-API-Validator
+          token: ${{ secrets.REPO_ACCESS_PAT }}
+          path: DCSA-API-Validator
 
       # Assert that the database is ready to load the test data.
       - run: echo "SELECT 1;" | docker exec -i -u postgres dcsa_db psql -d dcsa_openapi -f - 2>/dev/null || sleep 5
@@ -66,14 +64,13 @@ jobs:
         run: cat DCSA-BKG/DCSA-Information-Model/datamodel/testdata.d/*.sql | docker exec -i -u postgres dcsa_db psql -d dcsa_openapi -f -
 
       # Run validator
-      - name: Run the API validator on BKG // Merge in first
-      #  run: mvn -Dtest.suite=BKGV1.xml test
-#        env:
- #         client_secret: ${{ secrets.AUTH0_DCSA_CLIENT_SECRET }}
-  #        client_id: 1qEYXCbxWvjeYS8VVm1BfnfZrP3TY9n8
-   #       audience: localhost
-    #      OAuthTokenUri: https://dcsa.eu.auth0.com/oauth/token
-     #     API_ROOT_URI: http://localhost:9090/v1
-      #    CALLBACK_URI: http://172.17.0.1:4567
-       #   DCSA_API_VALIDATOR_MAY_USE_POST_EVENTS_ENDPOINT: true
-
+      - name: Run the API validator on BKG
+        run: cd DCSA-API-Validator && mvn -Dtest.suite=BKGV1.xml test
+        env:
+          client_secret: ${{ secrets.AUTH0_DCSA_CLIENT_SECRET }}
+          client_id: 1qEYXCbxWvjeYS8VVm1BfnfZrP3TY9n8
+          audience: localhost
+          OAuthTokenUri: https://dcsa.eu.auth0.com/oauth/token
+          API_ROOT_URI: http://localhost:9090/v1
+          CALLBACK_URI: http://172.17.0.1:4567
+          DCSA_API_VALIDATOR_MAY_USE_POST_EVENTS_ENDPOINT: true

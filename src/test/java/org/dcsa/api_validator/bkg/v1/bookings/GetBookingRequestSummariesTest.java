@@ -3,6 +3,7 @@ package org.dcsa.api_validator.bkg.v1.bookings;
 import io.restassured.path.json.JsonPath;
 import org.dcsa.api_validator.conf.Configuration;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.time.OffsetDateTime;
@@ -14,14 +15,33 @@ import java.util.stream.Collectors;
 import static io.restassured.RestAssured.given;
 import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.BOOKING_SUMMARIES_PATH;
 import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.JSON_SCHEMA_VALIDATOR;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.*;
 
 /*
  * Tests related to the GET /booking-summaries endpoint
  */
 
 public class GetBookingRequestSummariesTest {
+
+    private List<Map<?, ?>> response;
+
+    @BeforeClass
+    @SuppressWarnings("unchecked")
+    public void setUp() {
+        this.response =
+                (List<Map<?, ?>>)
+                        given().
+                                auth().
+                                oauth2(Configuration.accessToken).
+                                get(Configuration.ROOT_URI + BOOKING_SUMMARIES_PATH).
+                                then().
+                                assertThat().
+                                statusCode(200).
+                                body("size()", greaterThanOrEqualTo(0)).
+                                body(JSON_SCHEMA_VALIDATOR).
+                                extract().body().as(List.class);
+    }
+
 
     @Test
     public void testBookingRequests() {
@@ -36,95 +56,44 @@ public class GetBookingRequestSummariesTest {
                 body(JSON_SCHEMA_VALIDATOR);
     }
 
-    // Dependent on carrierBookingRequestReference value being same in test data
-    @Test
-    public void testForCarrierBookingRequestReference() {
-        given().
-                auth().
-                oauth2(Configuration.accessToken).
-                queryParam("carrierBookingRequestReference", "CARRIER_BOOKING_REQUEST_REFERENCE_01").
-                get(Configuration.ROOT_URI + BOOKING_SUMMARIES_PATH).
-                then().
-                assertThat().
-                statusCode(200).
-                body("size()", greaterThanOrEqualTo(0)).
-                body(JSON_SCHEMA_VALIDATOR);
-
-    }
-
     // check for exportDeclarationReference if (isExportDeclarationRequired = true)
     @Test
     public void testForExportDeclarationReference() {
-        @SuppressWarnings("unchecked")
-        List<Map<?, ?>> responses =
-                (List<Map<?, ?>>) given().
-                        auth().
-                        oauth2(Configuration.accessToken).
-                        get(Configuration.ROOT_URI + BOOKING_SUMMARIES_PATH).
-                        then().
-                        assertThat().
-                        statusCode(200).
-                        body("size()", greaterThanOrEqualTo(0)).
-                        body(JSON_SCHEMA_VALIDATOR).
-                        extract().body().as(List.class);
-
-        responses.stream().filter(response -> getBool(response, "isExportDeclarationRequired"))
-                .map(response -> response.get("exportDeclarationReference")).forEach(Assert::assertNotNull);
-
+        response.stream().filter(res -> getBool(res, "isExportDeclarationRequired"))
+                .map(res -> res.get("exportDeclarationReference")).forEach(Assert::assertNotNull);
     }
 
     // check for importLicenseReference if (isImportLicenseRequired = true)
     @Test
     public void testForImportLicenseReference() {
-        @SuppressWarnings("unchecked")
-        List<Map<?, ?>> responses =
-                (List<Map<?, ?>>) given().
-                        auth().
-                        oauth2(Configuration.accessToken).
-                        get(Configuration.ROOT_URI + BOOKING_SUMMARIES_PATH).
-                        then().
-                        assertThat().
-                        statusCode(200).
-                        body("size()", greaterThanOrEqualTo(0)).
-                        body(JSON_SCHEMA_VALIDATOR).
-                        extract().body().as(List.class);
-
-        responses.stream().filter(response -> getBool(response, "isImportLicenseRequired"))
-                .map(response -> response.get("importLicenseReference")).forEach(Assert::assertNotNull);
-
+        response.stream().filter(res -> getBool(res, "isImportLicenseRequired"))
+                .map(res -> res.get("importLicenseReference")).forEach(Assert::assertNotNull);
     }
 
     // Mandatory if (vessel/voyage is not provided)
     @Test
     public void testForExpectedDepartureTime() {
-        @SuppressWarnings("unchecked")
-        List<Map<?, ?>> responses =
-                (List<Map<?, ?>>) given().
-                        auth().
-                        oauth2(Configuration.accessToken).
-                        get(Configuration.ROOT_URI + BOOKING_SUMMARIES_PATH).
-                        then().
-                        assertThat().
-                        statusCode(200).
-                        body("size()", greaterThanOrEqualTo(0)).
-                        body(JSON_SCHEMA_VALIDATOR).
-                        extract().body().as(List.class);
-
-        responses.stream().filter(response -> response.get("vesselIMONumber") == null)
-                .map(response -> response.get("expectedDepartureDate")).forEach(Assert::assertNotNull);
+        response.stream().filter(res -> res.get("vesselIMONumber") == null)
+                .map(res -> res.get("expectedDepartureDate")).forEach(Assert::assertNotNull);
     }
 
-    // Test for documentStatus filtering - value: RECE
+    // Test for documentStatus filtering
     @Test
     public void testDocumentStatusQueryParam() {
-
-        List<String> documentStatuses = getListOfAnyAttribute("documentStatus", "documentStatus", "RECE");
-        assert (!documentStatuses.isEmpty());
-        int n = documentStatuses.size();
-
-        for (int i = 0; i < n; i++) {
-            Assert.assertTrue(documentStatuses.get(i).equals("RECE"));
-        }
+        response.stream()
+                .map(res -> res.get("documentStatus")).forEach(documentStatus -> {
+                    given()
+                            .auth()
+                            .oauth2(Configuration.accessToken)
+                            .queryParam("documentStatus", documentStatus)
+                            .get(Configuration.ROOT_URI + BOOKING_SUMMARIES_PATH)
+                            .then()
+                            .assertThat()
+                            .statusCode(200)
+                            .body("[0]", hasEntry("documentStatus", documentStatus))
+                            .body("documentStatus", everyItem(equalTo(documentStatus)))
+                            .body(JSON_SCHEMA_VALIDATOR);
+                });
     }
 
     // Test sorting:DESC (descending) and if order is respected. for submissionDateTime
@@ -135,7 +104,7 @@ public class GetBookingRequestSummariesTest {
         assert (!submissionDateTimesSorted.isEmpty());
         int n = submissionDateTimesSorted.size();
 
-        Assert.assertTrue(OffsetDateTime.parse(submissionDateTimesSorted.get(0)).isBefore(OffsetDateTime.parse(submissionDateTimesSorted.get(n -1))));
+        Assert.assertTrue(OffsetDateTime.parse(submissionDateTimesSorted.get(0)).isBefore(OffsetDateTime.parse(submissionDateTimesSorted.get(n - 1))));
     }
 
     // Test sorting:DESC (descending) and if order is respected. for submissionDateTime
@@ -146,7 +115,7 @@ public class GetBookingRequestSummariesTest {
         assert (!submissionDateTimesSorted.isEmpty());
         int n = submissionDateTimesSorted.size();
 
-        Assert.assertTrue(OffsetDateTime.parse(submissionDateTimesSorted.get(0)).isAfter(OffsetDateTime.parse(submissionDateTimesSorted.get(n -1))));
+        Assert.assertTrue(OffsetDateTime.parse(submissionDateTimesSorted.get(0)).isAfter(OffsetDateTime.parse(submissionDateTimesSorted.get(n - 1))));
     }
 
     // Test sorting:ASC (descending) and if order is respected. for BookingRequestDateTime
@@ -157,7 +126,7 @@ public class GetBookingRequestSummariesTest {
         assert (!bookingRequestDateTimesSorted.isEmpty());
         int n = bookingRequestDateTimesSorted.size();
 
-        Assert.assertTrue(OffsetDateTime.parse(bookingRequestDateTimesSorted.get(0)).isBefore(OffsetDateTime.parse(bookingRequestDateTimesSorted.get(n -1))));
+        Assert.assertTrue(OffsetDateTime.parse(bookingRequestDateTimesSorted.get(0)).isBefore(OffsetDateTime.parse(bookingRequestDateTimesSorted.get(n - 1))));
     }
 
     // Test sorting:DESC (descending) and if order is respected. for BookingRequestDateTime
@@ -168,7 +137,7 @@ public class GetBookingRequestSummariesTest {
         assert (!bookingRequestDateTimesSorted.isEmpty());
         int n = bookingRequestDateTimesSorted.size();
 
-        Assert.assertTrue(OffsetDateTime.parse(bookingRequestDateTimesSorted.get(0)).isAfter(OffsetDateTime.parse(bookingRequestDateTimesSorted.get(n -1))));
+        Assert.assertTrue(OffsetDateTime.parse(bookingRequestDateTimesSorted.get(0)).isAfter(OffsetDateTime.parse(bookingRequestDateTimesSorted.get(n - 1))));
     }
 
     @Test
@@ -209,9 +178,10 @@ public class GetBookingRequestSummariesTest {
         given().
                 auth().
                 oauth2(Configuration.accessToken).
-                header("API-Version", "2").
                 get(Configuration.ROOT_URI + BOOKING_SUMMARIES_PATH).
                 then().
+                assertThat()
+                .header("API-Version", "1.0.0").
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
                 body(JSON_SCHEMA_VALIDATOR);
@@ -231,10 +201,11 @@ public class GetBookingRequestSummariesTest {
                 queryParam(queryParam, queryParamValue).
                 get(Configuration.ROOT_URI + BOOKING_SUMMARIES_PATH).
                 then().
+                assertThat().
                 statusCode(200).
                 body("size()", greaterThanOrEqualTo(0)).
                 body(JSON_SCHEMA_VALIDATOR).
-                        extract().body().asString();
+                extract().body().asString();
 
         return JsonPath.from(json).getList(attribute).stream().collect(Collectors.toList());
     }

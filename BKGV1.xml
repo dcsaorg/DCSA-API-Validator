@@ -6,6 +6,7 @@
             <package name="org.dcsa.api_validator.bkg.v1"/>
             <package name="org.dcsa.api_validator.bkg.v1.shipments"/>
             <package name="org.dcsa.api_validator.bkg.v1.bookings"/>
+            <package name="org.dcsa.api_validator.bkg.v1.cancellations"/>
             <package name="org.dcsa.api_validator.conf"/>
         </packages>
     </test> <!-- Test -->

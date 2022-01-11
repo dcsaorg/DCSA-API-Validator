@@ -134,17 +134,19 @@ public class CancelBookingTest {
   @Test
   public void testCancelBookingInInvalidDocumentStatus() {
 
-    given()
-        .auth()
-        .oauth2(Configuration.accessToken)
-        .when()
-        .pathParam("carrierBookingRequestReference", bookingsNotAllowedToCancel.get(0))
-        .body(cancellationRequest.toString())
-        .contentType(ContentType.JSON)
-        .patch(Configuration.ROOT_URI + BOOKING_CARRIERBOOKINGREQUESTREFERENCE_PATH)
-        .then()
-        .assertThat()
-        .statusCode(HttpStatus.SC_BAD_REQUEST);
+    bookingsNotAllowedToCancel.forEach(
+        carrierBookingRequestReference ->
+            given()
+                .auth()
+                .oauth2(Configuration.accessToken)
+                .when()
+                .pathParam("carrierBookingRequestReference", carrierBookingRequestReference)
+                .body(cancellationRequest.toString())
+                .contentType(ContentType.JSON)
+                .patch(Configuration.ROOT_URI + BOOKING_CARRIERBOOKINGREQUESTREFERENCE_PATH)
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_BAD_REQUEST));
   }
 
   @Test

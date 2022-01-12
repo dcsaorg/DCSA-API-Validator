@@ -13,6 +13,7 @@ public class BookingTestConfiguration {
   public static final String BOOKING_SUMMARIES_PATH = "/booking-summaries";
   public static final String BOOKING_CARRIERBOOKINGREQUESTREFERENCE_PATH = "/bookings/{carrierBookingRequestReference}";
   public static final String BOOKING_PATH = "/bookings";
+  public static final String EVENTS_PATH = "/events";
 
   public static final Matcher<?> JSON_SCHEMA_VALIDATOR =
       matchesJsonSchemaInClasspath("bkg/v1/schemas/all.json")

@@ -1,20 +1,15 @@
 package org.dcsa.api_validator.bkg.v1.bookings;
 
-import io.restassured.path.json.JsonPath;
 import org.dcsa.api_validator.conf.Configuration;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.time.OffsetDateTime;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
 import static org.dcsa.api_validator.TestUtil.jsonToMap;
 import static org.dcsa.api_validator.TestUtil.loadFileAsString;
-import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.*;
+import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.BOOKING_PATH;
+import static org.dcsa.api_validator.bkg.v1.BookingTestConfiguration.JSON_SCHEMA_VALIDATOR;
 import static org.hamcrest.Matchers.*;
 
 /*
@@ -25,26 +20,10 @@ public class PostBookingTest {
 
   public static final String VALID_BOOKING = loadFileAsString("bkg/v1/ValidBookingPost.json");
 
-  private static final String[] MANDATORY_FIELDS = {
-    "receiptTypeAtOrigin",
-    "deliveryTypeAtDestination",
-    "cargoMovementTypeAtOrigin",
-    "cargoMovementTypeAtDestination",
-    "serviceContractReference",
-    "isPartialLoadAllowed",
-    "isExportDeclarationRequired",
-    "isImportLicenseRequired",
-    "submissionDateTime",
-    "communicationChannel",
-    "isEquipmentSubstitutionAllowed"
-  };
-
   @Test
   public void testValidBookingPost() {
     String splat =
         given()
-            .auth()
-            .oauth2(Configuration.accessToken)
             .contentType("application/json")
             .body(VALID_BOOKING)
             .post(Configuration.ROOT_URI + BOOKING_PATH)
@@ -59,29 +38,24 @@ public class PostBookingTest {
             .extract()
             .body()
             .asString();
-
-    System.out.println("testValidBookingPost");
   }
 
   @Test
-  public void testBookingPostMissingAllMandatoryFieldsIndividually() {
-    final String[] mandatoryFields = {
-      "receiptTypeAtOrigin",
-      "deliveryTypeAtDestination",
-      "cargoMovementTypeAtOrigin",
-      "cargoMovementTypeAtDestination",
-      "serviceContractReference",
-      "isPartialLoadAllowed",
-      "isExportDeclarationRequired",
-      "isImportLicenseRequired",
-      "submissionDateTime",
-      "communicationChannel",
-      "isEquipmentSubstitutionAllowed"
-    };
-
-    for (String mandatoryField : mandatoryFields) {
+  public void testBookingPostMissingAllMandatoryFields() {
       Map<String, Object> map = jsonToMap(VALID_BOOKING);
-      map.remove(mandatoryField);
+      assert map != null;
+      map.remove("receiptTypeAtOrigin");
+      map.remove("deliveryTypeAtDestination");
+      map.remove("cargoMovementTypeAtOrigin");
+      map.remove("cargoMovementTypeAtDestination");
+      map.remove("serviceContractReference");
+      map.remove("isPartialLoadAllowed");
+      map.remove("isExportDeclarationRequired");
+      map.remove("isImportLicenseRequired");
+      map.remove("submissionDateTime");
+      map.remove("communicationChannel");
+      map.remove("isEquipmentSubstitutionAllowed");
+      map.remove("commodities");
 
       given()
           .auth()
@@ -93,7 +67,69 @@ public class PostBookingTest {
           .assertThat()
           .statusCode(400)
           .body(JSON_SCHEMA_VALIDATOR);
-    }
-    System.out.println("testBookingPostMissingAllMandatoryFieldsIndividually");
+  }
+
+  @Test
+  public void testBookingPostMissingAllOptionalFields() {
+      Map<String, Object> map = jsonToMap(VALID_BOOKING);
+      assert map != null;
+      map.remove("paymentTermCode");
+      map.remove("exportDeclarationReference");
+      map.remove("importLicenseReference");
+      map.remove("isAMSACIFilingRequired");
+      map.remove("isDestinationFilingRequired");
+      map.remove("contractQuotationReference");
+      map.remove("expectedDepartureDate");
+      map.remove("transportDocumentTypeCode");
+      map.remove("transportDocumentReference");
+      map.remove("bookingChannelReference");
+      map.remove("incoTerms");
+      map.remove("vesselName");
+      map.remove("vesselIMONumber");
+      map.remove("exportVoyageNumber");
+      map.remove("preCarriageModeOfTransportCode");
+      map.remove("invoicePayableAt");
+      map.remove("placeOfIssue");
+      map.remove("valueAddedServiceRequests");
+      map.remove("references");
+      map.remove("requestedEquipments");
+      map.remove("documentParties");
+      map.remove("shipmentLocations");
+
+      given()
+          .auth()
+          .oauth2(Configuration.accessToken)
+          .contentType("application/json")
+          .body(map)
+          .post(Configuration.ROOT_URI + BOOKING_PATH)
+          .then()
+          .assertThat()
+          .body("documentStatus", equalTo("RECE"))
+          .body("carrierBookingRequestReference", notNullValue())
+          .body("bookingRequestCreatedDateTime", notNullValue())
+          .body("bookingRequestUpdatedDateTime", notNullValue())
+          .statusCode(202)
+          .body(JSON_SCHEMA_VALIDATOR);
+  }
+
+  // Test case with all optional fields removed
+
+  @Test
+  public void testAPIVersionQueryParam() {
+
+    Map<String, Object> map = jsonToMap(VALID_BOOKING);
+
+    given().
+            auth().
+            oauth2(Configuration.accessToken).
+            contentType("application/json").
+            body(map).
+            post(Configuration.ROOT_URI + BOOKING_PATH).
+            then().
+            assertThat()
+            .header("API-Version", "1.0.0").
+            statusCode(202).
+            body("size()", greaterThanOrEqualTo(0)).
+            body(JSON_SCHEMA_VALIDATOR);
   }
 }

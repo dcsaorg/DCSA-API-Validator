@@ -399,12 +399,16 @@ public class GetEventsTest {
     }
 
     @Test
-    @Ignore
     public void testLimitQueryParam() {
 
-        List<Integer> limits =  Arrays.asList(1,2, 5, 6);
+        // Test for "known to be" exact matches of limit.  These two are in the test data, so we know that is true.
+        List<Integer> limits =  Arrays.asList(1,2);
+        // Slightly larger limit but accepts the "<=" aspect of limit.
+        // Note that we do not use strictly equals to avoid failures if someone runs the test twice in a row
+        // as some tests create operations events.
+        final int upperLimit = 20;
 
-        limits.forEach(limit -> {
+        limits.forEach(limit ->
             given().
                     auth().
                     oauth2(Configuration.accessToken).
@@ -415,8 +419,20 @@ public class GetEventsTest {
                     statusCode(200).
                     body("size()", equalTo(limit)).
                     body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").
-                   using(jsonSchemaFactory));
-        });
+                   using(jsonSchemaFactory))
+        );
+
+        given().
+                auth().
+                oauth2(Configuration.accessToken).
+                queryParam("limit", upperLimit).
+                get(Configuration.ROOT_URI + "/events").
+                then().
+                assertThat().
+                statusCode(200).
+                body("size()", lessThanOrEqualTo(upperLimit)).
+                body(matchesJsonSchemaInClasspath("jit/v1/EventsSchema.json").
+                        using(jsonSchemaFactory));
     }
 
     // Test limit, fails as formatting is wrong.

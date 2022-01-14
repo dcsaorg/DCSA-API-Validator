@@ -104,7 +104,9 @@ public class GetBookingRequestSummariesTest {
         assert (!submissionDateTimesSorted.isEmpty());
         int n = submissionDateTimesSorted.size();
 
-        Assert.assertTrue(OffsetDateTime.parse(submissionDateTimesSorted.get(0)).isBefore(OffsetDateTime.parse(submissionDateTimesSorted.get(n - 1))));
+        for (int i = 0; i < submissionDateTimesSorted.size() - 2; i++) {
+          Assert.assertTrue(isAfterOrEqualDateTime(submissionDateTimesSorted.get(i), submissionDateTimesSorted.get(i + 1)));
+        }
     }
 
     // Test sorting:DESC (descending) and if order is respected. for submissionDateTime
@@ -113,9 +115,10 @@ public class GetBookingRequestSummariesTest {
 
         List<String> submissionDateTimesSorted = getListOfAnyAttribute("submissionDateTime", "sort", "submissionDateTime:DESC");
         assert (!submissionDateTimesSorted.isEmpty());
-        int n = submissionDateTimesSorted.size();
 
-        Assert.assertTrue(OffsetDateTime.parse(submissionDateTimesSorted.get(0)).isAfter(OffsetDateTime.parse(submissionDateTimesSorted.get(n - 1))));
+        for (int i = 0; i < submissionDateTimesSorted.size() - 2; i++) {
+            Assert.assertTrue(isAfterOrEqualDateTime(submissionDateTimesSorted.get(i + 1), submissionDateTimesSorted.get(i)));
+        }
     }
 
     // Test sorting:ASC (descending) and if order is respected. for BookingRequestDateTime
@@ -124,9 +127,10 @@ public class GetBookingRequestSummariesTest {
 
         List<String> bookingRequestDateTimesSorted = getListOfAnyAttribute("bookingRequestCreatedDateTime", "sort", "bookingRequestCreatedDateTime:ASC");
         assert (!bookingRequestDateTimesSorted.isEmpty());
-        int n = bookingRequestDateTimesSorted.size();
 
-        Assert.assertTrue(OffsetDateTime.parse(bookingRequestDateTimesSorted.get(0)).isBefore(OffsetDateTime.parse(bookingRequestDateTimesSorted.get(n - 1))));
+        for (int i = 0; i < bookingRequestDateTimesSorted.size() - 2; i++) {
+          Assert.assertTrue(isAfterOrEqualDateTime(bookingRequestDateTimesSorted.get(i), bookingRequestDateTimesSorted.get(i + 1)));
+        }
     }
 
     // Test sorting:DESC (descending) and if order is respected. for BookingRequestDateTime
@@ -135,9 +139,16 @@ public class GetBookingRequestSummariesTest {
 
         List<String> bookingRequestDateTimesSorted = getListOfAnyAttribute("bookingRequestCreatedDateTime", "sort", "bookingRequestCreatedDateTime:DESC");
         assert (!bookingRequestDateTimesSorted.isEmpty());
-        int n = bookingRequestDateTimesSorted.size();
 
-        Assert.assertTrue(OffsetDateTime.parse(bookingRequestDateTimesSorted.get(0)).isAfter(OffsetDateTime.parse(bookingRequestDateTimesSorted.get(n - 1))));
+      for (int i = 0; i < bookingRequestDateTimesSorted.size() - 2; i++) {
+        Assert.assertTrue(isAfterOrEqualDateTime(bookingRequestDateTimesSorted.get(i + 1), bookingRequestDateTimesSorted.get(i)));
+      }
+    }
+
+    private Boolean isAfterOrEqualDateTime(String beforeStr, String afterStr) {
+        OffsetDateTime before = OffsetDateTime.parse(beforeStr);
+        OffsetDateTime after = OffsetDateTime.parse(afterStr);
+        return after.isAfter(before) || after.isEqual(before);
     }
 
     @Test

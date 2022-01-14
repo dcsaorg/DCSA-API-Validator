@@ -112,8 +112,6 @@ public class PostBookingTest {
         .body(JSON_SCHEMA_VALIDATOR);
   }
 
-  // Test case with all optional fields removed
-
   @Test
   public void testAPIVersionQueryParam() {
 

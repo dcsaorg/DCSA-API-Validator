@@ -28,7 +28,7 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_PAT }}
 
       - name: Set dcsa-event-core mvn version variable
-        run: cd DCSA-Event-Core && echo "DCSA_EVENT_CORE_PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)- " >> $GITHUB_ENV
+        run: cd DCSA-Event-Core && echo "DCSA_EVENT_CORE_PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -Dchangelist='')- " >> $GITHUB_ENV
 
       - run: echo $DCSA_EVENT_CORE_PROJECT_VERSION
 

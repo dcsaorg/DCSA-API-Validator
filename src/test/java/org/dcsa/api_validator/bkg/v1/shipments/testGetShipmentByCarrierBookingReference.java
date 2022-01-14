@@ -22,72 +22,63 @@ import static org.hamcrest.Matchers.*;
 
 public class testGetShipmentByCarrierBookingReference {
 
-    private List<String> carrierBookingReferenceListForShipments;
+  private List<String> carrierBookingReferenceListForShipments;
 
-    @BeforeClass
-    public void getAllCarrierBookingReferencesForShipments() {
-        this.carrierBookingReferenceListForShipments =
-                JsonPath.from(
-                                given()
-                                        .auth()
-                                        .oauth2(Configuration.accessToken)
-                                        .get(Configuration.ROOT_URI + SHIPMENT_SUMMARIES_PATH)
-                                        .then()
-                                        .assertThat()
-                                        .statusCode(200)
-                                        .body("size()", greaterThanOrEqualTo(0))
-                                        .body(JSON_SCHEMA_VALIDATOR)
-                                        .extract()
-                                        .body()
-                                        .asString())
-                        .getList("carrierBookingReference");
-    }
+  @BeforeClass
+  public void getAllCarrierBookingReferencesForShipments() {
+    this.carrierBookingReferenceListForShipments =
+        JsonPath.from(
+                given()
+                    .get(Configuration.ROOT_URI + SHIPMENT_SUMMARIES_PATH)
+                    .then()
+                    .assertThat()
+                    .statusCode(200)
+                    .body("size()", greaterThanOrEqualTo(0))
+                    .body(JSON_SCHEMA_VALIDATOR)
+                    .extract()
+                    .body()
+                    .asString())
+            .getList("carrierBookingReference");
+  }
 
-    @Test
-    public void testGetValidShipments() {
-        carrierBookingReferenceListForShipments.forEach(
-                carrierBookingReference ->
-                        given()
-                                .auth()
-                                .oauth2(Configuration.accessToken)
-                                .when()
-                                .pathParam("carrierBookingReference", carrierBookingReference)
-                                .get(Configuration.ROOT_URI + SHIPMENT_CARRIERBOOKINGREFERENCE_PATH)
-                                .then()
-                                .assertThat()
-                                .body("size()", greaterThanOrEqualTo(0))
-                                .body("carrierBookingReference", equalTo(carrierBookingReference))
-                                .header("API-Version", "1.0.0")
-                                .statusCode(HttpStatus.SC_OK)
-                                .body(JSON_SCHEMA_VALIDATOR));
-                }
-
-    @Test
-    public void testShipmentWithInvalidCarrierBookingReference() {
-        given()
-                .auth()
-                .oauth2(Configuration.accessToken)
+  @Test
+  public void testGetValidShipments() {
+    carrierBookingReferenceListForShipments.forEach(
+        carrierBookingReference ->
+            given()
                 .when()
-                .pathParam(
-                        "carrierBookingReference",
-                        "12345678912345678901235678945651205451686156465154515564845156754845678465544567845648456548151554234")
+                .pathParam("carrierBookingReference", carrierBookingReference)
                 .get(Configuration.ROOT_URI + SHIPMENT_CARRIERBOOKINGREFERENCE_PATH)
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.SC_BAD_REQUEST);
-    }
+                .body("size()", greaterThanOrEqualTo(0))
+                .body("carrierBookingReference", equalTo(carrierBookingReference))
+                .header("API-Version", "1.0.0")
+                .statusCode(HttpStatus.SC_OK)
+                .body(JSON_SCHEMA_VALIDATOR));
+  }
 
-    @Test
-    public void testShipmentWithUnknownCarrierBookingReference() {
-        given()
-                .auth()
-                .oauth2(Configuration.accessToken)
-                .when()
-                .pathParam("carrierBookingReference", "IdoNotExist")
-                .get(Configuration.ROOT_URI + SHIPMENT_CARRIERBOOKINGREFERENCE_PATH)
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_NOT_FOUND);
-    }
+  @Test
+  public void testShipmentWithInvalidCarrierBookingReference() {
+    given()
+        .when()
+        .pathParam(
+            "carrierBookingReference",
+            "12345678912345678901235678945651205451686156465154515564845156754845678465544567845648456548151554234")
+        .get(Configuration.ROOT_URI + SHIPMENT_CARRIERBOOKINGREFERENCE_PATH)
+        .then()
+        .assertThat()
+        .statusCode(HttpStatus.SC_BAD_REQUEST);
+  }
+
+  @Test
+  public void testShipmentWithUnknownCarrierBookingReference() {
+    given()
+        .when()
+        .pathParam("carrierBookingReference", "IdoNotExist")
+        .get(Configuration.ROOT_URI + SHIPMENT_CARRIERBOOKINGREFERENCE_PATH)
+        .then()
+        .assertThat()
+        .statusCode(HttpStatus.SC_NOT_FOUND);
+  }
 }
-

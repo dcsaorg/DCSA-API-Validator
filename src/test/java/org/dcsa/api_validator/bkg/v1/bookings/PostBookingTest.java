@@ -69,8 +69,6 @@ public class PostBookingTest {
         .body(JSON_SCHEMA_VALIDATOR);
   }
 
-
-
   @Test
   public void testBookingPostMissingAllOptionalFields() {
     Map<String, Object> map = jsonToMap(VALID_BOOKING);

@@ -33,7 +33,7 @@ public class PostBookingTest {
         .body("carrierBookingRequestReference", notNullValue())
         .body("bookingRequestCreatedDateTime", notNullValue())
         .body("bookingRequestUpdatedDateTime", notNullValue())
-        .statusCode(HttpStatus.SC_OK)
+        .statusCode(HttpStatus.SC_ACCEPTED)
         .body(JSON_SCHEMA_VALIDATOR)
         .extract()
         .body()

@@ -69,10 +69,21 @@ public class PostBookingTest {
         .body(JSON_SCHEMA_VALIDATOR);
   }
 
+
+
   @Test
   public void testBookingPostMissingAllOptionalFields() {
     Map<String, Object> map = jsonToMap(VALID_BOOKING);
     assert map != null;
+
+    // importLicenseReference and exportDeclarationReference cannot be null
+    // if isImportLicenseRequired and isExportDeclarationRequired are true
+    map.remove("isImportLicenseRequired");
+    map.remove("isExportDeclarationRequired");
+    map.put("isImportLicenseRequired", false);
+    map.put("isExportDeclarationRequired", false);
+
+    // Remove optional fields
     map.remove("paymentTermCode");
     map.remove("exportDeclarationReference");
     map.remove("importLicenseReference");
@@ -104,12 +115,39 @@ public class PostBookingTest {
         .post(Configuration.ROOT_URI + BOOKING_PATH)
         .then()
         .assertThat()
+        .statusCode(HttpStatus.SC_ACCEPTED)
         .body("documentStatus", equalTo("RECE"))
         .body("carrierBookingRequestReference", notNullValue())
         .body("bookingRequestCreatedDateTime", notNullValue())
         .body("bookingRequestUpdatedDateTime", notNullValue())
-        .statusCode(HttpStatus.SC_ACCEPTED)
         .body(JSON_SCHEMA_VALIDATOR);
+  }
+
+  @Test
+  public void testBookingPostCannotHaveRequiredReferencesWithNullReferences() {
+    Map<String, Object> map = jsonToMap(VALID_BOOKING);
+    assert map != null;
+
+    // To ensure that requirements are set irrespective of json file
+    map.remove("isImportLicenseRequired");
+    map.remove("isExportDeclarationRequired");
+    map.put("isImportLicenseRequired", true);
+    map.put("isExportDeclarationRequired", true);
+
+    for (String fieldName : new String[] {"exportDeclarationReference", "importLicenseReference"}) {
+      map.remove(fieldName);
+
+      given()
+          .auth()
+          .oauth2(Configuration.accessToken)
+          .contentType("application/json")
+          .body(map)
+          .post(Configuration.ROOT_URI + BOOKING_PATH)
+          .then()
+          .assertThat()
+          .statusCode(HttpStatus.SC_BAD_REQUEST)
+          .body(JSON_SCHEMA_VALIDATOR);
+      }
   }
 
   @Test

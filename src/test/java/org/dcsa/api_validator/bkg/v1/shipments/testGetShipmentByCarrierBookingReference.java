@@ -32,7 +32,7 @@ public class testGetShipmentByCarrierBookingReference {
                     .get(Configuration.ROOT_URI + SHIPMENT_SUMMARIES_PATH)
                     .then()
                     .assertThat()
-                    .statusCode(200)
+                    .statusCode(HttpStatus.SC_OK)
                     .body("size()", greaterThanOrEqualTo(0))
                     .body(JSON_SCHEMA_VALIDATOR)
                     .extract()

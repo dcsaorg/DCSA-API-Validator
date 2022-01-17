@@ -88,7 +88,6 @@ public class PostBookingTest {
     map.remove("isAMSACIFilingRequired");
     map.remove("isDestinationFilingRequired");
     map.remove("contractQuotationReference");
-    map.remove("expectedDepartureDate");
     map.remove("transportDocumentTypeCode");
     map.remove("transportDocumentReference");
     map.remove("bookingChannelReference");
@@ -104,6 +103,10 @@ public class PostBookingTest {
     map.remove("requestedEquipments");
     map.remove("documentParties");
     map.remove("shipmentLocations");
+
+    // Cannot remove expectedDepartureDate if vessel IMO is also removed because of the
+    // GetBookingRequestSummariesTest.testForExpectedDepartureTime test case
+    //    map.remove("expectedDepartureDate");
 
     given()
         .auth()
@@ -145,7 +148,7 @@ public class PostBookingTest {
           .assertThat()
           .statusCode(HttpStatus.SC_BAD_REQUEST)
           .body(JSON_SCHEMA_VALIDATOR);
-      }
+    }
   }
 
   @Test

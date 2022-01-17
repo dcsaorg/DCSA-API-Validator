@@ -2,6 +2,7 @@ package org.dcsa.api_validator.bkg.v1.bookings;
 
 import org.apache.http.HttpStatus;
 import org.dcsa.api_validator.conf.Configuration;
+import org.junit.jupiter.api.Disabled;
 import org.testng.annotations.Test;
 
 import java.util.Map;
@@ -104,10 +105,6 @@ public class PostBookingTest {
     map.remove("documentParties");
     map.remove("shipmentLocations");
 
-    // Cannot remove expectedDepartureDate if vessel IMO is also removed because of the
-    // GetBookingRequestSummariesTest.testForExpectedDepartureTime test case
-    //    map.remove("expectedDepartureDate");
-
     given()
         .auth()
         .oauth2(Configuration.accessToken)
@@ -122,6 +119,32 @@ public class PostBookingTest {
         .body("bookingRequestCreatedDateTime", notNullValue())
         .body("bookingRequestUpdatedDateTime", notNullValue())
         .body(JSON_SCHEMA_VALIDATOR);
+  }
+
+
+  // Dependent on DDT-752
+  @Test
+  public void testBookingPostCannotHaveVeselIMONumberOrExpectedVoyageNumberAndExpectedDepartureDateBeNull() {
+//    Map<String, Object> map = jsonToMap(VALID_BOOKING);
+//    assert map != null;
+//
+//    // To ensure that requirements are set irrespective of json file
+//    map.remove("expectedDepartureDate");
+//
+//    for (String fieldName : new String[] {"expectedVoyageNumber", "vesselIMONumber"}) {
+//      map.remove(fieldName);
+//
+//      given()
+//          .auth()
+//          .oauth2(Configuration.accessToken)
+//          .contentType("application/json")
+//          .body(map)
+//          .post(Configuration.ROOT_URI + BOOKING_PATH)
+//          .then()
+//          .assertThat()
+//          .statusCode(HttpStatus.SC_BAD_REQUEST)
+//          .body(JSON_SCHEMA_VALIDATOR);
+//    }
   }
 
   @Test

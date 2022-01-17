@@ -121,30 +121,29 @@ public class PostBookingTest {
         .body(JSON_SCHEMA_VALIDATOR);
   }
 
-
-  // Dependent on DDT-752
-  @Test
+  // TODO: waiting for DDT-752 to be clarified
+  @Test(enabled = false)
   public void testBookingPostCannotHaveVeselIMONumberOrExpectedVoyageNumberAndExpectedDepartureDateBeNull() {
-//    Map<String, Object> map = jsonToMap(VALID_BOOKING);
-//    assert map != null;
-//
-//    // To ensure that requirements are set irrespective of json file
-//    map.remove("expectedDepartureDate");
-//
-//    for (String fieldName : new String[] {"expectedVoyageNumber", "vesselIMONumber"}) {
-//      map.remove(fieldName);
-//
-//      given()
-//          .auth()
-//          .oauth2(Configuration.accessToken)
-//          .contentType("application/json")
-//          .body(map)
-//          .post(Configuration.ROOT_URI + BOOKING_PATH)
-//          .then()
-//          .assertThat()
-//          .statusCode(HttpStatus.SC_BAD_REQUEST)
-//          .body(JSON_SCHEMA_VALIDATOR);
-//    }
+    Map<String, Object> map = jsonToMap(VALID_BOOKING);
+    assert map != null;
+
+    // To ensure that requirements are set irrespective of json file
+    map.remove("expectedDepartureDate");
+
+    for (String fieldName : new String[] {"expectedVoyageNumber", "vesselIMONumber"}) {
+      map.remove(fieldName);
+
+      given()
+          .auth()
+          .oauth2(Configuration.accessToken)
+          .contentType("application/json")
+          .body(map)
+          .post(Configuration.ROOT_URI + BOOKING_PATH)
+          .then()
+          .assertThat()
+          .statusCode(HttpStatus.SC_BAD_REQUEST)
+          .body(JSON_SCHEMA_VALIDATOR);
+    }
   }
 
   @Test

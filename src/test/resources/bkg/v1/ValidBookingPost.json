@@ -1,0 +1,110 @@
+{
+  "receiptTypeAtOrigin": "CY",
+  "deliveryTypeAtDestination": "CY",
+  "cargoMovementTypeAtOrigin": "FCL",
+  "cargoMovementTypeAtDestination": "LCL",
+  "serviceContractReference": "Test",
+  "isPartialLoadAllowed": true,
+  "isExportDeclarationRequired": true,
+  "exportDeclarationReference": "Export declaration reference",
+  "isImportLicenseRequired": true,
+  "importLicenseReference": "Import declaration reference",
+  "submissionDateTime": "2021-12-03T10:41:00+01:00",
+  "isAMSACIFilingRequired": true,
+  "isDestinationFilingRequired": true,
+  "expectedDepartureDate": "2020-03-08",
+  "communicationChannel": "AO",
+  "isEquipmentSubstitutionAllowed": true,
+  "invoicePayableAt": {
+    "latitude": "53.554?? N",
+    "longitude": "9.9938?? E"
+  },
+  "commodities": [
+    {
+      "commodityType": "Bloom",
+      "cargoGrossWeight": 2000.0,
+      "cargoGrossWeightUnit": "LBR",
+      "exportLicenseIssueDate": null,
+      "exportLicenseExpiryDate": null,
+      "HSCode": "720711"
+    },
+    {
+      "commodityType": "Hand Bags",
+      "cargoGrossWeight": 1200.0,
+      "cargoGrossWeightUnit": "KGM",
+      "exportLicenseIssueDate": null,
+      "exportLicenseExpiryDate": null,
+      "HSCode": "411510"
+    }
+  ],
+  "valueAddedServiceRequests": [
+    {
+      "valueAddedServiceCode": "SCON"
+    }
+  ],
+  "references": [
+    {
+      "referenceType": "FF",
+      "referenceValue": "tesxt"
+    }
+  ],
+  "requestedEquipments": [
+    {
+      "requestedEquipmentSizetype": "22GP",
+      "requestedEquipmentUnits": 4,
+      "isShipperOwned": false
+    }
+  ],
+  "documentParties": [
+    {
+      "party": {
+        "partyName": "Hapag Lloyd",
+        "taxReference1": "CVR-25645774",
+        "taxReference2": "CVR-25645774",
+        "publicKey": "eyJhbGciOisSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFzaW",
+        "nmftaCode": null,
+        "address": {
+          "name": "Lukas",
+          "street": "Rohrdamm",
+          "streetNumber": "82",
+          "floor": "5",
+          "city": "Bad Salzuflen Grastrup-h??lsen",
+          "stateRegion": "Nordrhein-Westfalen",
+          "country": "Germany",
+          "postCode": "32108"
+        },
+        "partyContactDetails": [
+          {
+            "name": "Peanut",
+            "phone": "peanut@jeff-fa-fa.com",
+            "email": "+31123456789"
+          }
+        ],
+        "identifyingCodes": [
+          {
+            "partyCode": "MMCU",
+            "codeListName": "LCL",
+            "DCSAResponsibleAgencyCode": "SCAC"
+          }
+        ]
+      },
+      "partyFunction": "DDS",
+      "displayedAddress": [
+        "Gubener Str. 42",
+        "Rhinstrasse 87"
+      ],
+      "isToBeNotified": true
+    }
+  ],
+  "shipmentLocations": [
+    {
+      "location": {
+        "locationName": "xxx",
+        "UNLocationCode": "AEJEA"
+      },
+      "shipmentLocationTypeCode": "POL",
+      "displayedName": "Hamburg ???",
+      "eventDateTime": null
+    }
+  ]
+}

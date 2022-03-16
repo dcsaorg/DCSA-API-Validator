@@ -60,9 +60,6 @@ jobs:
       # Assert that the database is ready to load the test data.
       - run: echo "SELECT 1;" | docker exec -i -u postgres dcsa_db psql -d dcsa_openapi -f - 2>/dev/null || sleep 5
 
-      - name: Load DCSA BKG test data
-        run: cat DCSA-BKG/DCSA-Information-Model/datamodel/testdata.d/*.sql | docker exec -i -u postgres dcsa_db psql -d dcsa_openapi -f -
-
       # Run validator
       - name: Run the API validator on BKG
         run: cd DCSA-API-Validator && mvn -Dtest.suite=BKGV1.xml test

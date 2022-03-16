@@ -24,7 +24,7 @@ public class CancelBookingTest {
 
   @BeforeClass
   private void createCancellationRequest() throws JsonProcessingException {
-    List<String> allowedStatusses = Arrays.asList("RECE", "PENU", "CONF");
+    List<String> allowedStatuses = Arrays.asList("RECE", "PENU", "CONF", "PENC");
     JSONObject cancellation = new JSONObject();
     cancellation.put("documentStatus", "CANC");
     cancellation.put("reason", "booking cancelled during test");
@@ -33,7 +33,7 @@ public class CancelBookingTest {
     bookingAllowedToCancel = createBooking().get("carrierBookingRequestReference").toString();
     bookingsNotAllowedToCancel =
         findAllBookings().stream()
-            .filter(map -> !allowedStatusses.contains(map.get("documentStatus")))
+            .filter(map -> !allowedStatuses.contains(map.get("documentStatus")))
             .map(map -> String.valueOf(map.get("carrierBookingRequestReference")))
             .collect(Collectors.toList());
   }

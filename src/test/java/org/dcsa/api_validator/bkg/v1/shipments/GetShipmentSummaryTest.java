@@ -60,7 +60,7 @@ public class GetShipmentSummaryTest {
     given()
       .auth()
       .oauth2(Configuration.accessToken)
-      .queryParam("documentStatus", "CONF")
+      .queryParam("documentStatus", "CMPL")
     .when()
       .get(Configuration.ROOT_URI + SHIPMENT_SUMMARIES_PATH)
     .then()

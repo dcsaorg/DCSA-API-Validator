@@ -24,7 +24,7 @@ public class CancelBookingTest {
 
   @BeforeClass
   private void createCancellationRequest() throws JsonProcessingException {
-    List<String> allowedStatuses = Arrays.asList("RECE", "PENU", "CONF");
+    List<String> allowedStatuses = Arrays.asList("RECE", "PENU", "CONF", "PENC");
     JSONObject cancellation = new JSONObject();
     cancellation.put("documentStatus", "CANC");
     cancellation.put("reason", "booking cancelled during test");

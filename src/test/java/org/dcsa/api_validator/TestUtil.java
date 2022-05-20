@@ -63,9 +63,8 @@ public class TestUtil {
             Map<String, Object> map = mapper.readValue(json, Map.class);
             return map;
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     private interface ParserFunction<T, R> {

@@ -8,6 +8,7 @@ import io.restassured.response.Response;
 import org.dcsa.api_validator.conf.Configuration;
 import org.hamcrest.Matchers;
 import org.testng.Assert;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.util.UUID;
@@ -38,7 +39,7 @@ public class EventSubscriptionsTest {
         .then()
         .assertThat()
         .statusCode(400)
-        .body("message", Matchers.containsString("must be any of [TRANSPORT, OPERATIONS]"));
+        .body("errors.collect { it.message }", Matchers.hasItem(Matchers.containsString("must be any of [OPERATIONS]")));
   }
 
   @Test
@@ -56,7 +57,7 @@ public class EventSubscriptionsTest {
         .then()
         .assertThat()
         .statusCode(400)
-        .body("message", Matchers.containsString("must be a valid Vessel IMO Number"));
+        .body("errors.collect { it.message }", Matchers.hasItem(Matchers.containsString("must be a valid Vessel IMO Number")));
   }
 
   @Test
@@ -109,6 +110,7 @@ public class EventSubscriptionsTest {
         .body("subscriptionID", Matchers.equalTo(createdEventSubscriptionID));
   }
 
+  @Ignore
   @Test
   public void testToDeleteSpecificEventSubscription() {
     Response response =
@@ -159,7 +161,7 @@ public class EventSubscriptionsTest {
         .then()
         .assertThat()
         .statusCode(400)
-        .body("message", Matchers.containsString("Please omit the \"secret\" attribute."));
+        .body("errors.collect { it.message }", Matchers.hasItem(Matchers.containsString("Please omit the \"secret\" attribute.")));
   }
 
   @Test
@@ -187,7 +189,7 @@ public class EventSubscriptionsTest {
         .then()
         .assertThat()
         .statusCode(400)
-        .body("message", Matchers.containsString("Id in url does not match id in body"));
+        .body("errors.collect { it.message }", Matchers.hasItem(Matchers.containsString("Id in url does not match id in body")));
   }
 
   @Test
@@ -222,10 +224,7 @@ public class EventSubscriptionsTest {
   }
 
   @Test
-  public void testToUpdateSecretEventSubscription() throws JsonProcessingException {
-
-    UUID uuid = UUID.randomUUID();
-
+  public void testToUpdateSecretEventSubscription() {
     Response response =
         given()
             .auth()

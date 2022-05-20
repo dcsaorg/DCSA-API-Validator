@@ -2,6 +2,7 @@ package org.dcsa.api_validator.jit.v1;
 
 import org.dcsa.api_validator.conf.Configuration;
 import org.hamcrest.Matchers;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
@@ -368,14 +369,13 @@ public class PostTimestampsTest {
                 then().
                 assertThat().
                 statusCode(400)
-                .body("message", Matchers.containsString("Ambiguous transport call"));
+                .body("errors.collect { it.message }", Matchers.hasItem(Matchers.containsString("Ambiguous transport call")));
     }
 
     // Testing with mandatory fields - Except PublisherField field
     // Should fail as PublisherField is mandatory
     @Test
     public void testMandatoryPublisherFieldFalseFormat() {
-
         Map<String, Object> map = jsonToMap(VALID_TIMESTAMP);
 
         map.remove("publisher");

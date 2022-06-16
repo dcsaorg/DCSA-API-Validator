@@ -17,6 +17,7 @@
           "transportReference",
           "carrierVoyageNumber",
           "descriptionOfGoods",
+          "packageCode",
           "parties",
           "locations",
           "serviceType",
@@ -62,6 +63,11 @@
             "id": "#/items/anyOf/0/properties/descriptionOfGoods",
             "type": "string",
             "title": "The descriptionOfGoods schema"
+          },
+          "packageCode": {
+            "id": "#/items/anyOf/0/properties/packageCode",
+            "type": "string",
+            "title": "The unique identifier for the package type"
           },
           "parties": {
             "id": "#/items/anyOf/0/properties/parties",
